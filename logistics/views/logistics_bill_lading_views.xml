@@ -69,14 +69,6 @@
                     </group>
                     <notebook>
                         <page string="Containers" name="containers">
-                            <group>
-                                <field name="container_to_add_id" string="Add Existing/New Container"
-                                       domain="[('bill_lading_id', '=', False), ('requisition_ids', 'in', requisition_ids)]"
-                                       context="{'default_bill_lading_id': id, 'default_requisition_ids': [(6, 0, requisition_ids)]}"
-                                       options="{'no_quick_create': True}"/>
-                                <button name="action_link_container" type="object" string="Link"
-                                        class="btn-secondary" invisible="not container_to_add_id"/>
-                            </group>
                             <field name="container_ids">
                                 <list>
                                     <field name="container_number"/>
