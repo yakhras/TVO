@@ -69,7 +69,8 @@
                     </group>
                     <notebook>
                         <page string="Containers" name="containers">
-                            <field name="container_ids">
+                            <field name="container_ids"
+                                   context="{'default_requisition_ids': [(6, 0, requisition_ids.ids)]}">
                                 <list>
                                     <field name="container_number"/>
                                     <field name="container_type"/>

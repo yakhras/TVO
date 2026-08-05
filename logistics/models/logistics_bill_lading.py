@@ -126,5 +126,8 @@ class LogisticsBillLading(models.Model):
             'res_model': 'logistics.container',
             'view_mode': 'list,form',
             'domain': [('bill_lading_id', '=', self.id)],
-            'context': {'default_bill_lading_id': self.id},
+            'context': {
+                'default_bill_lading_id': self.id,
+                'default_requisition_ids': [(6, 0, self.requisition_ids.ids)],
+            },
         }
