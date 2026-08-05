@@ -43,6 +43,9 @@ class LogisticsBillLading(models.Model):
     container_ids = fields.One2many(
         'logistics.container', 'bill_lading_id', string='Containers',
     )
+    container_to_add_id = fields.Many2one(
+        'logistics.container', string='Container to Add', store=False,
+    )
     company_id = fields.Many2one(
         'res.company', string='Company', required=True,
         default=lambda self: self.env.company,
@@ -117,6 +120,12 @@ class LogisticsBillLading(models.Model):
     def _compute_container_count(self):
         for rec in self:
             rec.container_count = len(rec.container_ids)
+
+    def action_link_container(self):
+        self.ensure_one()
+        if self.container_to_add_id:
+            self.container_to_add_id.bill_lading_id = self.id
+            self.container_to_add_id = False
 
     def action_view_containers(self):
         self.ensure_one()
