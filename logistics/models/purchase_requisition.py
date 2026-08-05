@@ -127,6 +127,7 @@ class PurchaseRequisition(models.Model):
             'res_model': 'logistics.bill.lading',
             'view_mode': 'list,form',
             'domain': [('id', 'in', self.bill_lading_ids.ids)],
+            'context': {'default_requisition_ids': [(4, self.id)]},
         }
 
     def action_view_container_lines(self):
