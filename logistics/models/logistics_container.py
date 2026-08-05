@@ -128,6 +128,17 @@ class LogisticsContainer(models.Model):
         store=True,
     )
 
+    @api.model
+    def default_get(self, fields_list):
+        defaults = super().default_get(fields_list)
+        if 'requisition_ids' in fields_list and not defaults.get('requisition_ids'):
+            bill_lading_id = defaults.get('bill_lading_id') or self.env.context.get('default_bill_lading_id')
+            if bill_lading_id:
+                bill_lading = self.env['logistics.bill.lading'].browse(bill_lading_id)
+                if bill_lading.requisition_ids:
+                    defaults['requisition_ids'] = [Command.set(bill_lading.requisition_ids.ids)]
+        return defaults
+
     def _compute_display_name(self):
         for rec in self:
             rec.display_name = rec.container_number or rec.name
