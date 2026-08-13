@@ -22,6 +22,7 @@
         'data/partner_categories.xml',
         'views/logistics_port_views.xml',
         'views/logistics_shipping_line_views.xml',
+        'wizards/logistics_container_link_wizard_views.xml',
         'views/logistics_bill_lading_views.xml',
         'views/logistics_container_views.xml',
         'views/logistics_container_line_views.xml',

@@ -69,6 +69,8 @@
                     </group>
                     <notebook>
                         <page string="Containers" name="containers">
+                            <button name="action_link_existing_container" type="object"
+                                    string="Link Existing Container(s)" class="btn-secondary mb-2"/>
                             <field name="container_ids">
                                 <list>
                                     <field name="container_number"/>

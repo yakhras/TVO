@@ -131,3 +131,17 @@ class LogisticsBillLading(models.Model):
                 'default_requisition_ids': [(6, 0, self.requisition_ids.ids)],
             },
         }
+
+    def action_link_existing_container(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'logistics.container.link.wizard',
+            'view_mode': 'form',
+            'view_id': self.env.ref(
+                'logistics.view_logistics_container_link_wizard_form').id,
+            'target': 'new',
+            'context': {
+                'default_bill_lading_id': self.id,
+            },
+        }

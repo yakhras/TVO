@@ -20,3 +20,4 @@ access_logistics_pre_notification_manager,logistics.pre.notification.manager,mod
 access_logistics_dashboard_user,logistics.dashboard.user,model_logistics_dashboard,group_logistics_user,1,0,0,0
 access_logistics_declaration_type_user,logistics.declaration.type.user,model_logistics_declaration_type,group_logistics_user,1,0,0,0
 access_logistics_declaration_type_manager,logistics.declaration.type.manager,model_logistics_declaration_type,group_logistics_manager,1,1,1,1
+access_logistics_container_link_wizard_user,logistics.container.link.wizard.user,model_logistics_container_link_wizard,group_logistics_user,1,1,1,1
