@@ -46,12 +46,6 @@
         <field name="view_mode">list,form</field>
     </record>
 
-    <record id="action_product_registration" model="ir.actions.act_window">
-        <field name="name">Product Registrations</field>
-        <field name="res_model">product.registration</field>
-        <field name="view_mode">list,form</field>
-    </record>
-
     <record id="action_logistics_declaration_type" model="ir.actions.act_window">
         <field name="name">Declaration Types</field>
         <field name="res_model">logistics.declaration.type</field>
@@ -172,12 +166,6 @@
               parent="menu_logistics_config"
               action="action_logistics_declaration_type"
               sequence="5"/>
-
-    <menuitem id="menu_logistics_product_reg"
-              name="Product Registrations"
-              parent="menu_logistics_config"
-              action="action_product_registration"
-              sequence="20"/>
 
 
 </odoo>
