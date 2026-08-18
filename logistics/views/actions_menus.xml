@@ -16,13 +16,6 @@
         <field name="view_mode">list,pivot,form</field>
     </record>
 
-    <record id="action_logistics_requisition_zer" model="ir.actions.act_window">
-        <field name="name">Zer Contracts</field>
-        <field name="res_model">purchase.requisition</field>
-        <field name="view_mode">list,pivot,form</field>
-        <field name="domain">[('vendor_id.name', 'ilike', 'ZER')]</field>
-    </record>
-
     <record id="action_logistics_bill_lading" model="ir.actions.act_window">
         <field name="name">Bills of Lading</field>
         <field name="res_model">logistics.bill.lading</field>
@@ -106,12 +99,6 @@
           parent="menu_logistics_deals"
           action="action_logistics_requisition"
           sequence="1"/>
-          
-    <menuitem id="menu_logistics_zer"
-              name="Zer Contracts"
-              parent="menu_logistics_deals"
-              action="action_logistics_requisition_zer"
-              sequence="10"/>
 
     <menuitem id="menu_logistics_bill_lading"
               name="Bills of Lading"
