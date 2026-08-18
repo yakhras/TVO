@@ -8,59 +8,34 @@
         <t t-else="">
 
             <!-- Deals by status -->
-            <h5 class="mb-3">Import Deals</h5>
-            <div class="row g-3 mb-4">
-                <div class="col-6 col-md-2">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openDeals('purchasing')">
-                        <div class="fs-1 fw-bold text-info" t-esc="state.kpis.deals_purchasing"/>
-                        <div class="small text-muted">Purchasing</div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-2">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openDeals('oversea')">
-                        <div class="fs-1 fw-bold text-warning" t-esc="state.kpis.deals_oversea"/>
-                        <div class="small text-muted">Oversea</div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-2">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openDeals('at_port')">
-                        <div class="fs-1 fw-bold text-danger" t-esc="state.kpis.deals_at_port"/>
-                        <div class="small text-muted">At Port</div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-2">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openDeals('arrived')">
-                        <div class="fs-1 fw-bold text-success" t-esc="state.kpis.deals_arrived"/>
-                        <div class="small text-muted">Arrived</div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-2">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openDeals('completed')">
-                        <div class="fs-1 fw-bold text-secondary" t-esc="state.kpis.deals_completed"/>
-                        <div class="small text-muted">Completed</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pipeline KPIs -->
-            <h5 class="mb-3">Pipeline</h5>
+            <h5 class="mb-3">Purchase Agreements</h5>
             <div class="row g-3 mb-4">
                 <div class="col-6 col-md-3">
-                    <div class="card text-center p-3 h-100">
-                        <div class="fs-1 fw-bold text-warning" t-esc="state.kpis.containers_in_transit"/>
-                        <div class="small text-muted">Containers In Transit</div>
+                    <div class="card text-center p-3 h-100 cursor-pointer"
+                         t-on-click="() => this.openDeals('draft')">
+                        <div class="small text-muted">Draft</div>
+                        <div class="fs-1 fw-bold text-secondary" t-esc="state.kpis.deals_draft || 0"/>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openOverdue()">
-                        <div class="fs-1 fw-bold text-danger" t-esc="state.kpis.overdue_arrivals"/>
-                        <div class="small text-muted">Overdue Arrivals</div>
+                         t-on-click="() => this.openDeals('confirmed')">
+                        <div class="small text-muted">Confirmed</div>
+                        <div class="fs-1 fw-bold text-info" t-esc="state.kpis.deals_confirmed || 0"/>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card text-center p-3 h-100 cursor-pointer"
+                         t-on-click="() => this.openDeals('done')">
+                        <div class="small text-muted">Closed</div>
+                        <div class="fs-1 fw-bold text-success" t-esc="state.kpis.deals_closed || 0"/>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card text-center p-3 h-100 cursor-pointer"
+                         t-on-click="() => this.openDeals('cancel')">
+                        <div class="small text-muted">Cancelled</div>
+                        <div class="fs-1 fw-bold text-danger" t-esc="state.kpis.deals_cancelled || 0"/>
                     </div>
                 </div>
             </div>

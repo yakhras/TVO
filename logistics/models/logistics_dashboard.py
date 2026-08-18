@@ -7,14 +7,12 @@ class LogisticsDashboard(models.AbstractModel):
 
     @api.model
     def get_dashboard_data(self):
-        today = fields.Date.today()
-        BL = self.env['logistics.bill.lading']
-        Container = self.env['logistics.container']
-        Req = self.env['purchase.requisition']
+        BL = self.env['logistics.bill.lading'].sudo()
+        Req = self.env['purchase.requisition'].sudo()
 
         deals_by_state = {
-            state: Req.search_count([('logistics_state', '=', state)])
-            for state in ('purchasing', 'oversea', 'at_port', 'arrived', 'completed')
+            state: Req.search_count([('state', '=', state)])
+            for state in ('draft', 'confirmed', 'done', 'cancel')
         }
 
         upcoming = BL.search([
@@ -24,18 +22,10 @@ class LogisticsDashboard(models.AbstractModel):
 
         return {
             'kpis': {
-                'deals_purchasing': deals_by_state['purchasing'],
-                'deals_oversea': deals_by_state['oversea'],
-                'deals_at_port': deals_by_state['at_port'],
-                'deals_arrived': deals_by_state['arrived'],
-                'deals_completed': deals_by_state['completed'],
-                'containers_in_transit': Container.search_count(
-                    [('state', 'in', ['shipped', 'in_transit'])]
-                ),
-                'overdue_arrivals': BL.search_count([
-                    ('arrival_date', '<', today),
-                    ('state', 'in', ['shipped', 'in_transit']),
-                ]),
+                'deals_draft': deals_by_state['draft'],
+                'deals_confirmed': deals_by_state['confirmed'],
+                'deals_closed': deals_by_state['done'],
+                'deals_cancelled': deals_by_state['cancel'],
             },
             'upcoming_arrivals': upcoming.read(
                 ['name', 'number', 'vessel', 'arrival_date',

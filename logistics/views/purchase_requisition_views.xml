@@ -61,7 +61,7 @@
         <field name="name">purchase.requisition.pivot.logistics</field>
         <field name="model">purchase.requisition</field>
         <field name="arch" type="xml">
-            <pivot string="Import Deals">
+            <pivot string="Purchase Agreements">
                 <field name="vendor_id" type="row"/>
                 <field name="origin_country_id" type="row"/>
                 <field name="logistics_state" type="col"/>

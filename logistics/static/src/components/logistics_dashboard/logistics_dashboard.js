@@ -20,24 +20,13 @@ export class LogisticsDashboard extends Component {
         });
     }
 
-    openDeals(logisticsState) {
+    openDeals(state) {
         this.action.doAction({
             type: "ir.actions.act_window",
-            name: "Import Deals",
+            name: "Purchase Agreements",
             res_model: "purchase.requisition",
             views: [[false, "list"], [false, "form"]],
-            domain: logisticsState ? [["logistics_state", "=", logisticsState]] : [],
-        });
-    }
-
-    openOverdue() {
-        const today = new Date().toISOString().split("T")[0];
-        this.action.doAction({
-            type: "ir.actions.act_window",
-            name: "Overdue Arrivals",
-            res_model: "logistics.bill.lading",
-            views: [[false, "list"], [false, "form"]],
-            domain: [["arrival_date", "<", today], ["state", "in", ["shipped", "in_transit"]]],
+            domain: state ? [["state", "=", state]] : [],
         });
     }
 

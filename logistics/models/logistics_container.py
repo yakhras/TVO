@@ -35,7 +35,7 @@ class LogisticsContainer(models.Model):
         'purchase.requisition',
         'logistics_container_requisition_rel',
         'container_id', 'requisition_id',
-        string='Import Deals', tracking=True,
+        string='Purchase Agreements', tracking=True,
     )
     purchase_order_id = fields.Many2one(
         'purchase.order', string='Purchase Order', tracking=True,

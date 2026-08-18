@@ -4,14 +4,14 @@
     <!-- ===== Actions ===== -->
 
     <record id="action_logistics_container_line_all" model="ir.actions.act_window">
-        <field name="name">All Lines</field>
+        <field name="name">Container Lines</field>
         <field name="res_model">logistics.container.line</field>
         <field name="view_mode">list,pivot,form</field>
         <field name="context">{}</field>
     </record>
 
     <record id="action_logistics_requisition" model="ir.actions.act_window">
-        <field name="name">Import Deals</field>
+        <field name="name">Purchase Agreements</field>
         <field name="res_model">purchase.requisition</field>
         <field name="view_mode">list,pivot,form</field>
     </record>
@@ -64,18 +64,18 @@
 
     <!-- Level 1 items -->
     <menuitem id="menu_logistics_all_lines"
-              name="All Lines"
+              name="Container Lines"
               parent="menu_logistics_root"
               action="action_logistics_container_line_all"
               sequence="10"/>
 
     <menuitem id="menu_logistics_deals"
-              name="Import Deals"
+              name="Purchase Agreements"
               parent="menu_logistics_root"
               action="action_logistics_requisition"
               sequence="30"/>
 
-    <!-- Sub-menu under Import Deals -->
+    <!-- Sub-menu under Purchase Agreements -->
     <menuitem id="menu_logistics_deals_all"
           name="All Deals"
           parent="menu_logistics_deals"

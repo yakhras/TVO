@@ -156,7 +156,7 @@
         <field name="name">logistics.container.line.pivot</field>
         <field name="model">logistics.container.line</field>
         <field name="arch" type="xml">
-            <pivot string="All Lines">
+            <pivot string="Container Lines">
                 <field name="product_id" type="row"/>
                 <field name="vendor_id" type="row"/>
                 <field name="product_qty" type="measure"/>

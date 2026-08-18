@@ -5,7 +5,7 @@
     'summary': 'Import operations tracking: containers, B/L, customs',
     'description': """
         Replaces the import tracking spreadsheet.
-        Tracks: Import Deals, Bills of Lading, Containers, Container Lines,
+        Tracks: Purchase Agreements, Bills of Lading, Containers, Container Lines,
         Customs Declarations, Ports.
     """,
     'depends': [

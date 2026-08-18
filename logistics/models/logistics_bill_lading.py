@@ -38,7 +38,7 @@ class LogisticsBillLading(models.Model):
     custom_declaration = fields.Boolean(string='Custom Declaration', tracking=True)
 
     requisition_ids = fields.Many2many(
-        'purchase.requisition', string='Import Deals',
+        'purchase.requisition', string='Purchase Agreements',
     )
     container_ids = fields.One2many(
         'logistics.container', 'bill_lading_id', string='Containers',

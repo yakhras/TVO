@@ -79,7 +79,7 @@
                                 </list>
                             </field>
                         </page>
-                        <page string="Import Deals" name="import_deals">
+                        <page string="Purchase Agreements" name="import_deals">
                             <field name="requisition_ids">
                                 <list>
                                     <field name="name"/>
