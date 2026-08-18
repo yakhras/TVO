@@ -45,30 +45,38 @@
             <table class="table table-sm table-hover">
                 <thead class="table-light">
                     <tr>
-                        <th>Reference</th>
-                        <th>B/L Number</th>
-                        <th>Vessel</th>
-                        <th>ETA</th>
-                        <th>Containers</th>
-                        <th>Forwarder</th>
-                        <th>Port of Discharge</th>
+                        <th>Purchase Agreement</th>
+                        <th>Supplier</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Sku price</th>
+                        <th>Total Weight</th>
+                        <th>Subtotal</th>
+                        <th>Container</th>
+                        <th>BL</th>
+                        <th>MT Price</th>
+                        <th>Arriving Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <t t-foreach="state.upcomingArrivals" t-as="bl" t-key="bl.id">
-                        <tr class="cursor-pointer" t-on-click="() => this.openBillLading(bl.id)">
-                            <td t-esc="bl.name"/>
-                            <td t-esc="bl.number"/>
-                            <td t-esc="bl.vessel || ''"/>
-                            <td t-esc="bl.arrival_date"/>
-                            <td t-esc="bl.container_count"/>
-                            <td t-esc="bl.forwarder_id ? bl.forwarder_id[1] : ''"/>
-                            <td t-esc="bl.port_of_discharge_id ? bl.port_of_discharge_id[1] : ''"/>
+                    <t t-foreach="state.upcomingArrivals" t-as="line" t-key="line.id">
+                        <tr class="cursor-pointer" t-on-click="() => this.openContainerLine(line.id)">
+                            <td t-esc="line.requisition_id ? line.requisition_id[1] : ''"/>
+                            <td t-esc="line.vendor_id ? line.vendor_id[1] : ''"/>
+                            <td t-esc="line.product_id ? line.product_id[1] : ''"/>
+                            <td t-esc="line.product_qty"/>
+                            <td t-esc="this.fmtCurrency(line.sku_price, line.currency_id)"/>
+                            <td t-esc="line.total_weight"/>
+                            <td t-esc="this.fmtCurrency(line.subtotal, line.currency_id)"/>
+                            <td t-esc="line.container_id ? line.container_id[1] : ''"/>
+                            <td t-esc="line.bill_lading_id ? line.bill_lading_id[1] : ''"/>
+                            <td t-esc="this.fmtCurrency(line.mt_price, line.currency_id)"/>
+                            <td t-esc="line.arrival_date"/>
                         </tr>
                     </t>
                     <t t-if="!state.upcomingArrivals.length">
                         <tr>
-                            <td colspan="7" class="text-center text-muted py-3">
+                            <td colspan="11" class="text-center text-muted py-3">
                                 No upcoming arrivals
                             </td>
                         </tr>

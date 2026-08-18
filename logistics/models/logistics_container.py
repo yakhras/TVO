@@ -11,6 +11,7 @@ class LogisticsContainer(models.Model):
     _description = 'Shipping Container'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'id desc'
+    _rec_names_search = ['name', 'container_number']
     _sql_constraints = [
         ('container_number_unique', 'UNIQUE(container_number)',
          'Container No. must be unique.'),

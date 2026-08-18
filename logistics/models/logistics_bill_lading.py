@@ -7,6 +7,7 @@ class LogisticsBillLading(models.Model):
     _description = 'Bill of Lading'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'bl_date desc, id desc'
+    _rec_names_search = ['name', 'number']
     _sql_constraints = [
         ('number_unique', 'UNIQUE(number)',
          'B/L Number must be unique.'),
@@ -48,20 +49,6 @@ class LogisticsBillLading(models.Model):
         default=lambda self: self.env.company,
     )
 
-    state = fields.Selection(
-        selection=[
-            ('draft', 'Draft'),
-            ('confirmed', 'Confirmed'),
-            ('shipped', 'Shipped'),
-            ('in_transit', 'In Transit'),
-            ('arrived', 'Arrived'),
-            ('delivered', 'Delivered'),
-            ('closed', 'Closed'),
-        ],
-        string='Status', default='draft', required=True,
-        copy=False, tracking=True,
-    )
-
     # --- Computed counts ---
     container_count = fields.Integer(compute='_compute_container_count', store=True)
 
@@ -77,41 +64,6 @@ class LogisticsBillLading(models.Model):
         for rec in self:
             rec.display_name = rec.number or rec.name
 
-
-    def action_confirm(self):
-        self.write({'state': 'confirmed'})
-
-    def action_ship(self):
-        self.write({'state': 'shipped'})
-        containers = self.container_ids.filtered(lambda c: c.state == 'draft')
-        if containers:
-            containers.write({'state': 'shipped'})
-
-    def action_in_transit(self):
-        self.write({'state': 'in_transit'})
-        containers = self.container_ids.filtered(
-            lambda c: c.state in ('draft', 'shipped')
-        )
-        if containers:
-            containers.write({'state': 'in_transit'})
-
-    def action_arrived(self):
-        self.write({'state': 'arrived'})
-        today = fields.Date.today()
-        for rec in self:
-            if not rec.arrival_date:
-                rec.arrival_date = today
-        containers = self.container_ids.filtered(
-            lambda c: c.state in ('draft', 'shipped', 'in_transit')
-        )
-        if containers:
-            containers.write({'state': 'arrived'})
-
-    def action_deliver(self):
-        self.write({'state': 'delivered'})
-
-    def action_close(self):
-        self.write({'state': 'closed'})
 
     @api.depends('container_ids')
     def _compute_container_count(self):

@@ -2,6 +2,7 @@
 import { Component, useState, onWillStart } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
+import { formatCurrency } from "@web/core/currency";
 
 export class LogisticsDashboard extends Component {
     static template = "logistics.LogisticsDashboard";
@@ -30,10 +31,17 @@ export class LogisticsDashboard extends Component {
         });
     }
 
-    openBillLading(id) {
+    fmtCurrency(amount, currencyTuple) {
+        if (!currencyTuple) {
+            return amount;
+        }
+        return formatCurrency(amount, currencyTuple[0]);
+    }
+
+    openContainerLine(id) {
         this.action.doAction({
             type: "ir.actions.act_window",
-            res_model: "logistics.bill.lading",
+            res_model: "logistics.container.line",
             res_id: id,
             views: [[false, "form"]],
         });

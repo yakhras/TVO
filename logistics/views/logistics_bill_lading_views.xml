@@ -6,22 +6,6 @@
         <field name="model">logistics.bill.lading</field>
         <field name="arch" type="xml">
             <form string="Bill of Lading">
-                <header>
-                    <button name="action_confirm" string="Confirm" type="object"
-                            class="btn-primary" invisible="state != 'draft'"/>
-                    <button name="action_ship" string="Ship" type="object"
-                            class="btn-primary" invisible="state != 'confirmed'"/>
-                    <button name="action_in_transit" string="In Transit" type="object"
-                            class="btn-primary" invisible="state != 'shipped'"/>
-                    <button name="action_arrived" string="Arrived" type="object"
-                            class="btn-primary" invisible="state != 'in_transit'"/>
-                    <button name="action_deliver" string="Deliver" type="object"
-                            class="btn-primary" invisible="state != 'arrived'"/>
-                    <button name="action_close" string="Close" type="object"
-                            class="btn-primary" invisible="state != 'delivered'"/>
-                    <field name="state" widget="statusbar"
-                           statusbar_visible="draft,confirmed,shipped,in_transit,arrived,delivered,closed"/>
-                </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button class="oe_stat_button" type="object"
@@ -111,10 +95,6 @@
                 <field name="port_of_discharge_id"/>
                 <field name="departure_date"/>
                 <field name="arrival_date"/>
-                <field name="state" widget="badge"
-                       decoration-info="state in ('draft','confirmed')"
-                       decoration-warning="state in ('shipped','in_transit')"
-                       decoration-success="state in ('arrived','delivered','closed')"/>
             </list>
         </field>
     </record>
@@ -143,20 +123,7 @@
                 <field name="vessel"/>
                 <field name="forwarder_id"/>
                 <separator/>
-                <filter name="state_draft" string="Draft"
-                        domain="[('state','=','draft')]"/>
-                <filter name="state_confirmed" string="Confirmed"
-                        domain="[('state','=','confirmed')]"/>
-                <filter name="state_shipped" string="Shipped"
-                        domain="[('state','=','shipped')]"/>
-                <filter name="state_in_transit" string="In Transit"
-                        domain="[('state','=','in_transit')]"/>
-                <filter name="state_arrived" string="Arrived"
-                        domain="[('state','=','arrived')]"/>
-                <separator/>
                 <group expand="0" string="Group By">
-                    <filter name="group_state" string="Status"
-                            context="{'group_by': 'state'}"/>
                     <filter name="group_forwarder" string="Forwarder"
                             context="{'group_by': 'forwarder_id'}"/>
                     <filter name="group_port_discharge" string="Port of Discharge"
@@ -171,8 +138,7 @@
         <field name="name">logistics.bill.lading.kanban</field>
         <field name="model">logistics.bill.lading</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="state">
-                <field name="state"/>
+            <kanban>
                 <field name="number"/>
                 <field name="vessel"/>
                 <field name="arrival_date"/>

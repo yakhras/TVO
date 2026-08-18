@@ -3,6 +3,7 @@ from odoo import api, fields, models
 
 class PurchaseRequisition(models.Model):
     _inherit = 'purchase.requisition'
+    _rec_names_search = ['name', 'reference']
 
     # --- New fields ---
     pi_date = fields.Date(string='PI Date')
@@ -74,21 +75,16 @@ class PurchaseRequisition(models.Model):
                 if l.requisition_id.id == rec.id
             )
 
-    @api.depends('container_ids.state', 'bill_lading_ids.state')
+    @api.depends('container_ids.state')
     def _compute_logistics_state(self):
         for rec in self:
             containers = rec.container_ids
-            bls = rec.bill_lading_ids
-            if not containers and not bls:
+            if not containers:
                 rec.logistics_state = 'purchasing'
-            elif containers and all(c.state == 'unloaded' for c in containers):
+            elif all(c.state == 'unloaded' for c in containers):
                 rec.logistics_state = 'completed'
             elif any(c.state in ('arrived', 'antrepo', 'released', 'unloaded') for c in containers):
                 rec.logistics_state = 'arrived'
-            elif any(bl.state in ('arrived', 'in_transit') for bl in bls):
-                rec.logistics_state = 'at_port'
-            elif any(bl.state == 'shipped' for bl in bls):
-                rec.logistics_state = 'oversea'
             else:
                 rec.logistics_state = 'purchasing'
 

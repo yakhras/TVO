@@ -7,18 +7,18 @@ class LogisticsDashboard(models.AbstractModel):
 
     @api.model
     def get_dashboard_data(self):
-        BL = self.env['logistics.bill.lading'].sudo()
         Req = self.env['purchase.requisition'].sudo()
+        Line = self.env['logistics.container.line'].sudo()
 
         deals_by_state = {
             state: Req.search_count([('state', '=', state)])
             for state in ('draft', 'confirmed', 'done', 'cancel')
         }
 
-        upcoming = BL.search([
-            ('state', 'in', ['shipped', 'in_transit']),
+        upcoming = Line.search([
+            ('state', 'not in', ['arrived', 'antrepo']),
             ('arrival_date', '!=', False),
-        ], order='arrival_date asc', limit=10)
+        ], order='arrival_date desc', limit=10)
 
         return {
             'kpis': {
@@ -27,8 +27,9 @@ class LogisticsDashboard(models.AbstractModel):
                 'deals_closed': deals_by_state['done'],
                 'deals_cancelled': deals_by_state['cancel'],
             },
-            'upcoming_arrivals': upcoming.read(
-                ['name', 'number', 'vessel', 'arrival_date',
-                 'container_count', 'forwarder_id', 'port_of_discharge_id']
-            ),
+            'upcoming_arrivals': upcoming.read([
+                'requisition_id', 'vendor_id', 'product_id', 'product_qty',
+                'sku_price', 'total_weight', 'subtotal', 'container_id',
+                'bill_lading_id', 'mt_price', 'arrival_date', 'currency_id',
+            ]),
         }
