@@ -81,9 +81,6 @@
                         <page string="Customs &amp; Transit" name="customs_transit">
                             <group>
                                 <group>
-                                    <field name="transit_trip_id"/>
-                                </group>
-                                <group>
                                     <field name="antrepo_arrival_date"/>
                                     <field name="wh_arriving_date"/>
                                 </group>

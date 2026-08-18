@@ -3,7 +3,6 @@ from . import logistics_shipping_line
 from . import logistics_bill_lading
 from . import logistics_container
 from . import logistics_container_line
-from . import logistics_transit_trip
 from . import logistics_shipment_tranche
 from . import purchase_requisition
 from . import logistics_dashboard

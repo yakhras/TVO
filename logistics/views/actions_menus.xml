@@ -28,12 +28,6 @@
         <field name="view_mode">kanban,list,pivot,form</field>
     </record>
 
-    <record id="action_logistics_transit_trip" model="ir.actions.act_window">
-        <field name="name">Transit Trips</field>
-        <field name="res_model">logistics.transit.trip</field>
-        <field name="view_mode">list,pivot,form</field>
-    </record>
-
     <record id="action_logistics_shipping_line" model="ir.actions.act_window">
         <field name="name">Shipping Lines</field>
         <field name="res_model">logistics.shipping.line</field>
@@ -98,48 +92,6 @@
               name="Containers"
               parent="menu_logistics_root"
               action="action_logistics_container"
-              sequence="50"/>
-
-    <menuitem id="menu_logistics_transit"
-              name="Transit Trips"
-              parent="menu_logistics_root"
-              action="action_logistics_transit_trip"
-              sequence="70"/>
-
-    <!-- Reports -->
-    <menuitem id="menu_logistics_reports"
-              name="Reports"
-              parent="menu_logistics_root"
-              sequence="90"/>
-
-    <menuitem id="menu_logistics_report_trends"
-              name="Purchase Trends"
-              parent="menu_logistics_reports"
-              action="action_report_purchase_trends"
-              sequence="10"/>
-
-    <menuitem id="menu_logistics_report_pipeline"
-              name="SKU Pipeline"
-              parent="menu_logistics_reports"
-              action="action_report_sku_pipeline"
-              sequence="20"/>
-
-    <menuitem id="menu_logistics_report_departures"
-              name="Supplier Departures"
-              parent="menu_logistics_reports"
-              action="action_report_supplier_departures"
-              sequence="30"/>
-
-    <menuitem id="menu_logistics_report_oils"
-              name="Oils Summary"
-              parent="menu_logistics_reports"
-              action="action_report_oils_summary"
-              sequence="40"/>
-
-    <menuitem id="menu_logistics_report_oleochem"
-              name="Oleochemicals Summary"
-              parent="menu_logistics_reports"
-              action="action_report_oleochem_summary"
               sequence="50"/>
 
     <!-- Configuration submenu -->

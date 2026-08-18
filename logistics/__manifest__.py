@@ -2,11 +2,11 @@
     'name': 'Logistics',
     'version': '18.0.1.0.0',
     'category': 'Logistics',
-    'summary': 'Import operations tracking: containers, B/L, customs, transit',
+    'summary': 'Import operations tracking: containers, B/L, customs',
     'description': """
         Replaces the import tracking spreadsheet.
         Tracks: Import Deals, Bills of Lading, Containers, Container Lines,
-        Customs Declarations, Transit Trips, Ports.
+        Customs Declarations, Ports.
     """,
     'depends': [
         'base',
@@ -26,9 +26,7 @@
         'views/logistics_bill_lading_views.xml',
         'views/logistics_container_views.xml',
         'views/logistics_container_line_views.xml',
-        'views/logistics_transit_trip_views.xml',
         'views/purchase_requisition_views.xml',
-        'views/logistics_container_line_reports.xml',
         'views/logistics_dashboard.xml',
         'views/logistics_declaration_type_views.xml',
         'views/actions_menus.xml',

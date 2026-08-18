@@ -39,9 +39,4 @@
         <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
     </record>
 
-    <record id="rule_logistics_transit_trip_comp" model="ir.rule">
-        <field name="name">Transit Trip: multi-company</field>
-        <field name="model_id" ref="model_logistics_transit_trip"/>
-        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
-    </record>
 </odoo>

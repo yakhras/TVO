@@ -7,13 +7,6 @@
             <field name="prefix">CNT/%(year)s/</field>
             <field name="padding">4</field>
         </record>
-
-        <record id="seq_logistics_transit_trip" model="ir.sequence">
-            <field name="name">Transit Trip</field>
-            <field name="code">logistics.transit.trip</field>
-            <field name="prefix">TT/%(year)s/</field>
-            <field name="padding">4</field>
-        </record>
     </data>
 
     <data noupdate="0">
