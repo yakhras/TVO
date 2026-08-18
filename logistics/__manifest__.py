@@ -28,7 +28,6 @@
         'views/logistics_container_line_views.xml',
         'views/logistics_transit_trip_views.xml',
         'views/product_registration_views.xml',
-        'views/logistics_pre_notification_views.xml',
         'views/purchase_requisition_views.xml',
         'views/logistics_container_line_reports.xml',
         'views/logistics_dashboard.xml',

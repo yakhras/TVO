@@ -5,7 +5,6 @@ from . import logistics_container
 from . import logistics_container_line
 from . import logistics_transit_trip
 from . import logistics_shipment_tranche
-from . import logistics_pre_notification
 from . import product_registration
 from . import purchase_requisition
 from . import logistics_dashboard

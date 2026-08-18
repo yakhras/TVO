@@ -52,12 +52,6 @@
         <field name="view_mode">list,form</field>
     </record>
 
-    <record id="action_logistics_pre_notification" model="ir.actions.act_window">
-        <field name="name">Pre-notifications</field>
-        <field name="res_model">logistics.pre.notification</field>
-        <field name="view_mode">list,form</field>
-    </record>
-
     <record id="action_logistics_declaration_type" model="ir.actions.act_window">
         <field name="name">Declaration Types</field>
         <field name="res_model">logistics.declaration.type</field>
@@ -185,10 +179,5 @@
               action="action_product_registration"
               sequence="20"/>
 
-    <menuitem id="menu_logistics_pre_notif"
-              name="Pre-notifications"
-              parent="menu_logistics_config"
-              action="action_logistics_pre_notification"
-              sequence="30"/>
 
 </odoo>
