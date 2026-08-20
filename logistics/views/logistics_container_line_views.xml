@@ -188,7 +188,7 @@
                     domain="[]" context="{'group_by': 'vendor_id'}"/>
                 <separator/>
                 <group expand="0" string="Group By">
-                    <filter name="group_requisition" string="Import Deal"
+                    <filter name="group_requisition" string="Purchase Agreement"
                             context="{'group_by': 'requisition_id'}"/>
                     <filter name="group_vendor" string="Supplier"
                         context="{'group_by': 'vendor_id'}"/>

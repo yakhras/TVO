@@ -31,6 +31,31 @@ export class LogisticsDashboard extends Component {
         });
     }
 
+    openContainers(state) {
+        this.action.doAction({
+            type: "ir.actions.act_window",
+            name: "Containers",
+            res_model: "logistics.container",
+            views: [[false, "list"], [false, "form"]],
+            domain: state ? [["state", "=", state]] : [],
+        });
+    }
+
+    openBillLadings(docsDraft, docsOriginal) {
+        this.action.doAction({
+            type: "ir.actions.act_window",
+            name: "Bills of Lading",
+            res_model: "logistics.bill.lading",
+            views: [[false, "list"], [false, "form"]],
+            domain: [
+                ["number", "!=", false],
+                ["number", "!=", ""],
+                ["docs_draft", "=", docsDraft],
+                ["docs_original", "=", docsOriginal],
+            ],
+        });
+    }
+
     fmtCurrency(amount, currencyTuple) {
         if (!currencyTuple) {
             return amount;

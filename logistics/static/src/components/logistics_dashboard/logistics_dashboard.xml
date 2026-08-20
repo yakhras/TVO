@@ -40,6 +40,72 @@
                 </div>
             </div>
 
+            <!-- Containers by status -->
+            <h5 class="mb-3">Containers</h5>
+            <div class="row g-3 mb-4">
+                <div class="col-6 col-md-3 col-lg">
+                    <div class="card text-center p-3 h-100 cursor-pointer"
+                         t-on-click="() => this.openContainers('purchase')">
+                        <div class="small text-muted">Purchasing</div>
+                        <div class="fs-1 fw-bold text-secondary" t-esc="state.kpis.containers_purchase || 0"/>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg">
+                    <div class="card text-center p-3 h-100 cursor-pointer"
+                         t-on-click="() => this.openContainers('oversea')">
+                        <div class="small text-muted">Oversea</div>
+                        <div class="fs-1 fw-bold text-warning" t-esc="state.kpis.containers_oversea || 0"/>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg">
+                    <div class="card text-center p-3 h-100 cursor-pointer"
+                         t-on-click="() => this.openContainers('at_port')">
+                        <div class="small text-muted">At Port</div>
+                        <div class="fs-1 fw-bold text-warning" t-esc="state.kpis.containers_at_port || 0"/>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg">
+                    <div class="card text-center p-3 h-100 cursor-pointer"
+                         t-on-click="() => this.openContainers('arrived')">
+                        <div class="small text-muted">Arrived</div>
+                        <div class="fs-1 fw-bold text-danger" t-esc="state.kpis.containers_arrived || 0"/>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg">
+                    <div class="card text-center p-3 h-100 cursor-pointer"
+                         t-on-click="() => this.openContainers('antrepo')">
+                        <div class="small text-muted">Antrepo</div>
+                        <div class="fs-1 fw-bold text-success" t-esc="state.kpis.containers_antrepo || 0"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bills of Lading by docs status -->
+            <h5 class="mb-3">Bills of Lading</h5>
+            <div class="row g-3 mb-4">
+                <div class="col-6 col-md-4">
+                    <div class="card text-center p-3 h-100 cursor-pointer"
+                         t-on-click="() => this.openBillLadings(false, false)">
+                        <div class="small text-muted">Docs Pending</div>
+                        <div class="fs-1 fw-bold text-secondary" t-esc="state.kpis.bl_docs_pending || 0"/>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="card text-center p-3 h-100 cursor-pointer"
+                         t-on-click="() => this.openBillLadings(true, false)">
+                        <div class="small text-muted">Draft Received</div>
+                        <div class="fs-1 fw-bold text-warning" t-esc="state.kpis.bl_docs_draft || 0"/>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="card text-center p-3 h-100 cursor-pointer"
+                         t-on-click="() => this.openBillLadings(true, true)">
+                        <div class="small text-muted">Original Received</div>
+                        <div class="fs-1 fw-bold text-success" t-esc="state.kpis.bl_docs_original || 0"/>
+                    </div>
+                </div>
+            </div>
+
             <!-- Upcoming Arrivals -->
             <h5 class="mb-3">Upcoming Arrivals</h5>
             <table class="table table-sm table-hover">

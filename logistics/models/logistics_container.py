@@ -21,7 +21,7 @@ class LogisticsContainer(models.Model):
         string='Reference', required=True, copy=False,
         readonly=True, default='New',
     )
-    container_number = fields.Char(string='Container No.', tracking=True)
+    container_number = fields.Char(string='Container No.', tracking=True, copy=False)
     container_type = fields.Selection(
         selection=[
             ('20', '20ft'),
@@ -45,6 +45,10 @@ class LogisticsContainer(models.Model):
     forwarder_id = fields.Many2one(
         'res.partner', string='Forwarder',
         related='bill_lading_id.forwarder_id', store=True,
+    )
+    vessel = fields.Char(
+        string='Vessel',
+        related='bill_lading_id.vessel', store=True,
     )
     port_of_loading_id = fields.Many2one(
         'logistics.port', string='Port From',
@@ -303,31 +307,33 @@ class LogisticsContainer(models.Model):
 
         ContainerLine = self.env['logistics.container.line']
         new_lines = []
-        for req in new_container.requisition_ids:
-            if not req.line_ids:
-                continue
-            other_lines = ContainerLine.search([
-                ('requisition_id', '=', req.id),
-                ('container_id', '!=', new_container.id),
-            ])
-            used_qty = {}
-            for ol in other_lines:
-                pid = ol.product_id.id
-                used_qty[pid] = used_qty.get(pid, 0.0) + ol.product_qty
-
-            for req_line in req.line_ids:
-                pid = req_line.product_id.id
-                remaining = req_line.product_qty - used_qty.get(pid, 0.0)
+        for line in self.container_line_ids:
+            vals = {
+                'product_id': line.product_id.id,
+                'product_qty': line.product_qty,
+                'product_uom_id': line.product_uom_id.id,
+                'sku_price': line.sku_price,
+                'requisition_id': line.requisition_id.id,
+                'sku_weight': line.sku_weight,
+            }
+            req_line = (
+                line.requisition_id.line_ids.filtered(
+                    lambda l: l.product_id == line.product_id
+                )[:1]
+                if line.requisition_id and line.product_id
+                else self.env['purchase.requisition.line']
+            )
+            if req_line:
+                other_lines = ContainerLine.search([
+                    ('requisition_id', '=', line.requisition_id.id),
+                    ('product_id', '=', line.product_id.id),
+                ])
+                used_qty = sum(other_lines.mapped('product_qty'))
+                remaining = req_line.product_qty - used_qty
                 if remaining <= 0:
                     continue
-                new_lines.append((0, 0, {
-                    'product_id': pid,
-                    'product_qty': remaining,
-                    'product_uom_id': req_line.product_uom_id.id,
-                    'sku_price': req_line.price_unit,
-                    'requisition_id': req.id,
-                    'sku_weight': req_line.product_id.weight or 0.0,
-                }))
+                vals['product_qty'] = min(line.product_qty, remaining)
+            new_lines.append((0, 0, vals))
 
         if new_lines:
             new_container.write({'container_line_ids': new_lines})

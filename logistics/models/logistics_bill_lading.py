@@ -7,6 +7,7 @@ class LogisticsBillLading(models.Model):
     _description = 'Bill of Lading'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'bl_date desc, id desc'
+    _rec_name = 'number'
     _rec_names_search = ['name', 'number']
     _sql_constraints = [
         ('number_unique', 'UNIQUE(number)',

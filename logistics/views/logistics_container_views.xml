@@ -48,6 +48,7 @@
                     <group string="From Bill of Lading">
                         <group>
                             <field name="forwarder_id" readonly="1"/>
+                            <field name="vessel" readonly="1"/>
                             <field name="port_of_loading_id" readonly="1"/>
                             <field name="port_of_discharge_id" readonly="1"/>
                         </group>

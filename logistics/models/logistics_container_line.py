@@ -25,7 +25,7 @@ class LogisticsContainerLine(models.Model):
         related='container_id.bill_lading_id', store=True,
     )
     requisition_id = fields.Many2one(
-        'purchase.requisition', string='Import Deal',
+        'purchase.requisition', string='Purchase Agreement',
         store=True, tracking=True,
     )
     purchase_order_id = fields.Many2one(

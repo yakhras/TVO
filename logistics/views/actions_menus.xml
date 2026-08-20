@@ -75,13 +75,6 @@
               action="action_logistics_requisition"
               sequence="30"/>
 
-    <!-- Sub-menu under Purchase Agreements -->
-    <menuitem id="menu_logistics_deals_all"
-          name="All Deals"
-          parent="menu_logistics_deals"
-          action="action_logistics_requisition"
-          sequence="1"/>
-
     <menuitem id="menu_logistics_bill_lading"
               name="Bills of Lading"
               parent="menu_logistics_root"
