@@ -8,5 +8,10 @@
     'license': 'LGPL-3',
     'depends': ['sale'],
     'data': ['views/res_config_settings.xml'],
+    'assets': {
+        'web.assets_backend': [
+            'sale_extension/static/src/js/sale_order_line_reference_match.js',
+        ],
+    },
     'installable': True,
 }
