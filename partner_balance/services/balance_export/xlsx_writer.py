@@ -18,11 +18,14 @@ from .field_mapping import FieldMapping
 class BalanceXlsxWriter:
     """Base writer for balance Excel exports."""
 
-    def __init__(self, field_names, row_count=0):
+    def __init__(self, field_names, row_count=0, direction='ltr'):
         self.field_names = field_names
+        self.direction = direction
         self.output = io.BytesIO()
         self.workbook = xlsxwriter.Workbook(self.output, {'in_memory': True})
         self.worksheet = self.workbook.add_worksheet()
+        if direction == 'rtl':
+            self.worksheet.right_to_left()
         self.value = False
 
         self._init_formats()
@@ -33,13 +36,13 @@ class BalanceXlsxWriter:
         decimal_places = self._get_max_decimal_places()
         monetary_format = f'#,##0.{"0" * decimal_places}'
 
-        self.styles = ExportStyles(self.workbook, monetary_format)
+        self.styles = ExportStyles(self.workbook, monetary_format, direction=self.direction)
         self.monetary_format = monetary_format
         self.float_format = '#,##0.00'
         self._float_cell_format = self.workbook.add_format({
             'text_wrap': True,
             'font_size': 8,
-            'align': 'left',
+            'align': self.styles._align('left'),
             'valign': 'vcenter',
             'border': 1,
             'num_format': self.float_format,
@@ -47,12 +50,7 @@ class BalanceXlsxWriter:
 
     def _get_max_decimal_places(self):
         """Get maximum decimal places from currencies."""
-        try:
-            results = request.env['res.currency'].search_read([], ['decimal_places'])
-            places = [r['decimal_places'] for r in results]
-            return max(places) if places else 2
-        except Exception:
-            return 2
+        return FieldMapping.get_max_decimal_places(request.env)
 
     def _validate_row_count(self, row_count):
         """Validate row count against Excel limits."""
@@ -299,9 +297,9 @@ class BalanceXlsxWriter:
 class GroupedBalanceXlsxWriter(BalanceXlsxWriter):
     """Writer for grouped balance exports."""
 
-    def __init__(self, fields, row_count=0):
+    def __init__(self, fields, row_count=0, direction='ltr'):
         field_names = [f['label'].strip() for f in fields]
-        super().__init__(field_names, row_count)
+        super().__init__(field_names, row_count, direction=direction)
         self.fields = fields
 
     def write_header(self):
@@ -433,8 +431,8 @@ class GroupedBalanceXlsxWriter(BalanceXlsxWriter):
 class AgedBalanceXlsxWriter(GroupedBalanceXlsxWriter):
     """Writer for aged balance Excel exports (no debit/credit, bucket-grouped residuals)."""
 
-    def __init__(self, fields, row_count=0, is_tr_report=False):
-        super().__init__(fields, row_count)
+    def __init__(self, fields, row_count=0, is_tr_report=False, direction='ltr'):
+        super().__init__(fields, row_count, direction=direction)
         self.is_tr_report = is_tr_report
         residual_name = 'amount_residual_try' if is_tr_report else 'amount_residual'
         self._residual_col_idx = next(
@@ -521,3 +519,61 @@ class AgedBalanceXlsxWriter(GroupedBalanceXlsxWriter):
             else:
                 self.write(row, col, '', self.styles.bold_bg)
         return row + 2
+
+
+class SimpleTableXlsxWriter(BalanceXlsxWriter):
+    """Base for flat, no-metadata, multi-partner summary exports
+    (e.g. Ledger Balance, Aged Balance Summary) — shares styling/RTL
+    handling with the per-partner writers instead of hand-rolling formats."""
+
+    def __init__(self, field_names, row_count=0, direction='ltr', column_widths=None):
+        super().__init__(field_names, row_count, direction=direction)
+        for idx, width in (column_widths or {}).items():
+            self.worksheet.set_column(idx, idx, width)
+
+    def write_simple_header(self):
+        """Write the single header row and return the first data row index."""
+        for i, name in enumerate(self.field_names):
+            self.write(0, i, name, self.styles.transaction_header)
+        return 1
+
+    def write_row(self, row_idx, values, monetary_cols=()):
+        """Write one flat data row, styling monetary columns distinctly."""
+        for col, value in enumerate(values):
+            style = self.styles.monetary if col in monetary_cols else self.styles.base
+            self.write(row_idx, col, value, style)
+
+
+class LedgerBalanceXlsxWriter(SimpleTableXlsxWriter):
+    """Writer for the all-partners Ledger Balance summary export."""
+
+    def __init__(self, currency_name, row_count=0, direction='ltr'):
+        field_names = [_('Partner'), _('Balance (%s)') % currency_name]
+        super().__init__(field_names, row_count, direction=direction,
+                          column_widths={0: 42, 1: 18})
+
+    def write_records(self, records):
+        row = self.write_simple_header()
+        for rec in records:
+            self.write_row(row, [rec.partner_id.name or '', rec.balance], monetary_cols=(1,))
+            row += 1
+
+
+class AgedSummaryXlsxWriter(SimpleTableXlsxWriter):
+    """Writer for the all-partners Aged Balance Summary export."""
+
+    BUCKET_FIELDS = ('amount_current', 'amount_1_30', 'amount_31_60', 'amount_61_90',
+                      'amount_91_120', 'amount_older', 'amount_total')
+
+    def __init__(self, currency_name, row_count=0, direction='ltr'):
+        field_names = [_('Partner'), _('Current'), _('1-30'), _('31-60'), _('61-90'),
+                       _('91-120'), _('>120'), _('Total (%s)') % currency_name]
+        super().__init__(field_names, row_count, direction=direction,
+                          column_widths={0: 40, **{i: 16 for i in range(1, 8)}})
+
+    def write_records(self, records):
+        row = self.write_simple_header()
+        for rec in records:
+            values = [rec.partner_id.name or ''] + [getattr(rec, f) for f in self.BUCKET_FIELDS]
+            self.write_row(row, values, monetary_cols=range(1, len(values)))
+            row += 1

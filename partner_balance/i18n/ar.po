@@ -1,0 +1,1026 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* partner_balance
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-10 06:52+0000\n"
+"PO-Revision-Date: 2026-09-10 06:52+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_aged_balance_summary_document
+msgid "&gt;120"
+msgstr "أكثر من 120"
+
+#. module: partner_balance
+#: model:ir.actions.report,print_report_name:partner_balance.action_report_aged_balance_summary
+msgid "'Aged Balance Summary'"
+msgstr "'ملخص أعمار الديون'"
+
+#. module: partner_balance
+#: model:ir.actions.report,print_report_name:partner_balance.action_report_aged_balance
+msgid "'Aged Balance'"
+msgstr "'أعمار الديون'"
+
+#. module: partner_balance
+#: model:ir.actions.report,print_report_name:partner_balance.action_report_ledger_balance_summary
+msgid "'Ledger Balance'"
+msgstr "'رصيد الأستاذ'"
+
+#. module: partner_balance
+#: model:ir.actions.report,print_report_name:partner_balance.action_report_balance_statement
+msgid "'Statement of Account'"
+msgstr "'كشف حساب'"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+msgid "1-30 Days"
+msgstr "1-30 يوم"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+msgid "31-60 Days"
+msgstr "31-60 يوم"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+msgid "61-90 Days"
+msgstr "61-90 يوم"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+msgid "91-120 Days"
+msgstr "91-120 يوم"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_partner_form_inherit_custom_button
+msgid "<span class=\"o_stat_text\">Balance</span>"
+msgstr "<span class=\"o_stat_text\">الرصيد</span>"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_document_base
+msgid "<span>As of: </span>"
+msgstr "<span>كما في: </span>"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_document_base
+msgid "<span>Generated: </span>"
+msgstr "<span>تاريخ الإنشاء: </span>"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_document_base
+msgid "<span>Period: </span>"
+msgstr "<span>الفترة: </span>"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+msgid "> 120 Days"
+msgstr "أكثر من 120 يوم"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+msgid "AGED BALANCE"
+msgstr "أعمار الديون"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+msgid "AGED BALANCE IN TRY"
+msgstr "أعمار الديون بالليرة التركية"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__account_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__account_id
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_search
+msgid "Account"
+msgstr "الحساب"
+
+#. module: partner_balance
+#: model:ir.model,name:partner_balance.model_account_move_line_report
+msgid "Account Move Line Report"
+msgstr "تقرير حركة القيود المحاسبية"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/partner_balance_toolbar.xml:0
+#: model:ir.model.fields,field_description:partner_balance.field_res_users__pb_show_aged
+msgid "Aged"
+msgstr "أعمار الديون"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: code:addons/partner_balance/models/account_aged_balance_summary.py:0
+#: model:ir.actions.act_window,name:partner_balance.action_aged_balance
+#: model:ir.actions.act_window,name:partner_balance.action_aged_balance_summary
+#: model:ir.actions.report,name:partner_balance.action_report_aged_balance
+#: model:ir.ui.menu,name:partner_balance.menu_aged_balance_summary
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tree
+msgid "Aged Balance"
+msgstr "أعمار الديون"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tr_tree
+msgid "Aged Balance (TRY)"
+msgstr "أعمار الديون (ليرة تركية)"
+
+#. module: partner_balance
+#: model:ir.model,name:partner_balance.model_account_aged_balance_line
+msgid "Aged Balance Line"
+msgstr "بند أعمار الديون"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.actions.report,name:partner_balance.action_report_aged_balance_summary
+#: model:ir.model,name:partner_balance.model_account_aged_balance_summary
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_summary_tree
+msgid "Aged Balance Summary"
+msgstr "ملخص أعمار الديون"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_summary_tr_tree
+msgid "Aged Balance Summary TL"
+msgstr "ملخص أعمار الديون (ليرة تركية)"
+
+#. module: partner_balance
+#: model:ir.actions.act_window,name:partner_balance.action_aged_balance_summary_tr
+msgid "Aged Balance TL"
+msgstr "أعمار الديون (ليرة تركية)"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.actions.act_window,name:partner_balance.action_aged_balance_tr
+msgid "Aged Balance in TRY"
+msgstr "أعمار الديون بالليرة التركية"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__amount_currency
+msgid "Amount Currency"
+msgstr "المبلغ بالعملة"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+msgid "As of:"
+msgstr "كما في:"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_ledger_balance__balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__balance
+#: model:ir.model.fields,field_description:partner_balance.field_res_partner__partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_res_users__partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_move_line_report_tr_tree
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_move_line_report_tree
+msgid "Balance"
+msgstr "الرصيد"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+msgid "Balance (%s)"
+msgstr "الرصيد (%s)"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_ledger_balance__balance_try
+msgid "Balance Try"
+msgstr "الرصيد بالليرة التركية"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/models/account_aged_balance_line.py:0
+#: code:addons/partner_balance/models/account_move_line_report.py:0
+msgid "Bank Payment"
+msgstr "دفعة بنكية"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/data_service.py:0
+msgid "Beginning"
+msgstr "البداية"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/models/account_aged_balance_line.py:0
+#: code:addons/partner_balance/models/account_move_line_report.py:0
+msgid "Bill"
+msgstr "فاتورة شراء"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+msgid "Binary fields cannot be exported to Excel unless base64-encoded."
+msgstr "لا يمكن تصدير الحقول الثنائية إلى إكسل إلا إذا كانت مشفرة بصيغة base64."
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__bucket
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_search
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tr_tree
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tree
+msgid "Bucket"
+msgstr "الفئة الزمنية"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__bucket_display
+msgid "Bucket Display"
+msgstr "عرض الفئة الزمنية"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/models/account_aged_balance_line.py:0
+#: code:addons/partner_balance/models/account_move_line_report.py:0
+msgid "Check"
+msgstr "شيك"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__company_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_summary__company_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_ledger_balance__company_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__company_currency_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__company_currency_id
+msgid "Company Currency"
+msgstr "عملة الشركة"
+
+#. module: partner_balance
+#: model:ir.model,name:partner_balance.model_res_partner
+msgid "Contact"
+msgstr "جهة اتصال"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+msgid "Content too long for XLSX (more than %s characters)."
+msgstr "المحتوى طويل جداً لصيغة إكسل (أكثر من %s حرف)."
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__amount_tr_credit
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__credit
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_move_line_report_tr_tree
+msgid "Credit"
+msgstr "دائن (له)"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/models/account_aged_balance_line.py:0
+#: code:addons/partner_balance/models/account_move_line_report.py:0
+msgid "Credit Note"
+msgstr "إشعار دائن"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__cumulated_balance
+msgid "Cumulated Balance"
+msgstr "الرصيد التراكمي"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__cumulated_amount_tr_currency
+msgid "Cumulated TL"
+msgstr "التراكمي بالليرة التركية"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_summary__company_currency_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_ledger_balance__company_currency_id
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_move_line_report_tr_tree
+msgid "Currency"
+msgstr "العملة"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_summary__amount_current
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_summary__amount_current_try
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_aged_balance_summary_document
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_summary_tr_tree
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_summary_tree
+msgid "Current"
+msgstr "الحالي"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_summary__is_customer
+msgid "Customer"
+msgstr "عميل"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_summary_search
+msgid "Customers"
+msgstr "العملاء"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__date
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__date
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tr_tree
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tree
+msgid "Date"
+msgstr "تاريخ المستند"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tr_tree
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tree
+msgid "Days"
+msgstr "الأيام"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__days_overdue
+msgid "Days Overdue"
+msgstr "أيام التأخير"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+msgid "Days:"
+msgstr "الأيام:"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__amount_tr_debit
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__debit
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_move_line_report_tr_tree
+msgid "Debit"
+msgstr "مدين (عليه)"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_aged_balance_document
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_balance_statement_document
+msgid "Disc. %"
+msgstr "نسبة الخصم %"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__discount
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__discount
+msgid "Discount (%)"
+msgstr "الخصم (%)"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__display_name
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_summary__display_name
+#: model:ir.model.fields,field_description:partner_balance.field_account_ledger_balance__display_name
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__display_name
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__display_name
+msgid "Display Name"
+msgstr "الاسم المعروض"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tr_tree
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tree
+msgid "Document"
+msgstr "المستند"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__date_maturity
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tr_tree
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tree
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+msgid "EXECUTIVE SUMMARY"
+msgstr "الملخص التنفيذي"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/js/partner_balance_list_controller.js:0
+msgid "End date must be after start date"
+msgstr "يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/partner_balance_toolbar.xml:0
+msgid "End:"
+msgstr "إلى:"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_res_users__pb_show_excel
+msgid "Excel Export"
+msgstr "تصدير إكسل"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/aged_balance_summary_template.xml:0
+#: code:addons/partner_balance/static/src/xml/ledger_balance_template.xml:0
+#: code:addons/partner_balance/static/src/xml/partner_balance_toolbar.xml:0
+msgid "Export to Excel"
+msgstr "تصدير إلى إكسل"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/aged_balance_summary_template.xml:0
+#: code:addons/partner_balance/static/src/xml/ledger_balance_template.xml:0
+#: code:addons/partner_balance/static/src/xml/partner_balance_toolbar.xml:0
+msgid "Export to PDF"
+msgstr "تصدير إلى PDF"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/partner_balance_toolbar.xml:0
+msgid "From:"
+msgstr "من:"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+msgid "Generated:"
+msgstr "تاريخ الإنشاء:"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_ledger_balance_search
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_search
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__id
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_summary__id
+#: model:ir.model.fields,field_description:partner_balance.field_account_ledger_balance__id
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__id
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/models/account_aged_balance_line.py:0
+#: code:addons/partner_balance/models/account_move_line_report.py:0
+msgid "Invoice"
+msgstr "فاتورة"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/models/account_aged_balance_line.py:0
+#: code:addons/partner_balance/models/account_move_line_report.py:0
+#: model:ir.model,name:partner_balance.model_account_move
+msgid "Journal Entry"
+msgstr "قيد يومية"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_bank_statement_line__l10n_tr_is_third_currency
+#: model:ir.model.fields,field_description:partner_balance.field_account_move__l10n_tr_is_third_currency
+msgid "L10N Tr Is Third Currency"
+msgstr "عملة ثالثة (تركيا)"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/partner_balance_toolbar.xml:0
+#: model:ir.model.fields,field_description:partner_balance.field_res_users__pb_show_ledger
+msgid "Ledger"
+msgstr "الأستاذ"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.model,name:partner_balance.model_account_ledger_balance
+#: model:ir.ui.menu,name:partner_balance.menu_partner_balance_report
+#: model:ir.ui.menu,name:partner_balance.menu_sale_partner_balance_report
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_ledger_balance_tree
+msgid "Ledger Balance"
+msgstr "رصيد الأستاذ"
+
+#. module: partner_balance
+#: model:ir.actions.report,name:partner_balance.action_report_ledger_balance_summary
+msgid "Ledger Balance Summary"
+msgstr "ملخص رصيد الأستاذ"
+
+#. module: partner_balance
+#: model:ir.actions.act_window,name:partner_balance.action_ledger_balance_tr
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_ledger_balance_tr_tree
+msgid "Ledger Balance TL"
+msgstr "رصيد الأستاذ (ليرة تركية)"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+msgid "Ledger Balance in TRY"
+msgstr "رصيد الأستاذ بالليرة التركية"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__line_sort
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__line_sort
+msgid "Line Sort"
+msgstr "ترتيب البند"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__line_type
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__line_type
+msgid "Line Type"
+msgstr "نوع البند"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/models/account_move_line_report.py:0
+msgid "Manual Payment"
+msgstr "دفعة يدوية"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__note
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__note
+msgid "Note"
+msgstr "البيان"
+
+#. module: partner_balance
+#: model:ir.model.constraint,message:partner_balance.constraint_partner_balance_user_config_user_uniq
+msgid "One config per user."
+msgstr "إعداد واحد لكل مستخدم."
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/field_mapping.py:0
+msgid "Opening Balance"
+msgstr "رصيد افتتاحي"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_move_line_report_tr_tree
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_move_line_report_tree
+msgid "Origin Amount"
+msgstr "المبلغ الأصلي"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__currency_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__currency_id
+msgid "Original Currency"
+msgstr "العملة الأصلية"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_res_users_balance_config
+msgid "PARTNER BALANCE REPORT"
+msgstr "تقرير رصيد الشريك"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__partner_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_summary__partner_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_ledger_balance__partner_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__partner_id
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_aged_balance_summary_document
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_ledger_balance_summary_document
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_ledger_balance_tr_tree
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_ledger_balance_tree
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_summary_tr_tree
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_summary_tree
+msgid "Partner"
+msgstr "الشريك"
+
+#. module: partner_balance
+#: model:ir.actions.act_window,name:partner_balance.action_partner_balance_menu_report
+msgid "Partner Balance"
+msgstr "رصيد الشريك"
+
+#. module: partner_balance
+#: model:ir.model,name:partner_balance.model_partner_balance_user_config
+msgid "Partner Balance Button Visibility per User"
+msgstr "إظهار زر رصيد الشريك لكل مستخدم"
+
+#. module: partner_balance
+#: model:res.groups,name:partner_balance.group_partner_balance_user
+msgid "Partner Balance: Access"
+msgstr "رصيد الشريك: صلاحية الوصول"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_move_line_report_tree
+msgid "Partner Ledger"
+msgstr "أستاذ الشريك"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+msgid "Partner:"
+msgstr "الشريك:"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/models/account_aged_balance_line.py:0
+#: code:addons/partner_balance/models/account_move_line_report.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__product_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__product_id
+#: model:ir.model.fields.selection,name:partner_balance.selection__account_aged_balance_line__line_type__product
+#: model:ir.model.fields.selection,name:partner_balance.selection__account_move_line_report__line_type__product
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_aged_balance_document
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_balance_statement_document
+msgid "Product"
+msgstr "المنتج"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/partner_balance_toolbar.xml:0
+#: model:ir.model.fields,field_description:partner_balance.field_res_users__pb_show_products
+msgid "Products"
+msgstr "المنتجات"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/models/account_aged_balance_line.py:0
+#: code:addons/partner_balance/models/account_move_line_report.py:0
+msgid "Purchase"
+msgstr "مشتريات"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_aged_balance_document
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_balance_statement_document
+msgid "Qty"
+msgstr "الكمية"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__quantity
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__tr_rate_display
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__tr_rate_display
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_move_line_report_tr_tree
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tr_tree
+msgid "Rate"
+msgstr "السعر"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__move_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__reference
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__move_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__reference
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+msgid "Report Period:"
+msgstr "فترة التقرير:"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tree
+msgid "Residual"
+msgstr "المتبقي"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__amount_residual
+msgid "Residual Amount"
+msgstr "المبلغ المتبقي"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__amount_residual_currency
+msgid "Residual in Original Currency"
+msgstr "المتبقي بالعملة الأصلية"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/models/account_aged_balance_line.py:0
+#: code:addons/partner_balance/models/account_move_line_report.py:0
+msgid "Sale"
+msgstr "مبيعات"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/ledger_balance_template.xml:0
+msgid "Sales"
+msgstr "المبيعات"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/ledger_balance_template.xml:0
+msgid "Sales Ledger"
+msgstr "أستاذ المبيعات"
+
+#. module: partner_balance
+#: model:ir.actions.act_window,name:partner_balance.action_sale_partner_balance_report
+msgid "Sales Ledger Balance"
+msgstr "رصيد أستاذ المبيعات"
+
+#. module: partner_balance
+#: model:ir.actions.act_window,name:partner_balance.action_sale_ledger_balance_tr
+msgid "Sales Ledger Balance TL"
+msgstr "رصيد أستاذ المبيعات (ليرة تركية)"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_ledger_balance__user_id
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_ledger_balance_search
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_ledger_balance_tree
+msgid "Salesperson"
+msgstr "مندوب المبيعات"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__show_aged
+msgid "Show Aged"
+msgstr "إظهار أعمار الديون"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__show_excel
+msgid "Show Excel"
+msgstr "إظهار إكسل"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__show_ledger
+msgid "Show Ledger"
+msgstr "إظهار الأستاذ"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__show_products
+msgid "Show Products"
+msgstr "إظهار المنتجات"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__show_skip_opening
+msgid "Show Skip Opening"
+msgstr "إظهار تجاوز الرصيد الافتتاحي"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__show_tl
+msgid "Show Tl"
+msgstr "إظهار الليرة التركية"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__show_usd
+msgid "Show Usd"
+msgstr "إظهار الدولار"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__show_view
+msgid "Show View"
+msgstr "إظهار العرض"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/partner_balance_toolbar.xml:0
+#: model:ir.model.fields,field_description:partner_balance.field_res_users__pb_show_skip_opening
+msgid "Skip Opening"
+msgstr "تجاوز الافتتاحي"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/partner_balance_toolbar.xml:0
+msgid "Skip initial balance calculation"
+msgstr "تجاوز حساب الرصيد الافتتاحي"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.actions.act_window,name:partner_balance.action_partner_move_line_tr_value
+msgid "Statement in TRY"
+msgstr "كشف حساب بالليرة التركية"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: code:addons/partner_balance/models/res_partner.py:0
+#: model:ir.actions.act_window,name:partner_balance.action_partner_move_line_usd
+#: model:ir.actions.report,name:partner_balance.action_report_balance_statement
+msgid "Statement of Account"
+msgstr "كشف حساب"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__price_subtotal
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__price_subtotal
+msgid "Subtotal"
+msgstr "المجموع الفرعي"
+
+#. module: partner_balance
+#: model:ir.model.fields.selection,name:partner_balance.selection__account_aged_balance_line__line_type__summary
+#: model:ir.model.fields.selection,name:partner_balance.selection__account_move_line_report__line_type__summary
+msgid "Summary"
+msgstr "ملخص"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/aged_balance_summary_template.xml:0
+#: code:addons/partner_balance/static/src/xml/ledger_balance_template.xml:0
+msgid "Switch to TL Report"
+msgstr "التحويل إلى تقرير الليرة التركية"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/aged_balance_summary_template.xml:0
+#: code:addons/partner_balance/static/src/xml/ledger_balance_template.xml:0
+msgid "Switch to USD Report"
+msgstr "التحويل إلى تقرير الدولار"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/aged_balance_summary_template.xml:0
+#: code:addons/partner_balance/static/src/xml/ledger_balance_template.xml:0
+#: code:addons/partner_balance/static/src/xml/partner_balance_toolbar.xml:0
+#: model:ir.model.fields,field_description:partner_balance.field_res_users__pb_show_tl
+msgid "TL"
+msgstr "ليرة تركية"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__amount_tr_currency
+msgid "TL Value"
+msgstr "القيمة بالليرة التركية"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_account_move_line_report_tr_tree
+msgid "TL Value Report"
+msgstr "تقرير القيمة بالليرة التركية"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__tr_currency_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__tr_currency_id
+msgid "TRY Currency"
+msgstr "عملة الليرة التركية"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_bank_statement_line__l10n_tr_tcmb_try_rate
+#: model:ir.model.fields,field_description:partner_balance.field_account_move__l10n_tr_tcmb_try_rate
+msgid "TRY Rate"
+msgstr "سعر الليرة التركية"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__amount_residual_try
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_line_tr_tree
+msgid "TRY Residual"
+msgstr "المتبقي بالليرة التركية"
+
+#. module: partner_balance
+#: model:ir.model.fields,help:partner_balance.field_account_bank_statement_line__l10n_tr_tcmb_try_rate
+#: model:ir.model.fields,help:partner_balance.field_account_move__l10n_tr_tcmb_try_rate
+msgid ""
+"TRY exchange rate for this invoice (units of TRY per 1 unit of invoice "
+"currency). Used in TRY reports (partner balance, GL TL). Leave 0 to auto-"
+"compute from daily rates."
+msgstr ""
+"سعر صرف الليرة التركية لهذه الفاتورة (وحدات الليرة التركية لكل وحدة من "
+"عملة الفاتورة). يُستخدم في تقارير الليرة التركية (رصيد الشريك، دفتر "
+"الأستاذ العام). اتركه 0 للحساب التلقائي من الأسعار اليومية."
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__tax_amount
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__tax_amount
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_aged_balance_document
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_balance_statement_document
+msgid "Tax"
+msgstr "الضريبة"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+msgid ""
+"Too many rows (%s rows, limit: %s) for Excel format. Consider splitting the "
+"export."
+msgstr ""
+"عدد الصفوف كبير جداً (%s صف، الحد الأقصى: %s) لصيغة إكسل. يُرجى تقسيم عملية "
+"التصدير."
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__price_total
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_summary__amount_total
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_summary__amount_total_try
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__price_total
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_aged_balance_document
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_balance_statement_document
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_summary_tr_tree
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_summary_tree
+msgid "Total"
+msgstr "الإجمالي"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+msgid "Total (%s)"
+msgstr "الإجمالي (%s)"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_summary__try_currency_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_ledger_balance__try_currency_id
+msgid "Try Currency"
+msgstr "عملة الليرة التركية"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__type
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__type
+msgid "Type"
+msgstr "نوع المستند"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__type_key
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__type_key
+msgid "Type Key"
+msgstr "مفتاح النوع"
+
+#. module: partner_balance
+#. odoo-javascript
+#: code:addons/partner_balance/static/src/xml/aged_balance_summary_template.xml:0
+#: code:addons/partner_balance/static/src/xml/ledger_balance_template.xml:0
+#: code:addons/partner_balance/static/src/xml/partner_balance_toolbar.xml:0
+#: model:ir.model.fields,field_description:partner_balance.field_res_users__pb_show_usd
+msgid "USD"
+msgstr "دولار"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/services/balance_export/xlsx_writer.py:0
+msgid "Undefined"
+msgstr "غير محدد"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__price_unit
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__price_unit
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_aged_balance_document
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_balance_statement_document
+msgid "Unit Price"
+msgstr "سعر الوحدة"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_line__product_uom_id
+#: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__product_uom_id
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_aged_balance_document
+#: model_terms:ir.ui.view,arch_db:partner_balance.report_balance_statement_document
+msgid "UoM"
+msgstr "الوحدة"
+
+#. module: partner_balance
+#: model:ir.model,name:partner_balance.model_res_users
+#: model:ir.model.fields,field_description:partner_balance.field_partner_balance_user_config__user_id
+msgid "User"
+msgstr "المستخدم"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_account_aged_balance_summary__is_vendor
+msgid "Vendor"
+msgstr "مورّد"
+
+#. module: partner_balance
+#: model_terms:ir.ui.view,arch_db:partner_balance.view_aged_balance_summary_search
+msgid "Vendors"
+msgstr "الموردون"
+
+#. module: partner_balance
+#: model:ir.model.fields,field_description:partner_balance.field_res_users__pb_view
+msgid "View"
+msgstr "عرض"

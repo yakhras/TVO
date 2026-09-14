@@ -25,11 +25,18 @@ class ExportStyles:
         'white': 'white',
     }
 
-    def __init__(self, workbook, monetary_format='#,##0.00'):
+    def __init__(self, workbook, monetary_format='#,##0.00', direction='ltr'):
         self.workbook = workbook
         self.monetary_format = monetary_format
         self.float_format = '#,##0.00'
+        self.rtl = direction == 'rtl'
         self._init_styles()
+
+    def _align(self, base):
+        """Mirror a horizontal alignment when the report direction is RTL."""
+        if not self.rtl:
+            return base
+        return {'left': 'right', 'right': 'left'}.get(base, base)
 
     def _init_styles(self):
         """Initialize all style formats."""
@@ -43,7 +50,7 @@ class ExportStyles:
         self.base = self.workbook.add_format({
             'text_wrap': True,
             'font_size': 8,
-            'align': 'left',
+            'align': self._align('left'),
             'valign': 'vcenter',
             'border': 1,
         })
@@ -108,7 +115,7 @@ class ExportStyles:
             'text_wrap': True,
             'num_format': 'yyyy-mm-dd',
             'font_size': 8,
-            'align': 'left',
+            'align': self._align('left'),
             'valign': 'vcenter',
             'border': 1,
         })
@@ -117,7 +124,7 @@ class ExportStyles:
             'text_wrap': True,
             'num_format': 'yyyy-mm-dd hh:mm:ss',
             'font_size': 8,
-            'align': 'left',
+            'align': self._align('left'),
             'valign': 'vcenter',
             'border': 1,
         })
@@ -125,7 +132,7 @@ class ExportStyles:
         self._float_style = self.workbook.add_format({
             'text_wrap': True,
             'font_size': 8,
-            'align': 'left',
+            'align': self._align('left'),
             'valign': 'vcenter',
             'border': 1,
             'num_format': self.float_format,
@@ -133,7 +140,7 @@ class ExportStyles:
 
         self.opening_balance = self.workbook.add_format({
             'num_format': self.monetary_format,
-            'align': 'left',
+            'align': self._align('left'),
             'valign': 'vcenter',
             'text_wrap': True,
             'bold': True,
@@ -143,7 +150,7 @@ class ExportStyles:
         })
 
         self.partner_name = self.workbook.add_format({
-            'align': 'left',
+            'align': self._align('left'),
             'valign': 'vcenter',
             'text_wrap': True,
             'bold': True,
@@ -157,7 +164,7 @@ class ExportStyles:
             'font_size': 8,
             'bg_color': '#e0f2fe',
             'border': 1,
-            'align': 'left',
+            'align': self._align('left'),
             'valign': 'vcenter',
             'text_wrap': True,
         })
@@ -166,7 +173,7 @@ class ExportStyles:
             'font_size': 7,
             'bg_color': '#f0f9ff',
             'border': 1,
-            'align': 'left',
+            'align': self._align('left'),
             'valign': 'vcenter',
             'text_wrap': True,
         })

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_document_base">
+        <t t-call="web.html_container">
+            <t t-set="o" t-value="None"/>
+            <t t-call="web.external_layout">
+                <div class="page" t-attf-dir="#{direction == 'rtl' and 'rtl' or 'ltr'}">
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <div t-if="partner_name">
+                                <strong t-esc="partner_name"/>
+                            </div>
+                        </div>
+                        <div class="col-6 text-end">
+                            <h3 t-esc="title"/>
+                            <div t-if="period_label">
+                                <span>Period: </span><span t-esc="period_label"/>
+                            </div>
+                            <div t-if="as_of_label">
+                                <span>As of: </span><span t-esc="as_of_label"/>
+                            </div>
+                            <div>
+                                <span>Generated: </span><span t-esc="generated_label"/>
+                            </div>
+                        </div>
+                    </div>
+                    <t t-out="0"/>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_balance_statement_document">
+        <t t-call="partner_balance.report_document_base">
+            <table class="table table-sm table-bordered o_report_data_table">
+                <thead>
+                    <tr>
+                        <t t-foreach="columns_headers" t-as="header">
+                            <th t-esc="header"/>
+                        </t>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-if="opening_row" class="fw-bold">
+                        <t t-foreach="opening_row" t-as="cell">
+                            <td t-att-style="cell_index in date_col_indices and 'white-space:nowrap' or None" t-esc="cell"/>
+                        </t>
+                    </tr>
+                    <t t-foreach="rows" t-as="row_pair">
+                        <tr>
+                            <t t-foreach="row_pair[0]" t-as="cell">
+                                <td t-att-style="cell_index in date_col_indices and 'white-space:nowrap' or None" t-esc="cell"/>
+                            </t>
+                        </tr>
+                        <tr t-if="show_products and row_pair[1] in product_lines_by_move" class="o_product_subtable_row">
+                            <td t-attf-colspan="#{len(columns_headers)}" style="background-color:#f0f9ff;padding:4px 8px 4px 40px;">
+                                <table class="table table-sm table-bordered mb-0" style="font-size:0.85em;">
+                                    <thead>
+                                        <tr style="background-color:#e0f2fe;">
+                                            <th>Product</th>
+                                            <th class="text-end">Qty</th>
+                                            <th>UoM</th>
+                                            <th class="text-end">Unit Price</th>
+                                            <th class="text-end">Disc. %</th>
+                                            <th class="text-end">Tax</th>
+                                            <th class="text-end">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="product_lines_by_move[row_pair[1]]" t-as="pline">
+                                            <td t-esc="pline['product']"/>
+                                            <td class="text-end" t-esc="pline['qty']"/>
+                                            <td t-esc="pline['uom']"/>
+                                            <td class="text-end" t-esc="pline['unit_price']"/>
+                                            <td class="text-end" t-esc="pline['discount']"/>
+                                            <td class="text-end" t-esc="pline['tax']"/>
+                                            <td class="text-end" t-esc="pline['total']"/>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </t>
+                    <tr class="fw-bold">
+                        <t t-foreach="totals_row" t-as="cell">
+                            <td t-esc="cell"/>
+                        </t>
+                    </tr>
+                </tbody>
+            </table>
+        </t>
+    </template>
+
+    <template id="report_aged_balance_document">
+        <t t-call="partner_balance.report_document_base">
+            <t t-foreach="buckets" t-as="bucket">
+                <h5 t-esc="bucket['label']"/>
+                <table class="table table-sm table-bordered o_report_data_table mb-4">
+                    <thead>
+                        <tr>
+                            <t t-foreach="columns_headers" t-as="header">
+                                <th t-esc="header"/>
+                            </t>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="bucket['rows']" t-as="row_pair">
+                            <tr>
+                                <t t-foreach="row_pair[0]" t-as="cell">
+                                    <td t-att-style="cell_index in date_col_indices and 'white-space:nowrap' or None" t-esc="cell"/>
+                                </t>
+                            </tr>
+                            <tr t-if="show_products and row_pair[1] in product_lines_by_move" class="o_product_subtable_row">
+                                <td t-attf-colspan="#{len(columns_headers)}" style="background-color:#f0f9ff;padding:4px 8px 4px 40px;">
+                                    <table class="table table-sm table-bordered mb-0" style="font-size:0.85em;">
+                                        <thead>
+                                            <tr style="background-color:#e0f2fe;">
+                                                <th>Product</th>
+                                                <th class="text-end">Qty</th>
+                                                <th>UoM</th>
+                                                <th class="text-end">Unit Price</th>
+                                                <th class="text-end">Disc. %</th>
+                                                <th class="text-end">Tax</th>
+                                                <th class="text-end">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="product_lines_by_move[row_pair[1]]" t-as="pline">
+                                                <td t-esc="pline['product']"/>
+                                                <td class="text-end" t-esc="pline['qty']"/>
+                                                <td t-esc="pline['uom']"/>
+                                                <td class="text-end" t-esc="pline['unit_price']"/>
+                                                <td class="text-end" t-esc="pline['discount']"/>
+                                                <td class="text-end" t-esc="pline['tax']"/>
+                                                <td class="text-end" t-esc="pline['total']"/>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr class="fw-bold">
+                            <t t-foreach="bucket['total_row']" t-as="cell">
+                                <td t-esc="cell"/>
+                            </t>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_ledger_balance_summary_document">
+        <t t-call="partner_balance.report_document_base">
+            <table class="table table-sm table-bordered o_report_data_table">
+                <thead>
+                    <tr>
+                        <th>Partner</th>
+                        <th t-esc="balance_header"/>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="rows" t-as="row">
+                        <td t-esc="row[0]"/>
+                        <td t-esc="row[1]"/>
+                    </tr>
+                </tbody>
+            </table>
+        </t>
+    </template>
+
+    <template id="report_aged_balance_summary_document">
+        <t t-call="partner_balance.report_document_base">
+            <table class="table table-sm table-bordered o_report_data_table">
+                <thead>
+                    <tr>
+                        <th>Partner</th>
+                        <th>Current</th>
+                        <th>1-30</th>
+                        <th>31-60</th>
+                        <th>61-90</th>
+                        <th>91-120</th>
+                        <th>&gt;120</th>
+                        <th t-esc="total_header"/>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="rows" t-as="row">
+                        <t t-foreach="row" t-as="cell">
+                            <td t-esc="cell"/>
+                        </t>
+                    </tr>
+                </tbody>
+            </table>
+        </t>
+    </template>
+</odoo>

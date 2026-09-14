@@ -11,6 +11,12 @@
                             t-on-click="onExcelExport">
                         <i class="fa fa-file-excel-o"/>
                     </button>
+                    <button class="btn btn-outline-danger btn-sm"
+                            type="button"
+                            title="Export to PDF"
+                            t-on-click="onPdfExport">
+                        <i class="fa fa-file-pdf-o"/>
+                    </button>
                     <button t-if="!isSaleView"
                             class="btn btn-sm"
                             t-att-class="isSaleView ? 'btn-primary' : 'btn-outline-primary'"

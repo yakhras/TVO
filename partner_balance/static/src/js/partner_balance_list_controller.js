@@ -96,6 +96,7 @@ export class PartnerBalanceListController extends ListController {
             onUsdReport: this.onUsdReport.bind(this),
             onDateChange: this.onDateChange.bind(this),
             onExcelExport: this.onExcelExport.bind(this),
+            onPdfExport: this.onPdfExport.bind(this),
             reportType: this.reportType,
             showDateInputs: this.showDateInputs,
             onLedgerReport: this.onLedgerReport.bind(this),
@@ -427,7 +428,7 @@ export class PartnerBalanceListController extends ListController {
     // Export
     // -------------------------------------------------------------------------
 
-    async onExcelExport() {
+    async _buildExportPayload() {
         const columns = this.props.archInfo.columns
             .filter(col => col.type === 'field')
             .filter(col => !col.optional || this.optionalActiveFields[col.name])
@@ -447,29 +448,39 @@ export class PartnerBalanceListController extends ListController {
             ids = resIds.length > 0 && resIds;
         }
 
-        const exportUrl = this.reportType === 'aged'
-            ? '/web/aged_balance_export/xlsx'
-            : '/web/balance_export/xlsx';
-
-        await download({
-            data: {
-                data: JSON.stringify({
-                    model: this.model.root.resModel,
-                    fields: exportedFields,
-                    ids: ids,
-                    domain: this.model.root.domain,
-                    groupby: this.model.root.groupBy,
-                    context: {
-                        ...this.context,
-                        date_from: this.state.dateFrom || null,
-                        date_to: this.state.dateTo || null,
-                        show_products: this.state.showProducts,
-                        skip_opening: this.state.skipOpening,
-                    },
-                    import_compat: false,
-                }),
+        return JSON.stringify({
+            model: this.model.root.resModel,
+            fields: exportedFields,
+            ids: ids,
+            domain: this.model.root.domain,
+            groupby: this.model.root.groupBy,
+            context: {
+                ...this.context,
+                date_from: this.state.dateFrom || null,
+                date_to: this.state.dateTo || null,
+                show_products: this.state.showProducts,
+                skip_opening: this.state.skipOpening,
             },
-            url: exportUrl,
+            import_compat: false,
+        });
+    }
+
+    _exportUrl(extension) {
+        const basePath = this.reportType === 'aged' ? '/web/aged_balance_export' : '/web/balance_export';
+        return `${basePath}/${extension}`;
+    }
+
+    async onExcelExport() {
+        await download({
+            data: { data: await this._buildExportPayload() },
+            url: this._exportUrl('xlsx'),
+        });
+    }
+
+    async onPdfExport() {
+        await download({
+            data: { data: await this._buildExportPayload() },
+            url: this._exportUrl('pdf'),
         });
     }
 }

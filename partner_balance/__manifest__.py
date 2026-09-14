@@ -27,6 +27,8 @@
         'views/aged_balance_view.xml',
         'views/partner_balance_config_view.xml',
         'views/account_move_views.xml',
+        'report/report_actions.xml',
+        'report/report_templates.xml',
 
     ],
 

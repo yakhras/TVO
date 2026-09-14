@@ -31,15 +31,24 @@ class AgedBalanceSummaryListController extends ListController {
         return this.props.context?.action_name === 'Aged Balance in TRY';
     }
 
+    _exportPayload() {
+        return JSON.stringify({
+            domain: this.model.root.domain,
+            allowed_company_ids: this.companyService.activeCompanyIds,
+        });
+    }
+
     async onExcelExport() {
-        const domain = this.model.root.domain;
-        const allowedCompanyIds = this.companyService.activeCompanyIds;
         await download({
             url: "/web/aged_balance_summary_export/xlsx",
-            data: { data: JSON.stringify({
-                domain: domain,
-                allowed_company_ids: allowedCompanyIds,
-            }) },
+            data: { data: this._exportPayload() },
+        });
+    }
+
+    async onPdfExport() {
+        await download({
+            url: "/web/aged_balance_summary_export/pdf",
+            data: { data: this._exportPayload() },
         });
     }
 

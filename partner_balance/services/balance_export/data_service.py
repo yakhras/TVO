@@ -142,10 +142,16 @@ class BalanceDataService:
                 rows.extend(self._extract_rows_from_groups(child))
         return rows
 
-    def get_oldest_date(self):
-        """Get the oldest transaction date for the partner."""
+    def get_oldest_date(self, env=None):
+        """Get the oldest transaction date for the partner.
+
+        `env` lets callers translate "Beginning" into a specific report language
+        (see `FieldMapping.create_opening_balance_row` for why the bare `_()`
+        helper isn't reliable here); defaults to `self.env`'s own language.
+        """
+        translate = (env or self.env)._
         if not self.partner_id:
-            return 'Beginning'
+            return translate('Beginning')
 
         result = self.env['account.move.line'].sudo().read_group(
             domain=[('partner_id', '=', self.partner_id)],
@@ -155,7 +161,7 @@ class BalanceDataService:
 
         if result and result[0].get('date'):
             return result[0]['date']
-        return 'Beginning'
+        return translate('Beginning')
 
     def get_opening_balances_by_group(self, groups, groupby_field, use_partner_currency=False):
         """

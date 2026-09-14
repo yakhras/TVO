@@ -14,6 +14,7 @@ export class PartnerBalanceToolbar extends Component {
         onTrReport: { type: Function },
         onDateChange: { type: Function },
         onExcelExport: { type: Function },
+        onPdfExport: { type: Function },
         showProducts: { type: Boolean, optional: true }, onToggleProducts: { type: Function },
         skipOpening: { type: Boolean, optional: true },
         onToggleSkipOpening: { type: Function },
@@ -44,6 +45,10 @@ export class PartnerBalanceToolbar extends Component {
 
     handleExcelExport() {
         this.props.onExcelExport();
+    }
+
+    handlePdfExport() {
+        this.props.onPdfExport();
     }
 
     handleTrReport() {

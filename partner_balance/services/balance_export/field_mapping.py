@@ -85,14 +85,21 @@ class FieldMapping:
         return default
 
     @classmethod
-    def create_opening_balance_row(cls, opening_data):
-        """Create a standard opening balance row."""
+    def create_opening_balance_row(cls, opening_data, env=None):
+        """Create a standard opening balance row.
+
+        `env` lets callers translate "Opening Balance" into a specific report
+        language: the bare `_()` helper resolves its language by inspecting the
+        caller's frame, which is unreliable across module boundaries, so pass an
+        env already scoped to the target `lang` (see `env(context=...)`) when the
+        report language may differ from the current request's own session language.
+        """
         from odoo.tools.translate import _
 
         row = [''] * 9
         row[cls.COLUMNS['date']] = opening_data.get('date', '')
         row[cls.COLUMNS['journal_entry']] = ''
-        row[cls.COLUMNS['label']] = _('Opening Balance')
+        row[cls.COLUMNS['label']] = env._('Opening Balance') if env is not None else _('Opening Balance')
         row[cls.COLUMNS['reference']] = ''
         row[cls.COLUMNS['debit']] = opening_data.get('debit', 0.0)
         row[cls.COLUMNS['credit']] = opening_data.get('credit', 0.0)
@@ -100,6 +107,17 @@ class FieldMapping:
         row[cls.COLUMNS['amount_currency']] = ''
         row[cls.COLUMNS['currency']] = ''
         return row
+
+    @staticmethod
+    def get_max_decimal_places(env):
+        """Get maximum decimal places across installed currencies (shared by the
+        xlsx and PDF export pipelines so they show the same precision)."""
+        try:
+            results = env['res.currency'].search_read([], ['decimal_places'])
+            places = [r['decimal_places'] for r in results]
+            return max(places) if places else 2
+        except Exception:
+            return 2
 
     @classmethod
     def find_column_by_label(cls, fields, partial_name):

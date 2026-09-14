@@ -33,6 +33,13 @@ class LedgerBalanceListController extends ListController {
         });
     }
 
+    async onPdfExport() {
+        await download({
+            url: "/web/ledger_balance_export/pdf",
+            data: {},
+        });
+    }
+
     get isSaleView() {
         return !!this.props.context?.is_sale_view;
     }

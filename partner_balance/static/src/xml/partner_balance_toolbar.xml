@@ -32,6 +32,15 @@
                     <i class="fa fa-file-excel-o"/>
                 </button>
 
+                <!-- PDF Export Button -->
+                <button t-if="props.userConfig.show_excel"
+                        class="btn btn-outline-danger btn-sm"
+                        type="button"
+                        title="Export to PDF"
+                        t-on-click="handlePdfExport">
+                    <i class="fa fa-file-pdf-o"/>
+                </button>
+
                 <t t-if="props.showDateInputs">
                     <!-- Date From -->
                     <label class="mb-0 text-muted small">From:</label>

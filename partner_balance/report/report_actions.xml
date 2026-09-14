@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_balance_statement" model="ir.actions.report">
+        <field name="name">Statement of Account</field>
+        <field name="model">account.move.line.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">partner_balance.report_balance_statement_document</field>
+        <field name="print_report_name">'Statement of Account'</field>
+    </record>
+
+    <record id="action_report_aged_balance" model="ir.actions.report">
+        <field name="name">Aged Balance</field>
+        <field name="model">account.aged.balance.line</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">partner_balance.report_aged_balance_document</field>
+        <field name="print_report_name">'Aged Balance'</field>
+    </record>
+
+    <record id="action_report_ledger_balance_summary" model="ir.actions.report">
+        <field name="name">Ledger Balance Summary</field>
+        <field name="model">account.ledger.balance</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">partner_balance.report_ledger_balance_summary_document</field>
+        <field name="print_report_name">'Ledger Balance'</field>
+    </record>
+
+    <record id="action_report_aged_balance_summary" model="ir.actions.report">
+        <field name="name">Aged Balance Summary</field>
+        <field name="model">account.aged.balance.summary</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">partner_balance.report_aged_balance_summary_document</field>
+        <field name="print_report_name">'Aged Balance Summary'</field>
+    </record>
+</odoo>
