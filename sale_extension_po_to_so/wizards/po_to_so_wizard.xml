@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_po_to_so_wizard_form" model="ir.ui.view">
+        <field name="name">po.to.so.wizard.form</field>
+        <field name="model">po.to.so.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Convert Purchase Orders to Sale Order">
+                <group string="Purchase Orders">
+                    <field name="purchase_order_ids" nolabel="1" colspan="2">
+                        <list>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="date_order"/>
+                            <field name="amount_total"/>
+                        </list>
+                    </field>
+                </group>
+                <group string="Conversion Rules">
+                    <group>
+                        <field name="product_selection_mode"/>
+                        <field name="qty_mode"/>
+                        <field name="qty_fixed_delta" invisible="qty_mode != 'fixed'"/>
+                    </group>
+                    <group>
+                        <field name="price_mode"/>
+                        <field name="price_fixed_delta" invisible="price_mode != 'fixed'"/>
+                        <field name="price_percentage_delta" invisible="price_mode != 'percentage'"/>
+                    </group>
+                </group>
+                <button name="action_apply_bulk_settings" string="Apply to Lines" type="object" class="btn-secondary"/>
+                <field name="line_ids">
+                    <list editable="bottom">
+                        <field name="include" column_invisible="parent.product_selection_mode == 'all'"/>
+                        <field name="product_id" readonly="1" force_save="1"/>
+                        <field name="source_qty" readonly="1" force_save="1"/>
+                        <field name="product_uom_qty"/>
+                        <field name="source_price_unit" readonly="1" force_save="1"/>
+                        <field name="price_unit"/>
+                        <field name="price_subtotal" string="Subtotal" sum="Subtotal" readonly="1"/>
+                        <field name="price_tax" string="Tax" sum="Tax" readonly="1"/>
+                        <field name="price_total" string="Total" sum="Total" readonly="1"/>
+                        <field name="currency_id" column_invisible="1"/>
+                        <field name="source_po_line_id" column_invisible="1" force_save="1"/>
+                        <field name="product_uom" column_invisible="1" force_save="1"/>
+                    </list>
+                </field>
+                <group string="Target Sale Order">
+                    <field name="partner_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="pricelist_id"/>
+                    <field name="currency_id" readonly="1"/>
+                    <field name="tax_ids" widget="many2many_tags"/>
+                </group>
+                <footer>
+                    <button string="Confirm" name="action_confirm" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_po_to_so_wizard" model="ir.actions.act_window">
+        <field name="name">Convert Purchase Orders to Sale Order</field>
+        <field name="res_model">po.to.so.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_po_to_so_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_po_to_so"
+              name="Convert POs to SO"
+              parent="sale.sale_order_menu"
+              action="action_po_to_so_wizard"
+              groups="sale_extension_po_to_so.group_po_to_so_user"
+              sequence="15"/>
+</odoo>
