@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_armongate_config,armongate.config,model_armongate_config,,1,1,1,1
+access_armongate_restart_terminal_wizard,armongate.restart_terminal.wizard,model_armongate_restart_terminal_wizard,,1,1,1,1
