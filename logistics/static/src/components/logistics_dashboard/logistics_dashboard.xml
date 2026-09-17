@@ -149,6 +149,9 @@
                     </t>
                 </tbody>
             </table>
+            <div class="text-end" t-if="state.upcomingHasMore">
+                <a href="#" class="o_logistics_show_more" t-on-click.prevent="showMoreArrivals">Show More</a>
+            </div>
 
         </t>
     </div>

@@ -11,14 +11,28 @@ export class LogisticsDashboard extends Component {
     setup() {
         this.orm = useService("orm");
         this.action = useService("action");
-        this.state = useState({ kpis: {}, upcomingArrivals: [], loaded: false });
+        this.state = useState({
+            kpis: {},
+            upcomingArrivals: [],
+            upcomingHasMore: false,
+            loaded: false,
+        });
 
         onWillStart(async () => {
             const data = await this.orm.call("logistics.dashboard", "get_dashboard_data", []);
             this.state.kpis = data.kpis;
             this.state.upcomingArrivals = data.upcoming_arrivals;
+            this.state.upcomingHasMore = data.upcoming_arrivals_has_more;
             this.state.loaded = true;
         });
+    }
+
+    async showMoreArrivals() {
+        const data = await this.orm.call("logistics.dashboard", "get_upcoming_arrivals", [
+            this.state.upcomingArrivals.length,
+        ]);
+        this.state.upcomingArrivals.push(...data.lines);
+        this.state.upcomingHasMore = data.has_more;
     }
 
     openDeals(state) {
