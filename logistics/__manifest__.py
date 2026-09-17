@@ -29,6 +29,7 @@
         'views/purchase_requisition_views.xml',
         'views/logistics_dashboard.xml',
         'views/logistics_declaration_type_views.xml',
+        'views/logistics_container_child_state_views.xml',
         'views/actions_menus.xml',
     ],
     'assets': {

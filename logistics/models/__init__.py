@@ -2,6 +2,7 @@ from . import logistics_port
 from . import logistics_shipping_line
 from . import logistics_bill_lading
 from . import logistics_container
+from . import logistics_container_child_state
 from . import logistics_container_line
 from . import logistics_shipment_tranche
 from . import purchase_requisition

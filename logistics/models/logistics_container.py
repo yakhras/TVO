@@ -5,6 +5,14 @@ from odoo.fields import Command
 
 _logger = logging.getLogger(__name__)
 
+CONTAINER_STATE_SELECTION = [
+    ('purchase', 'Purchasing'),
+    ('oversea', 'Oversea'),
+    ('at_port', 'At Port'),
+    ('arrived', 'Arrived'),
+    ('antrepo', 'Antrepo'),
+]
+
 
 class LogisticsContainer(models.Model):
     _name = 'logistics.container'
@@ -115,15 +123,12 @@ class LogisticsContainer(models.Model):
     )
 
     state = fields.Selection(
-        selection=[
-            ('purchase', 'Purchasing'),
-            ('oversea', 'Oversea'),
-            ('at_port', 'At Port'),
-            ('arrived', 'Arrived'),
-            ('antrepo', 'Antrepo'),
-        ],
+        selection=CONTAINER_STATE_SELECTION,
         string='Status', default='purchase', required=True,
         copy=False, tracking=True,
+    )
+    child_state_id = fields.Many2one(
+        'logistics.container.child.state', string='Child State',
     )
 
     # --- Computed counts ---
@@ -147,6 +152,11 @@ class LogisticsContainer(models.Model):
     def _compute_display_name(self):
         for rec in self:
             rec.display_name = rec.container_number or rec.name
+
+    @api.onchange('state')
+    def _onchange_state(self):
+        if self.child_state_id.parent_state != self.state:
+            self.child_state_id = False
 
     @api.onchange('requisition_ids')
     def _onchange_requisition_ids(self):

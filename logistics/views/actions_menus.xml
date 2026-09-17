@@ -46,6 +46,12 @@
         <field name="view_mode">list,form</field>
     </record>
 
+    <record id="action_logistics_container_child_state" model="ir.actions.act_window">
+        <field name="name">Container Child States</field>
+        <field name="res_model">logistics.container.child.state</field>
+        <field name="view_mode">list</field>
+    </record>
+
     <!-- ===== Menus ===== -->
 
     <!-- Top-level app menu -->
@@ -111,6 +117,12 @@
               parent="menu_logistics_config"
               action="action_logistics_declaration_type"
               sequence="5"/>
+
+    <menuitem id="menu_logistics_container_child_state"
+              name="Container Child States"
+              parent="menu_logistics_config"
+              action="action_logistics_container_child_state"
+              sequence="15"/>
 
 
 </odoo>

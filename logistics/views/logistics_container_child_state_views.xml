@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_logistics_container_child_state_list" model="ir.ui.view">
+        <field name="name">logistics.container.child.state.list</field>
+        <field name="model">logistics.container.child.state</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="parent_state"/>
+                <field name="child_state"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_logistics_container_child_state_search" model="ir.ui.view">
+        <field name="name">logistics.container.child.state.search</field>
+        <field name="model">logistics.container.child.state</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="child_state"/>
+                <field name="parent_state"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_parent_state" string="Parent State"
+                            context="{'group_by': 'parent_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>
