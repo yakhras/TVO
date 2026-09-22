@@ -8,3 +8,4 @@ from . import logistics_shipment_tranche
 from . import purchase_requisition
 from . import logistics_dashboard
 from . import logistics_declaration_type
+from . import logistics_requisition_mismatch_report

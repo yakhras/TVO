@@ -23,6 +23,7 @@
         'views/logistics_port_views.xml',
         'views/logistics_shipping_line_views.xml',
         'wizards/logistics_container_link_wizard_views.xml',
+        'wizards/logistics_container_line_qty_override_wiz_views.xml',
         'views/logistics_bill_lading_views.xml',
         'views/logistics_container_views.xml',
         'views/logistics_container_line_views.xml',
@@ -31,6 +32,7 @@
         'views/logistics_declaration_type_views.xml',
         'views/logistics_container_child_state_views.xml',
         'views/actions_menus.xml',
+        'views/logistics_requisition_mismatch_report_views.xml',
     ],
     'assets': {
         'web.assets_backend': [

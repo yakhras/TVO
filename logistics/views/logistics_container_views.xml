@@ -33,8 +33,7 @@
                             <field name="container_number" />
                             <field name="container_type" />
                             <field name="bill_lading_id" />
-                            <field name="requisition_ids" widget="many2many_tags"
-                                 domain="[('remaining_qty', '>', 0)]"/>
+                            <field name="requisition_ids" widget="many2many_tags"/>
                             <field name="purchase_order_id"
                                 domain="[('requisition_id', 'in', requisition_ids)]"/>
                             <field name="invoice_no"/>
@@ -82,6 +81,12 @@
                                          domain="[('id', 'in', allowed_product_ids)]"
                                          options="{'no_create': True, 'no_create_edit': True}"/>
                                     <field name="product_qty"/>
+                                    <field name="agreement_remaining_qty" readonly="1"
+                                           optional="show"/>
+                                    <button name="action_open_qty_exceeded_detail"
+                                            type="object" icon="fa-exclamation-triangle"
+                                            title="Quantity exceeds the agreement — click for detail"
+                                            invisible="product_qty &lt;= agreement_remaining_qty or product_qty &lt;= 0"/>
                                     <field name="sku_price" readonly="1"/>
                                     <field name="subtotal" readonly="1"/>
                                     <field name="total_weight" readonly="1"/>

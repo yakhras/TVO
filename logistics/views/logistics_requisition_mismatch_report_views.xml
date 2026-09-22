@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- List View -->
+    <record id="view_logistics_requisition_mismatch_report_list" model="ir.ui.view">
+        <field name="name">logistics.requisition.mismatch.report.list</field>
+        <field name="model">logistics.requisition.mismatch.report</field>
+        <field name="arch" type="xml">
+            <list string="Agreement vs Container Mismatch" create="false" edit="false" delete="false"
+                  decoration-danger="mismatch_type == 'increase'"
+                  decoration-warning="mismatch_type == 'decrease'"
+                  decoration-muted="mismatch_type == 'match'">
+                <field name="requisition_id"/>
+                <field name="vendor_id"/>
+                <field name="product_id"/>
+                <field name="ordered_qty" sum="Total Agreed"/>
+                <field name="shipped_qty" sum="Total in Containers"/>
+                <field name="variance_qty" sum="Total Variance"/>
+                <field name="product_uom_id"/>
+                <field name="mismatch_type" widget="badge"
+                       decoration-danger="mismatch_type == 'increase'"
+                       decoration-warning="mismatch_type == 'decrease'"
+                       decoration-success="mismatch_type == 'match'"/>
+                <field name="company_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="view_logistics_requisition_mismatch_report_pivot" model="ir.ui.view">
+        <field name="name">logistics.requisition.mismatch.report.pivot</field>
+        <field name="model">logistics.requisition.mismatch.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Agreement vs Container Mismatch">
+                <field name="requisition_id" type="row"/>
+                <field name="product_id" type="row"/>
+                <field name="mismatch_type" type="col"/>
+                <field name="ordered_qty" type="measure"/>
+                <field name="shipped_qty" type="measure"/>
+                <field name="variance_qty" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_logistics_requisition_mismatch_report_search" model="ir.ui.view">
+        <field name="name">logistics.requisition.mismatch.report.search</field>
+        <field name="model">logistics.requisition.mismatch.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="requisition_id"/>
+                <field name="vendor_id"/>
+                <field name="product_id"/>
+                <separator/>
+                <filter name="filter_increase" string="Over Allocated"
+                        domain="[('mismatch_type', '=', 'increase')]"/>
+                <filter name="filter_decrease" string="Under Allocated"
+                        domain="[('mismatch_type', '=', 'decrease')]"/>
+                <filter name="filter_match" string="Matched"
+                        domain="[('mismatch_type', '=', 'match')]"/>
+                <separator/>
+                <filter name="filter_mismatch_only" string="Mismatches Only"
+                        domain="[('mismatch_type', '!=', 'match')]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_requisition" string="Purchase Agreement"
+                            context="{'group_by': 'requisition_id'}"/>
+                    <filter name="group_vendor" string="Vendor"
+                            context="{'group_by': 'vendor_id'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter name="group_mismatch_type" string="Mismatch"
+                            context="{'group_by': 'mismatch_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_logistics_requisition_mismatch_report" model="ir.actions.act_window">
+        <field name="name">Agreement vs Container Mismatch</field>
+        <field name="res_model">logistics.requisition.mismatch.report</field>
+        <field name="view_mode">list,pivot</field>
+        <field name="search_view_id" ref="view_logistics_requisition_mismatch_report_search"/>
+        <field name="context">{'search_default_filter_mismatch_only': 1}</field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_logistics_reporting"
+              name="Reporting"
+              parent="menu_logistics_root"
+              sequence="90"/>
+
+    <menuitem id="menu_logistics_requisition_mismatch_report"
+              name="Agreement vs Container Mismatch"
+              parent="menu_logistics_reporting"
+              action="action_logistics_requisition_mismatch_report"
+              sequence="10"/>
+
+</odoo>

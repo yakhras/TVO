@@ -218,19 +218,18 @@ class LogisticsContainer(models.Model):
                     )
                     continue
                 remaining = line.product_qty - used_qty.get(pid, 0.0)
-                if remaining <= 0:
-                    _logger.info(
-                        "[container %s] req=%s product=%s remaining=%.2f skip",
-                        self.name or 'NEW', req.name, line.product_id.name, remaining,
-                    )
-                    continue
+                # Still add the line even when fully (or over) allocated elsewhere —
+                # it starts at 0 so the user can knowingly raise it via the
+                # container.line "Confirm Over Quantity" action instead of the
+                # product silently never appearing on this container.
+                qty = max(remaining, 0.0)
                 _logger.info(
-                    "[container %s] req=%s product=%s ADDING qty=%.2f",
-                    self.name or 'NEW', req.name, line.product_id.name, remaining,
+                    "[container %s] req=%s product=%s ADDING qty=%.2f (remaining=%.2f)",
+                    self.name or 'NEW', req.name, line.product_id.name, qty, remaining,
                 )
                 new_lines |= self.env['logistics.container.line'].new({
                     'product_id': pid,
-                    'product_qty': remaining,
+                    'product_qty': qty,
                     'product_uom_id': line.product_uom_id.id,
                     'sku_price': line.price_unit,
                     'requisition_id': req_id,
