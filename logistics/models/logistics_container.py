@@ -13,6 +13,12 @@ CONTAINER_STATE_SELECTION = [
     ('antrepo', 'Antrepo'),
 ]
 
+TRANSPORT_UNIT_SELECTION = [
+    ('container', 'Container'),
+    ('truck', 'Truck'),
+    ('bulk_vessel', 'Bulk Vessel'),
+]
+
 
 class LogisticsContainer(models.Model):
     _name = 'logistics.container'
@@ -29,12 +35,16 @@ class LogisticsContainer(models.Model):
         string='Reference', required=True, copy=False,
         readonly=True, default='New',
     )
+    transport_unit = fields.Selection(
+        selection=TRANSPORT_UNIT_SELECTION,
+        string='Transport Unit', tracking=True,
+    )
     container_number = fields.Char(string='Container No.', tracking=True, copy=False)
     container_type = fields.Selection(
         selection=[
             ('20', '20ft'),
             ('40', '40ft'),
-            ('truck', 'Truck'),
+            ('other', 'Other'),
         ],
         string='Container Type', tracking=True,
     )

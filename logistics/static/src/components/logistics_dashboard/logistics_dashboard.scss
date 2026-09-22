@@ -1,0 +1,15 @@
+.o_logistics_dashboard {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.o_logistics_arrivals_table_wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+
+    thead th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+}

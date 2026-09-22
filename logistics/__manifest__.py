@@ -1,6 +1,6 @@
 {
     'name': 'Logistics',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': 'Logistics',
     'summary': 'Import operations tracking: containers, B/L, customs',
     'description': """
@@ -36,9 +36,11 @@
         'web.assets_backend': [
             'logistics/static/src/components/logistics_dashboard/logistics_dashboard.js',
             'logistics/static/src/components/logistics_dashboard/logistics_dashboard.xml',
+            'logistics/static/src/components/logistics_dashboard/logistics_dashboard.scss',
         ],
     },
     'installable': True,
     'application': True,
     'license': 'LGPL-3',
+    'post_init_hook': 'post_init_hook',
 }

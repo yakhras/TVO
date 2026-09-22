@@ -29,6 +29,7 @@
                     </div>
                     <group>
                         <group>
+                            <field name="transport_unit" />
                             <field name="container_number" />
                             <field name="container_type" />
                             <field name="bill_lading_id" />
@@ -116,6 +117,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name"/>
+                <field name="transport_unit"/>
                 <field name="container_number"/>
                 <field name="container_type"/>
                 <field name="bill_lading_id"/>
@@ -199,6 +201,7 @@
             <kanban default_group_by="state">
                 <field name="state"/>
                 <field name="name"/>
+                <field name="transport_unit"/>
                 <field name="container_number"/>
                 <field name="container_type"/>
                 <field name="bill_lading_id"/>
@@ -206,6 +209,10 @@
                 <templates>
                     <t t-name="card">
                         <field name="name" class="fw-bold"/>
+                        <div class="row">
+                            <span class="col-5 text-muted">Transport Unit</span>
+                            <span class="col-7"><field name="transport_unit"/></span>
+                        </div>
                         <div class="row">
                             <span class="col-5 text-muted">Number</span>
                             <span class="col-7"><field name="container_number"/></span>
