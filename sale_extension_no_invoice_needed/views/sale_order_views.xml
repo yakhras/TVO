@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- List view used only by 'Orders to Invoice' -->
+    <record id="view_order_tree_to_invoice" model="ir.ui.view">
+        <field name="name">sale.order.list.to.invoice</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="mode">primary</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_set_no_invoice_needed"
+                        type="object"
+                        string="Set No Invoice Needed"
+                        class="btn-secondary"
+                        groups="account.group_account_manager"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- List view used only by 'No Invoice Needed' -->
+    <record id="view_order_tree_no_invoice_needed" model="ir.ui.view">
+        <field name="name">sale.order.list.no.invoice.needed</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="mode">primary</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_reset_to_invoice"
+                        type="object"
+                        string="Reset to To Invoice"
+                        class="btn-secondary"
+                        groups="account.group_account_manager"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_orders_no_invoice_needed" model="ir.actions.act_window">
+        <field name="name">No Invoice Needed</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form,calendar,graph,pivot,kanban,activity</field>
+        <field name="context">{'create': False}</field>
+        <field name="domain">[('invoice_status', '=', 'no_invoice_needed')]</field>
+        <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No orders marked as 'No Invoice Needed'
+            </p>
+        </field>
+    </record>
+
+    <!-- Bind each list view to its own menu action only -->
+    <record id="action_orders_to_invoice_view_list" model="ir.actions.act_window.view">
+        <field name="sequence">1</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_order_tree_to_invoice"/>
+        <field name="act_window_id" ref="sale.action_orders_to_invoice"/>
+    </record>
+
+    <record id="action_orders_no_invoice_needed_view_list" model="ir.actions.act_window.view">
+        <field name="sequence">1</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_order_tree_no_invoice_needed"/>
+        <field name="act_window_id" ref="action_orders_no_invoice_needed"/>
+    </record>
+
+    <menuitem id="menu_sale_order_no_invoice_needed"
+              parent="sale.menu_sale_invoicing"
+              action="action_orders_no_invoice_needed"
+              sequence="30"/>
+
+</odoo>
