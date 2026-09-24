@@ -1,6 +1,6 @@
 {
     'name': 'Logistics',
-    'version': '18.0.1.0.4',
+    'version': '18.0.1.0.5',
     'category': 'Logistics',
     'summary': 'Import operations tracking: containers, B/L, customs',
     'description': """
@@ -11,7 +11,9 @@
     'depends': [
         'base',
         'mail',
+        'purchase',
         'purchase_requisition',
+        'purchase_requisition_totals',
         'product',
         'stock',
         'account',

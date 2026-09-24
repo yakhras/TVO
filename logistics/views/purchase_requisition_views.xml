@@ -95,4 +95,84 @@
         </field>
     </record>
 
+    <!-- Agreement lines analysis (product category + quantity/amount measures) -->
+    <record id="view_logistics_requisition_line_pivot" model="ir.ui.view">
+        <field name="name">purchase.requisition.line.pivot.logistics</field>
+        <field name="model">purchase.requisition.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Agreement Analysis" sample="1">
+                <field name="categ_id" type="row"/>
+                <field name="partner_id" type="col"/>
+                <field name="product_qty" string="Qty on Agreement" type="measure"/>
+                <field name="price_subtotal" type="measure"/>
+                <field name="price_total" type="measure"/>
+                <field name="price_unit" invisible="1"/>
+                <field name="price_tax" invisible="1"/>
+                <field name="weighted_subtotal" invisible="1"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_logistics_requisition_line_list" model="ir.ui.view">
+        <field name="name">purchase.requisition.line.list.logistics</field>
+        <field name="model">purchase.requisition.line</field>
+        <field name="arch" type="xml">
+            <list string="Agreement Lines" create="0" edit="0" delete="0">
+                <field name="requisition_id"/>
+                <field name="partner_id" optional="show"/>
+                <field name="categ_id" optional="show"/>
+                <field name="product_id"/>
+                <field name="description_picking" optional="show"/>
+                <field name="product_qty" string="Qty on Agreement" sum="Total"/>
+                <field name="po_qty_ordered" sum="Total"/>
+                <field name="po_qty_received" sum="Total" optional="show"/>
+                <field name="po_qty_billed" sum="Total" optional="show"/>
+                <field name="qty_to_order" sum="Total" optional="show"/>
+                <field name="qty_to_receive" sum="Total" optional="show"/>
+                <field name="qty_to_bill" sum="Total" optional="show"/>
+                <field name="product_uom_id" groups="uom.group_uom" optional="show"/>
+                <field name="price_unit" optional="show"/>
+                <field name="avg_kg_price" optional="hide"/>
+                <field name="total_weight" sum="Total" optional="show"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="price_subtotal" sum="Total"/>
+                <field name="price_total" sum="Total" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_logistics_requisition_line_search" model="ir.ui.view">
+        <field name="name">purchase.requisition.line.search.logistics</field>
+        <field name="model">purchase.requisition.line</field>
+        <field name="arch" type="xml">
+            <search string="Agreement Lines">
+                <field name="requisition_id"/>
+                <field name="product_id"/>
+                <field name="categ_id"/>
+                <field name="description_picking"/>
+                <field name="partner_id"/>
+                <filter name="to_order" string="Remaining to Order" domain="[('qty_to_order', '&gt;', 0)]"/>
+                <filter name="to_receive" string="Remaining to Receive" domain="[('qty_to_receive', '&gt;', 0)]"/>
+                <filter name="to_bill" string="Remaining to Bill" domain="[('qty_to_bill', '&gt;', 0)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_categ" string="Product Category" context="{'group_by': 'categ_id'}"/>
+                    <filter name="group_vendor" string="Vendor" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_requisition" string="Purchase Agreement" context="{'group_by': 'requisition_id'}"/>
+                    <filter name="group_product" string="Product" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_description_picking" string="Description on Picking" context="{'group_by': 'description_picking'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_logistics_requisition_line_analysis" model="ir.actions.act_window">
+        <field name="name">Agreement Analysis</field>
+        <field name="res_model">purchase.requisition.line</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'pivot', 'view_id': ref('view_logistics_requisition_line_pivot')}),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_logistics_requisition_line_list')})]"/>
+        <field name="search_view_id" ref="view_logistics_requisition_line_search"/>
+    </record>
+
 </odoo>

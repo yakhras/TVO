@@ -9,10 +9,123 @@ class PurchaseRequisitionLine(models.Model):
         compute='_compute_description_picking', store=True, readonly=True,
     )
 
+    # --- Pivot analysis ---
+    categ_id = fields.Many2one(
+        'product.category', string='Product Category',
+        related='product_id.categ_id', store=True,
+    )
+    po_qty_ordered = fields.Float(
+        string='Qty Ordered', digits='Product Unit of Measure',
+        compute='_compute_po_quantities', store=True,
+    )
+    po_qty_received = fields.Float(
+        string='Qty Received', digits='Product Unit of Measure',
+        compute='_compute_po_quantities', store=True,
+    )
+    po_qty_billed = fields.Float(
+        string='Qty Billed', digits='Product Unit of Measure',
+        compute='_compute_po_quantities', store=True,
+    )
+    qty_to_order = fields.Float(
+        string='Remaining to Order', digits='Product Unit of Measure',
+        compute='_compute_po_quantities', store=True,
+    )
+    qty_to_receive = fields.Float(
+        string='Remaining to Receive', digits='Product Unit of Measure',
+        compute='_compute_po_quantities', store=True,
+    )
+    qty_to_bill = fields.Float(
+        string='Remaining to Bill', digits='Product Unit of Measure',
+        compute='_compute_po_quantities', store=True,
+    )
+    total_weight = fields.Float(
+        string='Total Weight', digits='Stock Weight',
+        compute='_compute_total_weight', store=True,
+    )
+    # Subtotal of the lines that have a weight; used to weight Average Kg Price.
+    weighted_subtotal = fields.Monetary(
+        compute='_compute_avg_prices', store=True,
+    )
+    avg_price_unit = fields.Float(
+        string='Average Unit Price', digits='Product Price',
+        compute='_compute_avg_prices', store=True, aggregator='avg',
+    )
+    avg_kg_price = fields.Float(
+        string='Average Kg Price', digits='Product Price',
+        compute='_compute_avg_prices', store=True, aggregator='avg',
+    )
+
     @api.depends('product_id.product_tmpl_id.description_picking')
     def _compute_description_picking(self):
         for line in self:
             line.description_picking = line.product_id.description_picking
+
+    @api.depends(
+        'product_id', 'product_uom_id', 'product_qty',
+        'requisition_id.purchase_ids.state',
+        'requisition_id.purchase_ids.order_line.product_qty',
+        'requisition_id.purchase_ids.order_line.qty_received',
+        'requisition_id.purchase_ids.order_line.qty_invoiced',
+    )
+    def _compute_po_quantities(self):
+        # Same matching as core qty_ordered: confirmed POs of the agreement,
+        # same product, quantities counted once, on the first line of that product.
+        for line in self:
+            ordered = received = billed = 0.0
+            first = line.requisition_id.line_ids.filtered(lambda l: l.product_id == line.product_id)[:1]
+            if first == line:
+                pos = line.requisition_id.purchase_ids.filtered(lambda po: po.state in ('purchase', 'done'))
+                for po_line in pos.order_line.filtered(lambda l: l.product_id == line.product_id):
+                    to_uom = line.product_uom_id or po_line.product_uom
+                    convert = po_line.product_uom._compute_quantity
+                    ordered += convert(po_line.product_qty, to_uom)
+                    received += convert(po_line.qty_received, to_uom)
+                    billed += convert(po_line.qty_invoiced, to_uom)
+            line.po_qty_ordered = ordered
+            line.po_qty_received = received
+            line.po_qty_billed = billed
+            line.qty_to_order = line.product_qty - ordered
+            line.qty_to_receive = ordered - received
+            line.qty_to_bill = ordered - billed
+
+    @api.depends('product_id.weight', 'product_qty', 'product_uom_id')
+    def _compute_total_weight(self):
+        weight_uom = self.env['product.template']._get_weight_uom_id_from_ir_config_parameter()
+        for line in self:
+            uom = line.product_uom_id
+            if uom and uom.category_id == weight_uom.category_id:
+                line.total_weight = uom._compute_quantity(line.product_qty, weight_uom)
+            elif line.product_id and uom:
+                qty = uom._compute_quantity(line.product_qty, line.product_id.uom_id)
+                line.total_weight = qty * line.product_id.weight
+            else:
+                line.total_weight = 0.0
+
+    @api.depends('price_unit', 'price_subtotal', 'total_weight')
+    def _compute_avg_prices(self):
+        for line in self:
+            line.avg_price_unit = line.price_unit
+            line.weighted_subtotal = line.price_subtotal if line.total_weight else 0.0
+            line.avg_kg_price = line.price_subtotal / line.total_weight if line.total_weight else 0.0
+
+    @api.model
+    def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
+        # Replace the plain average of the averages with a quantity/weight-weighted one.
+        names = {f.split(':')[0] for f in fields}
+        want_unit = 'avg_price_unit' in names
+        want_kg = 'avg_kg_price' in names
+        if not (want_unit or want_kg):
+            return super().read_group(domain, fields, groupby, offset, limit, orderby, lazy)
+        extra = ['price_subtotal:sum', 'product_qty:sum', 'weighted_subtotal:sum', 'total_weight:sum']
+        rows = super().read_group(domain, list(fields) + extra, groupby, offset, limit, orderby, lazy)
+        for row in rows:
+            if want_unit:
+                qty = row.get('product_qty') or 0.0
+                row['avg_price_unit'] = (row.get('price_subtotal') or 0.0) / qty if qty else 0.0
+            if want_kg:
+                weight = row.get('total_weight') or 0.0
+                row['avg_kg_price'] = (row.get('weighted_subtotal') or 0.0) / weight if weight else 0.0
+        return rows
 
 
 class PurchaseRequisition(models.Model):

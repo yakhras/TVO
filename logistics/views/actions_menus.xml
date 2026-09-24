@@ -75,11 +75,33 @@
               action="action_logistics_container_line_all"
               sequence="10"/>
 
-    <menuitem id="menu_logistics_deals"
+    <!-- Purchase Agreements: parent menu (action cleared explicitly, a
+         menuitem without action would keep the previously set one) -->
+    <record id="menu_logistics_deals" model="ir.ui.menu">
+        <field name="name">Purchase Agreements</field>
+        <field name="parent_id" ref="menu_logistics_root"/>
+        <field name="action" eval="False"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <menuitem id="menu_logistics_requisition"
               name="Purchase Agreements"
-              parent="menu_logistics_root"
+              parent="menu_logistics_deals"
               action="action_logistics_requisition"
-              sequence="30"/>
+              sequence="10"/>
+
+    <menuitem id="menu_logistics_requisition_line_analysis"
+              name="Agreement Analysis"
+              parent="menu_logistics_deals"
+              action="action_logistics_requisition_line_analysis"
+              sequence="20"/>
+
+    <!-- Same analysis under Purchase > Reporting -->
+    <menuitem id="menu_purchase_report_requisition_line_analysis"
+              name="Agreement Analysis"
+              parent="purchase.purchase_report_main"
+              action="action_logistics_requisition_line_analysis"
+              sequence="100"/>
 
     <menuitem id="menu_logistics_bill_lading"
               name="Bills of Lading"
