@@ -62,6 +62,12 @@ class LogisticsContainerLine(models.Model):
         store=True,
         readonly=True,
     )
+    child_state_id = fields.Many2one(
+        related='container_id.child_state_id',
+        string='Child State',
+        store=True,
+        readonly=True,
+    )
 
     # === PRODUCT RELATED ===
     product_template = fields.Char(

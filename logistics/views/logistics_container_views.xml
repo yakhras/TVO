@@ -132,12 +132,12 @@
                                 <field name="amount_total" sum="Total"/>
                   <field name="destination_country_id" optional="hide"/>
                   <field name="dest_city_id" optional="hide"/>
-                <field name="child_state_id" optional="show"/>
                 <field name="state" widget="badge"
                        decoration-muted="state == 'purchase'"
                        decoration-warning="state in ('oversea', 'at_port')"
                        decoration-danger="state == 'arrived'"
                        decoration-success="state == 'antrepo'"/>
+                <field name="child_state_id" optional="show"/>
             </list>
         </field>
     </record>

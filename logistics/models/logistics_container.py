@@ -139,6 +139,8 @@ class LogisticsContainer(models.Model):
     )
     child_state_id = fields.Many2one(
         'logistics.container.child.state', string='Child State',
+        required=True, tracking=True,
+        default=lambda self: self._first_child_state('purchase'),
     )
 
     # --- Computed counts ---
@@ -163,10 +165,17 @@ class LogisticsContainer(models.Model):
         for rec in self:
             rec.display_name = rec.container_number or rec.name
 
+    @api.model
+    def _first_child_state(self, state):
+        """First child state (in the model's _order) for the given parent state."""
+        return self.env['logistics.container.child.state'].search(
+            [('parent_state', '=', state)], limit=1,
+        )
+
     @api.onchange('state')
     def _onchange_state(self):
         if self.child_state_id.parent_state != self.state:
-            self.child_state_id = False
+            self.child_state_id = self._first_child_state(self.state)
 
     @api.onchange('requisition_ids')
     def _onchange_requisition_ids(self):
@@ -269,6 +278,9 @@ class LogisticsContainer(models.Model):
             if vals.get('name', 'New') == 'New':
                 vals['name'] = self.env['ir.sequence'].next_by_code(
                     'logistics.container') or 'New'
+            if not vals.get('child_state_id'):
+                vals['child_state_id'] = self._first_child_state(
+                    vals.get('state') or 'purchase').id
         records = super().create(vals_list)
         bls = records.mapped('bill_lading_id').filtered(bool)
         records._sync_bl_requisitions(bls)
