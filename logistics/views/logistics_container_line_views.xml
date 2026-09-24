@@ -16,6 +16,7 @@
                     <group string="Identity">
                         <group>
                             <field name="internal_ref" readonly="1"/>
+                            <field name="transport_unit" readonly="1"/>
                             <field name="container_id"/>
                             <field name="requisition_id"/>
                             <field name="bill_lading_id" readonly="1"/>
@@ -136,6 +137,7 @@
                 <field name="sku_price" readonly="1"/>
                 <field name="total_weight" readonly="1" sum="Total Weight"/>
                 <field name="subtotal" readonly="1" sum="Subtotal"/>
+                <field name="transport_unit" readonly="1" optional="show"/>
                 <field name="container_id"/>
                 <field name="bill_lading_id"/>
                 <!-- Pricing (optional) -->
@@ -211,6 +213,8 @@
                             context="{'group_by': 'requisition_id'}"/>
                     <filter name="group_vendor" string="Supplier"
                         context="{'group_by': 'vendor_id'}"/>
+                    <filter name="group_transport_unit" string="Transport Type"
+                            context="{'group_by': 'transport_unit'}"/>
                     <filter name="group_container" string="Container"
                             context="{'group_by': 'container_id'}"/>
                     <filter name="group_bill_lading" string="Bill of Lading"

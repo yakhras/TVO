@@ -15,6 +15,10 @@ class LogisticsContainerLine(models.Model):
     old_sku = fields.Char(string='Old SKU')
 
     # === RELATIONS ===
+    transport_unit = fields.Selection(
+        string='Transport Type',
+        related='container_id.transport_unit', store=True,
+    )
     container_id = fields.Many2one(
         'logistics.container', string='Container', ondelete='cascade',
     )
