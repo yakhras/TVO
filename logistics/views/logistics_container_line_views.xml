@@ -30,6 +30,7 @@
                                     <field name="product_id"
                                            domain="[('id', 'in', allowed_product_ids)]"/>
                                     <field name="product_template" readonly="1"/>
+                                    <field name="description_picking" readonly="1"/>
                                 </group>
                                 <group>
                                     <field name="category_id" readonly="1"/>
@@ -125,6 +126,7 @@
                 <field name="vendor_id" readonly="1"/>
                 <field name="allowed_product_ids" column_invisible="1"/>
                 <field name="product_id" domain="[('id', 'in', allowed_product_ids)]"/>
+                <field name="description_picking" readonly="1" optional="show"/>
                 <field name="product_qty" sum="Total Qty"/>
                 <field name="agreement_remaining_qty" optional="hide"/>
                 <button name="action_open_qty_exceeded_detail"
@@ -191,6 +193,7 @@
                 <field name="container_id"/>
                 <field name="bill_lading_id"/>
                 <field name="requisition_id"/>
+                <field name="description_picking"/>
                 <field name="state"/>
                 <field name="child_state_id"/>
                 <separator/>
@@ -214,6 +217,8 @@
                             context="{'group_by': 'bill_lading_id'}"/>
                     <filter name="group_category" string="Category"
                             context="{'group_by': 'category_id'}"/>
+                    <filter name="group_description_picking" string="Description on Picking"
+                            context="{'group_by': 'description_picking'}"/>
                     <filter name="group_state" string="Status"
                             context="{'group_by': 'state'}"/>
                     <filter name="group_child_state" string="Child State"

@@ -76,6 +76,10 @@ class LogisticsContainerLine(models.Model):
     category_id = fields.Many2one(
         'product.category', string='Category', related='product_id.categ_id',
     )
+    description_picking = fields.Text(
+        string='Description on Picking',
+        compute='_compute_description_picking', store=True, readonly=True,
+    )
 
     # === COMPUTED HELPERS ===
     allowed_product_ids = fields.Many2many(
@@ -376,6 +380,11 @@ class LogisticsContainerLine(models.Model):
     def _compute_allowed_requisition_ids(self):
         for line in self:
             line.allowed_requisition_ids = line.container_id.requisition_ids
+
+    @api.depends('product_id.product_tmpl_id.description_picking')
+    def _compute_description_picking(self):
+        for line in self:
+            line.description_picking = line.product_id.description_picking
 
     @api.depends('sku_weight', 'product_qty')
     def _compute_total_weight(self):

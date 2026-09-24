@@ -28,6 +28,11 @@
                 <field name="pi_date"/>
             </xpath>
 
+            <!-- Description on Picking on agreement product lines -->
+            <xpath expr="//field[@name='line_ids']/list/field[@name='product_description_variants']" position="after">
+                <field name="description_picking" readonly="1" optional="show"/>
+            </xpath>
+
             <!-- Container Lines notebook page after Products -->
             <xpath expr="//page[@name='products']" position="after">
                 <page string="Container Lines" name="container_lines">
@@ -53,6 +58,25 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
                 <field name="pi_date" optional="show"/>
+                <field name="description_picking" readonly="1" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend native search view -->
+    <record id="view_purchase_requisition_filter_inherit_logistics" model="ir.ui.view">
+        <field name="name">purchase.requisition.search.inherit.logistics</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="description_picking"/>
+            </xpath>
+            <xpath expr="//search" position="inside">
+                <group expand="0" string="Group By">
+                    <filter name="group_description_picking" string="Description on Picking"
+                            context="{'group_by': 'description_picking'}"/>
+                </group>
             </xpath>
         </field>
     </record>

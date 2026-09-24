@@ -1,6 +1,20 @@
 from odoo import api, fields, models
 
 
+class PurchaseRequisitionLine(models.Model):
+    _inherit = 'purchase.requisition.line'
+
+    description_picking = fields.Text(
+        string='Description on Picking',
+        compute='_compute_description_picking', store=True, readonly=True,
+    )
+
+    @api.depends('product_id.product_tmpl_id.description_picking')
+    def _compute_description_picking(self):
+        for line in self:
+            line.description_picking = line.product_id.description_picking
+
+
 class PurchaseRequisition(models.Model):
     _inherit = 'purchase.requisition'
     _rec_names_search = ['name', 'reference']
@@ -12,6 +26,12 @@ class PurchaseRequisition(models.Model):
     origin_country_id = fields.Many2one(
         'res.country', string='Origin',
         related='vendor_id.country_id', store=True,
+    )
+
+    description_picking = fields.Text(
+        string='Description on Picking',
+        compute='_compute_description_picking', store=True, readonly=True,
+        help='Distinct "Description on Picking" values of the agreement products.',
     )
 
     # --- Relational ---
@@ -54,6 +74,15 @@ class PurchaseRequisition(models.Model):
         for rec in self:
             rec.display_name = rec.reference or rec.name
 
+
+    @api.depends('line_ids.description_picking')
+    def _compute_description_picking(self):
+        for rec in self:
+            descriptions = []
+            for desc in rec.line_ids.mapped('description_picking'):
+                if desc and desc not in descriptions:
+                    descriptions.append(desc)
+            rec.description_picking = ', '.join(descriptions) or False
 
     @api.depends('container_ids')
     def _compute_container_count(self):
