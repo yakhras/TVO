@@ -1,6 +1,6 @@
 {
     'name': 'Logistics',
-    'version': '18.0.1.0.3',
+    'version': '18.0.1.0.4',
     'category': 'Logistics',
     'summary': 'Import operations tracking: containers, B/L, customs',
     'description': """
@@ -15,6 +15,7 @@
         'product',
         'stock',
         'account',
+        'sale',
     ],
     'data': [
         'security/logistics_security.xml',
@@ -34,6 +35,7 @@
         'views/logistics_container_child_state_views.xml',
         'views/actions_menus.xml',
         'views/logistics_requisition_mismatch_report_views.xml',
+        'views/sale_container_line_views.xml',
     ],
     'assets': {
         'web.assets_backend': [

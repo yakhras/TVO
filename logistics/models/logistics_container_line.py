@@ -72,9 +72,11 @@ class LogisticsContainerLine(models.Model):
     # === PRODUCT RELATED ===
     product_template = fields.Char(
         string='Product Template', related='product_id.product_tmpl_id.name',
+        store=True, translate=False,
     )
     category_id = fields.Many2one(
         'product.category', string='Category', related='product_id.categ_id',
+        store=True,
     )
     description_picking = fields.Text(
         string='Description on Picking',
