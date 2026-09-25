@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===== Flat report 1: Arrivals by Product (SQL view) ===== -->
+
+    <record id="view_logistics_arrival_product_report_list" model="ir.ui.view">
+        <field name="name">logistics.arrival.product.report.list</field>
+        <field name="model">logistics.arrival.product.report</field>
+        <field name="arch" type="xml">
+            <list string="Arrivals by Product" create="0" edit="0" delete="0"
+                  action="action_open_lines" type="object">
+                <field name="arrival_date"/>
+                <field name="product_id"/>
+                <field name="description_picking"/>
+                <field name="product_qty" sum="Total"/>
+                <field name="total_weight" sum="Total"/>
+                <field name="container_count"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_logistics_arrival_product_report_search" model="ir.ui.view">
+        <field name="name">logistics.arrival.product.report.search</field>
+        <field name="model">logistics.arrival.product.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id"/>
+                <field name="description_picking"/>
+                <filter name="filter_arrival_date" string="Arriving Date" date="arrival_date"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_arrival_date" string="Arriving Date"
+                            context="{'group_by': 'arrival_date:day'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_logistics_arrival_product_report" model="ir.actions.act_window">
+        <field name="name">Arrivals by Product (Flat)</field>
+        <field name="res_model">logistics.arrival.product.report</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="view_logistics_arrival_product_report_search"/>
+    </record>
+
+    <!-- ===== Flat report 2: Arrivals by Forwarder (SQL view) ===== -->
+
+    <record id="view_logistics_arrival_forwarder_report_list" model="ir.ui.view">
+        <field name="name">logistics.arrival.forwarder.report.list</field>
+        <field name="model">logistics.arrival.forwarder.report</field>
+        <field name="arch" type="xml">
+            <list string="Arrivals by Forwarder" create="0" edit="0" delete="0"
+                  action="action_open_lines" type="object">
+                <field name="arrival_date"/>
+                <field name="forwarder_id"/>
+                <field name="bill_lading_id"/>
+                <field name="port_of_discharge_id"/>
+                <field name="product_id"/>
+                <field name="description_picking"/>
+                <field name="product_qty" sum="Total"/>
+                <field name="total_weight" sum="Total"/>
+                <field name="container_count"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_logistics_arrival_forwarder_report_search" model="ir.ui.view">
+        <field name="name">logistics.arrival.forwarder.report.search</field>
+        <field name="model">logistics.arrival.forwarder.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="forwarder_id"/>
+                <field name="bill_lading_id"/>
+                <field name="port_of_discharge_id"/>
+                <field name="product_id"/>
+                <field name="description_picking"/>
+                <filter name="filter_arrival_date" string="Arriving Date" date="arrival_date"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_arrival_date" string="Arriving Date"
+                            context="{'group_by': 'arrival_date:day'}"/>
+                    <filter name="group_forwarder" string="Forwarder"
+                            context="{'group_by': 'forwarder_id'}"/>
+                    <filter name="group_bill_lading" string="Bill of Lading"
+                            context="{'group_by': 'bill_lading_id'}"/>
+                    <filter name="group_port_to" string="Port To"
+                            context="{'group_by': 'port_of_discharge_id'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_logistics_arrival_forwarder_report" model="ir.actions.act_window">
+        <field name="name">Arrivals by Forwarder (Flat)</field>
+        <field name="res_model">logistics.arrival.forwarder.report</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="view_logistics_arrival_forwarder_report_search"/>
+    </record>
+
+    <!-- ===== Menus (under Logistics > Reporting) ===== -->
+
+    <menuitem id="menu_logistics_arrival_product_report"
+              name="Arrivals by Product (Flat)"
+              parent="menu_logistics_reporting"
+              action="action_logistics_arrival_product_report"
+              sequence="40"/>
+
+    <menuitem id="menu_logistics_arrival_forwarder_report"
+              name="Arrivals by Forwarder (Flat)"
+              parent="menu_logistics_reporting"
+              action="action_logistics_arrival_forwarder_report"
+              sequence="50"/>
+
+</odoo>

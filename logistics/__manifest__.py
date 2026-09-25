@@ -38,6 +38,7 @@
         'views/actions_menus.xml',
         'views/logistics_requisition_mismatch_report_views.xml',
         'views/logistics_container_line_report_views.xml',
+        'views/logistics_arrival_report_views.xml',
         'views/sale_container_line_views.xml',
     ],
     'assets': {
