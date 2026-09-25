@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- ===== Flat report 1: Arrivals by Product (SQL view) ===== -->
+    <!-- ===== Report 1: Arrivals by Product (SQL view) ===== -->
 
     <record id="view_logistics_arrival_product_report_list" model="ir.ui.view">
         <field name="name">logistics.arrival.product.report.list</field>
@@ -58,13 +58,13 @@
     </record>
 
     <record id="action_logistics_arrival_product_report" model="ir.actions.act_window">
-        <field name="name">Arrivals by Product (Flat)</field>
+        <field name="name">Arrivals by Product</field>
         <field name="res_model">logistics.arrival.product.report</field>
         <field name="view_mode">list</field>
         <field name="search_view_id" ref="view_logistics_arrival_product_report_search"/>
     </record>
 
-    <!-- ===== Flat report 2: Arrivals by Forwarder (SQL view) ===== -->
+    <!-- ===== Report 2: Arrivals by Forwarder (SQL view) ===== -->
 
     <record id="view_logistics_arrival_forwarder_report_list" model="ir.ui.view">
         <field name="name">logistics.arrival.forwarder.report.list</field>
@@ -133,7 +133,7 @@
     </record>
 
     <record id="action_logistics_arrival_forwarder_report" model="ir.actions.act_window">
-        <field name="name">Arrivals by Forwarder (Flat)</field>
+        <field name="name">Arrivals by Forwarder</field>
         <field name="res_model">logistics.arrival.forwarder.report</field>
         <field name="view_mode">list</field>
         <field name="search_view_id" ref="view_logistics_arrival_forwarder_report_search"/>
@@ -142,13 +142,13 @@
     <!-- ===== Menus (under Logistics > Reporting) ===== -->
 
     <menuitem id="menu_logistics_arrival_product_report"
-              name="Arrivals by Product (Flat)"
+              name="Arrivals by Product"
               parent="menu_logistics_reporting"
               action="action_logistics_arrival_product_report"
               sequence="40"/>
 
     <menuitem id="menu_logistics_arrival_forwarder_report"
-              name="Arrivals by Forwarder (Flat)"
+              name="Arrivals by Forwarder"
               parent="menu_logistics_reporting"
               action="action_logistics_arrival_forwarder_report"
               sequence="50"/>

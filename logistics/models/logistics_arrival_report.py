@@ -43,7 +43,7 @@ def _action_open_lines(report):
 
 class LogisticsArrivalProductReport(models.Model):
     _name = 'logistics.arrival.product.report'
-    _description = 'Arrivals by Product (Flat)'
+    _description = 'Arrivals by Product'
     _auto = False
     _order = 'arrival_date desc, product_id'
 
@@ -74,7 +74,7 @@ class LogisticsArrivalProductReport(models.Model):
 
 class LogisticsArrivalForwarderReport(models.Model):
     _name = 'logistics.arrival.forwarder.report'
-    _description = 'Arrivals by Forwarder (Flat)'
+    _description = 'Arrivals by Forwarder'
     _auto = False
     _order = 'arrival_date desc, forwarder_id, bill_lading_id, product_id'
 
