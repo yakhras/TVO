@@ -50,8 +50,8 @@
                             context="{'group_by': 'child_state_id'}"/>
                 </group>
                 <searchpanel>
-                    <field name="child_state_id" select="multi" groupby="parent_state"
-                           string="Child State" icon="fa-tags"/>
+                    <!-- no groupby: grouped values are AND-ed per group by the web client -->
+                    <field name="child_state_id" select="multi" string="Child State" icon="fa-tags"/>
                 </searchpanel>
             </search>
         </field>
@@ -125,8 +125,8 @@
                             context="{'group_by': 'child_state_id'}"/>
                 </group>
                 <searchpanel>
-                    <field name="child_state_id" select="multi" groupby="parent_state"
-                           string="Child State" icon="fa-tags"/>
+                    <!-- no groupby: grouped values are AND-ed per group by the web client -->
+                    <field name="child_state_id" select="multi" string="Child State" icon="fa-tags"/>
                 </searchpanel>
             </search>
         </field>
