@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===== Report 1: Arrivals by Product ===== -->
+
+    <record id="view_logistics_container_line_pivot_arrival_product" model="ir.ui.view">
+        <field name="name">logistics.container.line.pivot.arrival.product</field>
+        <field name="model">logistics.container.line</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <pivot string="Arrivals by Product">
+                <field name="arrival_date" interval="day" type="row"/>
+                <field name="product_id" type="row"/>
+                <field name="description_picking" type="row"/>
+                <field name="product_qty" type="measure"/>
+                <field name="total_weight" type="measure"/>
+                <!-- many2one measure = count distinct in pivot -->
+                <field name="container_id" type="measure" string="Number of Containers"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_logistics_container_line_list_arrival_product" model="ir.ui.view">
+        <field name="name">logistics.container.line.list.arrival.product</field>
+        <field name="model">logistics.container.line</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <list string="Arrivals by Product" create="0" edit="0" delete="0">
+                <field name="arrival_date"/>
+                <field name="product_id"/>
+                <field name="description_picking"/>
+                <field name="container_id"/>
+                <field name="product_qty" sum="Total"/>
+                <field name="total_weight" sum="Total"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_logistics_container_line_report_arrival_product" model="ir.actions.act_window">
+        <field name="name">Arrivals by Product</field>
+        <field name="res_model">logistics.container.line</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="search_view_id" ref="view_logistics_container_line_search"/>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="action_logistics_container_line_report_arrival_product_pivot" model="ir.actions.act_window.view">
+        <field name="sequence">1</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_logistics_container_line_pivot_arrival_product"/>
+        <field name="act_window_id" ref="action_logistics_container_line_report_arrival_product"/>
+    </record>
+
+    <record id="action_logistics_container_line_report_arrival_product_list" model="ir.actions.act_window.view">
+        <field name="sequence">2</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_logistics_container_line_list_arrival_product"/>
+        <field name="act_window_id" ref="action_logistics_container_line_report_arrival_product"/>
+    </record>
+
+    <!-- ===== Report 2: Arrivals by Forwarder / B/L / Port ===== -->
+
+    <record id="view_logistics_container_line_pivot_arrival_forwarder" model="ir.ui.view">
+        <field name="name">logistics.container.line.pivot.arrival.forwarder</field>
+        <field name="model">logistics.container.line</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <pivot string="Arrivals by Forwarder">
+                <field name="arrival_date" interval="day" type="row"/>
+                <field name="forwarder_id" type="row"/>
+                <field name="bill_lading_id" type="row"/>
+                <field name="port_of_discharge_id" type="row"/>
+                <field name="product_id" type="row"/>
+                <field name="description_picking" type="row"/>
+                <field name="product_qty" type="measure"/>
+                <field name="total_weight" type="measure"/>
+                <field name="container_id" type="measure" string="Number of Containers"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_logistics_container_line_list_arrival_forwarder" model="ir.ui.view">
+        <field name="name">logistics.container.line.list.arrival.forwarder</field>
+        <field name="model">logistics.container.line</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <list string="Arrivals by Forwarder" create="0" edit="0" delete="0">
+                <field name="arrival_date"/>
+                <field name="forwarder_id"/>
+                <field name="bill_lading_id"/>
+                <field name="port_of_discharge_id"/>
+                <field name="product_id"/>
+                <field name="description_picking"/>
+                <field name="container_id"/>
+                <field name="product_qty" sum="Total"/>
+                <field name="total_weight" sum="Total"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_logistics_container_line_report_arrival_forwarder" model="ir.actions.act_window">
+        <field name="name">Arrivals by Forwarder</field>
+        <field name="res_model">logistics.container.line</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="search_view_id" ref="view_logistics_container_line_search"/>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="action_logistics_container_line_report_arrival_forwarder_pivot" model="ir.actions.act_window.view">
+        <field name="sequence">1</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_logistics_container_line_pivot_arrival_forwarder"/>
+        <field name="act_window_id" ref="action_logistics_container_line_report_arrival_forwarder"/>
+    </record>
+
+    <record id="action_logistics_container_line_report_arrival_forwarder_list" model="ir.actions.act_window.view">
+        <field name="sequence">2</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_logistics_container_line_list_arrival_forwarder"/>
+        <field name="act_window_id" ref="action_logistics_container_line_report_arrival_forwarder"/>
+    </record>
+
+    <!-- ===== Menus (under Logistics > Reporting) ===== -->
+
+    <menuitem id="menu_logistics_container_line_report_arrival_product"
+              name="Arrivals by Product"
+              parent="menu_logistics_reporting"
+              action="action_logistics_container_line_report_arrival_product"
+              sequence="20"/>
+
+    <menuitem id="menu_logistics_container_line_report_arrival_forwarder"
+              name="Arrivals by Forwarder"
+              parent="menu_logistics_reporting"
+              action="action_logistics_container_line_report_arrival_forwarder"
+              sequence="30"/>
+
+</odoo>
