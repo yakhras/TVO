@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Default child states. noupdate: edits made in Configuration are kept on upgrade.
+         Existing records are linked to these ids by migrations/18.0.1.0.6/pre-migrate.py. -->
+    <data noupdate="1">
+        <!-- Purchasing -->
+        <record id="child_state_waiting_loading_termin" model="logistics.container.child.state">
+            <field name="child_state">Waiting for Loading Termin</field>
+            <field name="parent_state">purchase</field>
+        </record>
+        <record id="child_state_awaiting_supplier_load" model="logistics.container.child.state">
+            <field name="child_state">Awaiting Supplier Load</field>
+            <field name="parent_state">purchase</field>
+        </record>
+        <record id="child_state_loading_port_waiting_departure" model="logistics.container.child.state">
+            <field name="child_state">At Loading Port Waiting for Departure</field>
+            <field name="parent_state">purchase</field>
+        </record>
+
+        <!-- Oversea -->
+        <record id="child_state_on_the_way" model="logistics.container.child.state">
+            <field name="child_state">On the Way</field>
+            <field name="parent_state">oversea</field>
+        </record>
+
+        <!-- At Port -->
+        <record id="child_state_custom_clearance_destination_port" model="logistics.container.child.state">
+            <field name="child_state">Custom Clerance at Destination Port</field>
+            <field name="parent_state">at_port</field>
+        </record>
+        <record id="child_state_at_discharging_port" model="logistics.container.child.state">
+            <field name="child_state">At Discharging Port</field>
+            <field name="parent_state">at_port</field>
+        </record>
+        <record id="child_state_custom_clearance_loading_port" model="logistics.container.child.state">
+            <field name="child_state">Custom Clerance at Loading Port</field>
+            <field name="parent_state">at_port</field>
+        </record>
+        <record id="child_state_problem_custom_clearance" model="logistics.container.child.state">
+            <field name="child_state">Problem at Custom Clerance</field>
+            <field name="parent_state">at_port</field>
+        </record>
+        <record id="child_state_port_to_antrepo_transit" model="logistics.container.child.state">
+            <field name="child_state">Port to Antrepo Transit</field>
+            <field name="parent_state">at_port</field>
+        </record>
+
+        <!-- Arrived -->
+        <record id="child_state_completed" model="logistics.container.child.state">
+            <field name="child_state">Completed</field>
+            <field name="parent_state">arrived</field>
+        </record>
+        <record id="child_state_syria_transit_stage" model="logistics.container.child.state">
+            <field name="child_state">Syria Transit Stage</field>
+            <field name="parent_state">arrived</field>
+        </record>
+
+        <!-- Antrepo -->
+        <record id="child_state_at_antrepo" model="logistics.container.child.state">
+            <field name="child_state">At Antrepo</field>
+            <field name="parent_state">antrepo</field>
+        </record>
+    </data>
+</odoo>

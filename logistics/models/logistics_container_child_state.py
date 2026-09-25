@@ -1,6 +1,15 @@
 from odoo import fields, models
 
-from .logistics_container import CONTAINER_STATE_SELECTION
+# Defined here (not in logistics_container) so this model is registered, and
+# its table created, before logistics.container: the container's required
+# child_state_id default queries this table when the column is initialized.
+CONTAINER_STATE_SELECTION = [
+    ('purchase', 'Purchasing'),
+    ('oversea', 'Oversea'),
+    ('at_port', 'At Port'),
+    ('arrived', 'Arrived'),
+    ('antrepo', 'Antrepo'),
+]
 
 
 class LogisticsContainerChildState(models.Model):

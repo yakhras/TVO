@@ -3,15 +3,9 @@ import logging
 from odoo import api, fields, models
 from odoo.fields import Command
 
-_logger = logging.getLogger(__name__)
+from .logistics_container_child_state import CONTAINER_STATE_SELECTION
 
-CONTAINER_STATE_SELECTION = [
-    ('purchase', 'Purchasing'),
-    ('oversea', 'Oversea'),
-    ('at_port', 'At Port'),
-    ('arrived', 'Arrived'),
-    ('antrepo', 'Antrepo'),
-]
+_logger = logging.getLogger(__name__)
 
 TRANSPORT_UNIT_SELECTION = [
     ('container', 'Container'),
