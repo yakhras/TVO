@@ -1,6 +1,8 @@
 from odoo import fields, models
 from odoo.tools.sql import SQL
 
+from .logistics_container import CONTAINER_STATE_SELECTION
+
 
 def _arrival_report_query(dimensions):
     """One row per unique combination of `dimensions` (container line columns),
@@ -51,9 +53,16 @@ class LogisticsArrivalProductReport(models.Model):
     product_qty = fields.Float(string='Quantity', digits='Product Unit of Measure', readonly=True)
     total_weight = fields.Float(string='Total Weight', digits='Stock Weight', readonly=True)
     container_count = fields.Integer(string='Number of Containers', readonly=True)
+    state = fields.Selection(CONTAINER_STATE_SELECTION, string='Status', readonly=True)
+    child_state_id = fields.Many2one(
+        'logistics.container.child.state', string='Child State', readonly=True,
+    )
     company_id = fields.Many2one('res.company', string='Company', readonly=True)
 
-    _dimensions = ['arrival_date', 'product_id', 'description_picking']
+    _dimensions = [
+        'arrival_date', 'product_id', 'description_picking',
+        'state', 'child_state_id',
+    ]
 
     @property
     def _table_query(self):
@@ -78,11 +87,16 @@ class LogisticsArrivalForwarderReport(models.Model):
     product_qty = fields.Float(string='Quantity', digits='Product Unit of Measure', readonly=True)
     total_weight = fields.Float(string='Total Weight', digits='Stock Weight', readonly=True)
     container_count = fields.Integer(string='Number of Containers', readonly=True)
+    state = fields.Selection(CONTAINER_STATE_SELECTION, string='Status', readonly=True)
+    child_state_id = fields.Many2one(
+        'logistics.container.child.state', string='Child State', readonly=True,
+    )
     company_id = fields.Many2one('res.company', string='Company', readonly=True)
 
     _dimensions = [
         'arrival_date', 'forwarder_id', 'bill_lading_id',
         'port_of_discharge_id', 'product_id', 'description_picking',
+        'state', 'child_state_id',
     ]
 
     @property

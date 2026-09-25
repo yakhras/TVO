@@ -15,6 +15,8 @@
                 <field name="product_qty" sum="Total"/>
                 <field name="total_weight" sum="Total"/>
                 <field name="container_count"/>
+                <field name="state" optional="hide"/>
+                <field name="child_state_id" optional="hide"/>
                 <field name="company_id" groups="base.group_multi_company" optional="hide"/>
             </list>
         </field>
@@ -27,13 +29,30 @@
             <search>
                 <field name="product_id"/>
                 <field name="description_picking"/>
+                <field name="state"/>
+                <field name="child_state_id"/>
+                <separator/>
+                <filter name="state_purchase"   string="Purchasing" domain="[('state','=','purchase')]"/>
+                <filter name="state_oversea"    string="Oversea"    domain="[('state','=','oversea')]"/>
+                <filter name="state_at_port"    string="At Port"    domain="[('state','=','at_port')]"/>
+                <filter name="state_arrived"    string="Arrived"    domain="[('state','=','arrived')]"/>
+                <filter name="state_antrepo"    string="Antrepo"    domain="[('state','=','antrepo')]"/>
+                <separator/>
                 <filter name="filter_arrival_date" string="Arriving Date" date="arrival_date"/>
                 <group expand="0" string="Group By">
                     <filter name="group_arrival_date" string="Arriving Date"
                             context="{'group_by': 'arrival_date:day'}"/>
                     <filter name="group_product" string="Product"
                             context="{'group_by': 'product_id'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_child_state" string="Child State"
+                            context="{'group_by': 'child_state_id'}"/>
                 </group>
+                <searchpanel>
+                    <field name="child_state_id" select="multi" groupby="parent_state"
+                           string="Child State" icon="fa-tags"/>
+                </searchpanel>
             </search>
         </field>
     </record>
@@ -62,6 +81,8 @@
                 <field name="product_qty" sum="Total"/>
                 <field name="total_weight" sum="Total"/>
                 <field name="container_count"/>
+                <field name="state" optional="hide"/>
+                <field name="child_state_id" optional="hide"/>
                 <field name="company_id" groups="base.group_multi_company" optional="hide"/>
             </list>
         </field>
@@ -77,6 +98,15 @@
                 <field name="port_of_discharge_id"/>
                 <field name="product_id"/>
                 <field name="description_picking"/>
+                <field name="state"/>
+                <field name="child_state_id"/>
+                <separator/>
+                <filter name="state_purchase"   string="Purchasing" domain="[('state','=','purchase')]"/>
+                <filter name="state_oversea"    string="Oversea"    domain="[('state','=','oversea')]"/>
+                <filter name="state_at_port"    string="At Port"    domain="[('state','=','at_port')]"/>
+                <filter name="state_arrived"    string="Arrived"    domain="[('state','=','arrived')]"/>
+                <filter name="state_antrepo"    string="Antrepo"    domain="[('state','=','antrepo')]"/>
+                <separator/>
                 <filter name="filter_arrival_date" string="Arriving Date" date="arrival_date"/>
                 <group expand="0" string="Group By">
                     <filter name="group_arrival_date" string="Arriving Date"
@@ -89,7 +119,15 @@
                             context="{'group_by': 'port_of_discharge_id'}"/>
                     <filter name="group_product" string="Product"
                             context="{'group_by': 'product_id'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_child_state" string="Child State"
+                            context="{'group_by': 'child_state_id'}"/>
                 </group>
+                <searchpanel>
+                    <field name="child_state_id" select="multi" groupby="parent_state"
+                           string="Child State" icon="fa-tags"/>
+                </searchpanel>
             </search>
         </field>
     </record>
