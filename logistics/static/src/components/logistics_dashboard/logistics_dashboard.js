@@ -8,11 +8,20 @@ export class LogisticsDashboard extends Component {
     static template = "logistics.LogisticsDashboard";
     static props = ["*"];
 
+    containerStateColors = {
+        purchase: "text-secondary",
+        oversea: "text-warning",
+        at_port: "text-warning",
+        arrived: "text-danger",
+        antrepo: "text-success",
+    };
+
     setup() {
         this.orm = useService("orm");
         this.action = useService("action");
         this.state = useState({
             kpis: {},
+            containerStates: [],
             upcomingArrivals: [],
             upcomingHasMore: false,
             loaded: false,
@@ -21,6 +30,7 @@ export class LogisticsDashboard extends Component {
         onWillStart(async () => {
             const data = await this.orm.call("logistics.dashboard", "get_dashboard_data", []);
             this.state.kpis = data.kpis;
+            this.state.containerStates = data.container_states;
             this.state.upcomingArrivals = data.upcoming_arrivals;
             this.state.upcomingHasMore = data.upcoming_arrivals_has_more;
             this.state.loaded = true;
@@ -52,6 +62,16 @@ export class LogisticsDashboard extends Component {
             res_model: "logistics.container",
             views: [[false, "list"], [false, "form"]],
             domain: state ? [["state", "=", state]] : [],
+        });
+    }
+
+    openContainersByChildState(childStateId, name) {
+        this.action.doAction({
+            type: "ir.actions.act_window",
+            name: `Containers - ${name}`,
+            res_model: "logistics.container",
+            views: [[false, "list"], [false, "form"]],
+            domain: [["child_state_id", "=", childStateId]],
         });
     }
 

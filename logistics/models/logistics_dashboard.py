@@ -1,5 +1,7 @@
 from odoo import api, fields, models
 
+from .logistics_container_child_state import CONTAINER_STATE_SELECTION
+
 
 class LogisticsDashboard(models.AbstractModel):
     _name = 'logistics.dashboard'
@@ -42,8 +44,25 @@ class LogisticsDashboard(models.AbstractModel):
 
         containers_by_state = {
             state: Container.search_count([('state', '=', state)])
-            for state in ('purchase', 'oversea', 'at_port', 'arrived', 'antrepo')
+            for state, _label in CONTAINER_STATE_SELECTION
         }
+
+        counts_by_child = {
+            child_state.id: count
+            for child_state, count in Container._read_group(
+                [], ['child_state_id'], ['__count'])
+        }
+        child_states = self.env['logistics.container.child.state'].sudo().search([])
+        container_states = [{
+            'state': state,
+            'label': label,
+            'count': containers_by_state[state],
+            'children': [{
+                'id': c.id,
+                'name': c.child_state,
+                'count': counts_by_child.get(c.id, 0),
+            } for c in child_states.filtered(lambda c: c.parent_state == state)],
+        } for state, label in CONTAINER_STATE_SELECTION]
 
         bl_has_number = [('number', '!=', False), ('number', '!=', '')]
         bl_docs_pending = BL.search_count(bl_has_number + [
@@ -64,15 +83,11 @@ class LogisticsDashboard(models.AbstractModel):
                 'deals_confirmed': deals_by_state['confirmed'],
                 'deals_closed': deals_by_state['done'],
                 'deals_cancelled': deals_by_state['cancel'],
-                'containers_purchase': containers_by_state['purchase'],
-                'containers_oversea': containers_by_state['oversea'],
-                'containers_at_port': containers_by_state['at_port'],
-                'containers_arrived': containers_by_state['arrived'],
-                'containers_antrepo': containers_by_state['antrepo'],
                 'bl_docs_pending': bl_docs_pending,
                 'bl_docs_draft': bl_docs_draft,
                 'bl_docs_original': bl_docs_original,
             },
+            'container_states': container_states,
             'upcoming_arrivals': upcoming['lines'],
             'upcoming_arrivals_has_more': upcoming['has_more'],
         }

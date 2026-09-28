@@ -3,6 +3,14 @@
     overflow-y: auto;
 }
 
+.o_logistics_child_state {
+    border-radius: 4px;
+
+    &:hover {
+        background-color: var(--bs-secondary-bg, #f1f3f5);
+    }
+}
+
 .o_logistics_arrivals_table_wrapper {
     max-height: 400px;
     overflow-y: auto;

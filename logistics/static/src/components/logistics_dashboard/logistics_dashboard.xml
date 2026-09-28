@@ -40,44 +40,28 @@
                 </div>
             </div>
 
-            <!-- Containers by status -->
+            <!-- Containers by status, with their child states -->
             <h5 class="mb-3">Containers</h5>
             <div class="row g-3 mb-4">
-                <div class="col-6 col-md-3 col-lg">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openContainers('purchase')">
-                        <div class="small text-muted">Purchasing</div>
-                        <div class="fs-1 fw-bold text-secondary" t-esc="state.kpis.containers_purchase || 0"/>
+                <t t-foreach="state.containerStates" t-as="parent" t-key="parent.state">
+                    <div class="col-6 col-md-4 col-lg">
+                        <div class="card p-3 h-100 cursor-pointer"
+                             t-on-click="() => this.openContainers(parent.state)">
+                            <div class="text-center">
+                                <div class="small text-muted" t-esc="parent.label"/>
+                                <div t-attf-class="fs-1 fw-bold {{ containerStateColors[parent.state] }}" t-esc="parent.count"/>
+                            </div>
+                            <ul class="list-unstyled small mb-0 mt-2 pt-2 border-top" t-if="parent.children.length">
+                                <li t-foreach="parent.children" t-as="child" t-key="child.id"
+                                    class="d-flex justify-content-between gap-2 py-1 o_logistics_child_state"
+                                    t-on-click.stop="() => this.openContainersByChildState(child.id, child.name)">
+                                    <span class="text-muted" t-esc="child.name"/>
+                                    <span class="fw-bold" t-esc="child.count"/>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="col-6 col-md-3 col-lg">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openContainers('oversea')">
-                        <div class="small text-muted">Oversea</div>
-                        <div class="fs-1 fw-bold text-warning" t-esc="state.kpis.containers_oversea || 0"/>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3 col-lg">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openContainers('at_port')">
-                        <div class="small text-muted">At Port</div>
-                        <div class="fs-1 fw-bold text-warning" t-esc="state.kpis.containers_at_port || 0"/>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3 col-lg">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openContainers('arrived')">
-                        <div class="small text-muted">Arrived</div>
-                        <div class="fs-1 fw-bold text-danger" t-esc="state.kpis.containers_arrived || 0"/>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3 col-lg">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openContainers('antrepo')">
-                        <div class="small text-muted">Antrepo</div>
-                        <div class="fs-1 fw-bold text-success" t-esc="state.kpis.containers_antrepo || 0"/>
-                    </div>
-                </div>
+                </t>
             </div>
 
             <!-- Bills of Lading by docs status -->
