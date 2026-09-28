@@ -7,87 +7,81 @@
         </t>
         <t t-else="">
 
-            <!-- Deals by status -->
-            <h5 class="mb-3">Purchase Agreements</h5>
+            <!-- Chart grid, one row from lg: Purchase Agreements pie (3) | Bills of Lading
+                 stacked bar (3) | Containers columns (6); all charts share one height -->
             <div class="row g-3 mb-4">
-                <div class="col-6 col-md-3">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openDeals('draft')">
-                        <div class="small text-muted">Draft</div>
-                        <div class="fs-1 fw-bold text-secondary" t-esc="state.kpis.deals_draft || 0"/>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openDeals('confirmed')">
-                        <div class="small text-muted">Confirmed</div>
-                        <div class="fs-1 fw-bold text-info" t-esc="state.kpis.deals_confirmed || 0"/>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openDeals('done')">
-                        <div class="small text-muted">Closed</div>
-                        <div class="fs-1 fw-bold text-success" t-esc="state.kpis.deals_closed || 0"/>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openDeals('cancel')">
-                        <div class="small text-muted">Cancelled</div>
-                        <div class="fs-1 fw-bold text-danger" t-esc="state.kpis.deals_cancelled || 0"/>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Containers by status, with their child states -->
-            <h5 class="mb-3">Containers</h5>
-            <div class="row g-3 mb-4">
-                <t t-foreach="state.containerStates" t-as="parent" t-key="parent.state">
-                    <div class="col-6 col-md-4 col-lg">
-                        <div class="card p-3 h-100 cursor-pointer"
-                             t-on-click="() => this.openContainers(parent.state)">
-                            <div class="text-center">
-                                <div class="small text-muted" t-esc="parent.label"/>
-                                <div t-attf-class="fs-1 fw-bold {{ containerStateColors[parent.state] }}" t-esc="parent.count"/>
-                            </div>
-                            <ul class="list-unstyled small mb-0 mt-2 pt-2 border-top" t-if="parent.children.length">
-                                <li t-foreach="parent.children" t-as="child" t-key="child.id"
-                                    class="d-flex justify-content-between gap-2 py-1 o_logistics_child_state"
-                                    t-on-click.stop="() => this.openContainersByChildState(child.id, child.name)">
-                                    <span class="text-muted" t-esc="child.name"/>
-                                    <span class="fw-bold" t-esc="child.count"/>
-                                </li>
-                            </ul>
+                <!-- Purchase Agreements by status (pie chart) -->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card p-3 h-100">
+                        <!-- Title and total on one line; click opens all agreements -->
+                        <div class="o_logistics_chart_head cursor-pointer"
+                             t-on-click="() => this.openDeals(false)">
+                            <h5 class="mb-0">Purchase Agreements</h5>
+                            <span class="fs-4 fw-bold" t-esc="dealsTotal"/>
+                        </div>
+                        <div class="o_logistics_pie">
+                            <canvas t-ref="dealsChart"/>
                         </div>
                     </div>
-                </t>
-            </div>
+                </div>
 
-            <!-- Bills of Lading by docs status -->
-            <h5 class="mb-3">Bills of Lading</h5>
-            <div class="row g-3 mb-4">
-                <div class="col-6 col-md-4">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openBillLadings(false, false)">
-                        <div class="small text-muted">Docs Pending</div>
-                        <div class="fs-1 fw-bold text-secondary" t-esc="state.kpis.bl_docs_pending || 0"/>
+                <!-- Bills of Lading by docs stage (single stacked bar, top to bottom) -->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card p-3 h-100">
+                        <div class="o_logistics_chart_head cursor-pointer"
+                             t-on-click="() => this.openBillLadings()">
+                            <h5 class="mb-0">Bills of Lading</h5>
+                            <span class="fs-4 fw-bold" t-esc="blTotal"/>
+                        </div>
+                        <div class="o_logistics_stack">
+                            <div t-foreach="blSegments" t-as="seg" t-key="seg.key"
+                                 t-attf-class="o_logistics_block text-bg-{{ seg.color }}"
+                                 t-att-style="'flex-grow: ' + seg.share"
+                                 t-att-title="seg.label + ': ' + seg.count + ' (' + seg.percent + '%)'"
+                                 t-on-click="() => this.openBillLadings(seg.draft, seg.original)">
+                                <div class="small" t-esc="seg.label"/>
+                                <div class="fs-5 fw-bold" t-esc="seg.count"/>
+                            </div>
+                            <div t-if="!blSegments.length" class="o_logistics_block o_logistics_block_empty text-muted">
+                                No bills of lading
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-6 col-md-4">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openBillLadings(true, false)">
-                        <div class="small text-muted">Draft Received</div>
-                        <div class="fs-1 fw-bold text-warning" t-esc="state.kpis.bl_docs_draft || 0"/>
+
+                <!-- Containers: one column per parent state, at least as wide as its longest label;
+                     child state tiles stacked inside, heights by count -->
+                <div class="col-12 col-lg-6">
+                    <div class="card p-3 h-100">
+                        <div class="o_logistics_chart_head cursor-pointer"
+                             t-on-click="() => this.openContainers(false)">
+                            <h5 class="mb-0">Containers</h5>
+                            <span class="fs-4 fw-bold" t-esc="containersTotal"/>
+                        </div>
+                        <div class="o_logistics_columns">
+                            <div t-foreach="containerColumns" t-as="parent" t-key="parent.state"
+                                 class="o_logistics_column">
+                                <div t-attf-class="o_logistics_column_head text-bg-{{ parent.color }} {{ parent.children.length ? '' : 'flex-grow-1' }}"
+                                     t-att-title="parent.title"
+                                     t-on-click="() => this.openContainers(parent.state)">
+                                    <t t-esc="parent.label"/> <b t-esc="parent.count"/>
+                                </div>
+                                <div t-foreach="parent.children" t-as="child" t-key="child.id"
+                                     t-attf-class="o_logistics_column_tile bg-{{ parent.color }}-subtle text-{{ parent.color }}-emphasis"
+                                     t-att-style="'flex-grow: ' + child.count"
+                                     t-att-title="child.title"
+                                     t-on-click="() => this.openContainersByChildState(child.id, child.name)">
+                                    <t t-esc="child.name"/> <b t-esc="child.count"/>
+                                </div>
+                            </div>
+                            <div t-if="!containerColumns.length" class="o_logistics_block o_logistics_block_empty text-muted">
+                                No containers
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-6 col-md-4">
-                    <div class="card text-center p-3 h-100 cursor-pointer"
-                         t-on-click="() => this.openBillLadings(true, true)">
-                        <div class="small text-muted">Original Received</div>
-                        <div class="fs-1 fw-bold text-success" t-esc="state.kpis.bl_docs_original || 0"/>
-                    </div>
-                </div>
+
             </div>
 
             <!-- Upcoming Arrivals -->
@@ -136,7 +130,7 @@
                 </table>
             </div>
             <div class="text-end" t-if="state.upcomingHasMore">
-                <a href="#" class="o_logistics_show_more" t-on-click.prevent="showMoreArrivals">Show More</a>
+                <a href="#" t-on-click.prevent="showMoreArrivals">Show More</a>
             </div>
 
         </t>

@@ -1,14 +1,111 @@
+// Shared height of the three dashboard charts (pie, BL bar, containers columns)
+$o-logistics-chart-height: 260px;
+
 .o_logistics_dashboard {
     height: 100%;
     overflow-y: auto;
 }
 
-.o_logistics_child_state {
-    border-radius: 4px;
+// Chart card header: title on the left, total aligned on the same line
+.o_logistics_chart_head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--bs-border-color, #dee2e6);
+}
+
+// Purchase Agreements pie chart area
+.o_logistics_pie {
+    position: relative;
+    height: $o-logistics-chart-height;
+}
+
+// Clickable colored block holding a label and its count (BL bar, empty containers placeholder)
+.o_logistics_block {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    cursor: pointer;
 
     &:hover {
-        background-color: var(--bs-secondary-bg, #f1f3f5);
+        filter: brightness(0.92);
     }
+}
+
+.o_logistics_block_empty {
+    flex-grow: 1;
+    background-color: var(--bs-secondary-bg, #e9ecef);
+    cursor: default;
+
+    &:hover {
+        filter: none;
+    }
+}
+
+// Bills of Lading single stacked bar: blocks sized by display share (inline flex-grow)
+.o_logistics_stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    height: $o-logistics-chart-height;
+    border-radius: 6px;
+    overflow: hidden;
+
+    > .o_logistics_block {
+        flex: 0 1 0;
+    }
+}
+
+// Containers chart: columns side by side, each at least as wide as its longest
+// one-line label; leftover card width is shared equally so the columns always
+// fill the card edge to edge. Tiles share the column height by count (inline
+// flex-grow) with a floor of one text line. Scrolls sideways only if the
+// labels together are wider than the card.
+.o_logistics_columns {
+    display: flex;
+    gap: 2px;
+    height: $o-logistics-chart-height;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.o_logistics_column {
+    // Basis = label width (never shrinks below it), equal share of any spare width
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.o_logistics_column_head,
+.o_logistics_column_tile {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0 0.35rem;
+    font-size: 12px;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover {
+        filter: brightness(0.92);
+    }
+}
+
+.o_logistics_column_head {
+    flex: none;
+    height: 22px;
+}
+
+.o_logistics_column_tile {
+    flex: 0 1 0;
+    min-height: 20px;
 }
 
 .o_logistics_arrivals_table_wrapper {
