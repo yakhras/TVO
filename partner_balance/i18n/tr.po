@@ -306,6 +306,18 @@ msgid "Statement of Account"
 msgstr "Hesap Ekstresi"
 
 #. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+msgid "Detailed Statement of Account"
+msgstr "Detaylı Hesap Ekstresi"
+
+#. module: partner_balance
+#. odoo-python
+#: code:addons/partner_balance/controllers/main_balance.py:0
+msgid "Mr"
+msgstr "Sayın"
+
+#. module: partner_balance
 #: model:ir.model.fields,field_description:partner_balance.field_account_move_line_report__price_subtotal
 msgid "Subtotal"
 msgstr "Ara Toplam"

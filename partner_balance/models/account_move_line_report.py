@@ -172,6 +172,23 @@ class AccountMoveLineReport(models.Model):
             )
         return self.env._try_currency_cache
 
+    def get_product_lines(self):
+        """Product lines of these report rows' invoices, for the list view's
+        "Products" sub-tables.
+
+        The report spans all companies, but a plain client-side searchRead on
+        account.move.line is restricted to the browser's active companies, so
+        invoices of other companies showed no products on screen while the
+        (sudo) PDF/XLSX exports did. Access is checked on the report rows
+        themselves, then the lines are read with sudo like the exports.
+        """
+        self.check_access('read')
+        return self.env['account.move.line'].sudo().search_read(
+            [('move_id', 'in', self.move_id.ids), ('display_type', '=', 'product')],
+            ['move_id', 'product_id', 'quantity', 'product_uom_id', 'price_unit',
+             'discount', 'price_total', 'price_subtotal'],
+        )
+
     def _compute_tr_currency_id(self):
         """Always return TRY currency for monetary field formatting."""
         try_currency = self._get_try_currency()

@@ -279,25 +279,19 @@ export class PartnerBalanceListController extends ListController {
     async _fetchProductData() {
         const records = this.model.root.records;
         const invoiceTypes = ['out_invoice', 'in_invoice', 'out_refund', 'in_refund'];
-        const moveIds = [...new Set(
-            records
-                .filter(r => {
-                    return invoiceTypes.includes(r.data.type_key);
-                })
-                .map(r => r.data.move_id && r.data.move_id[0])
-                .filter(Boolean)
-        )];
+        const invoiceRowIds = records
+            .filter(r => invoiceTypes.includes(r.data.type_key))
+            .map(r => r.resId);
 
-
-        if (!moveIds.length) {
+        if (!invoiceRowIds.length) {
             this._productData = {};
             return;
         }
 
-        const lines = await this.orm.searchRead(
-            'account.move.line',
-            [['move_id', 'in', moveIds], ['display_type', '=', 'product']],
-            ['move_id', 'product_id', 'quantity', 'product_uom_id', 'price_unit', 'discount', 'price_total', 'price_subtotal']
+        // Server-side fetch: a direct searchRead on account.move.line would be
+        // limited to the active companies, unlike the report and its exports.
+        const lines = await this.orm.call(
+            'account.move.line.report', 'get_product_lines', [invoiceRowIds]
         );
 
 

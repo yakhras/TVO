@@ -274,6 +274,18 @@ class BalanceExcelExport(BaseExportFormat, http.Controller):
         end = data_service.date_to or datetime.date.today().strftime('%Y-%m-%d')
         return f"{start} - {end}"
 
+    def _pdf_partner_name(self, ctx, lang):
+        """Partner name for the PDF header, prefixed with a translated "Mr"
+        when the partner is an individual (not a company)."""
+        partner_name = ctx.get('partner_name', '')
+        partner_id = ctx.get('default_partner_id')
+        if not partner_name or not partner_id:
+            return partner_name
+        partner = request.env['res.partner'].sudo().browse(partner_id)
+        if partner.exists() and partner.company_type == 'person':
+            return f"{self._lang_env(lang)._('Mr')} {partner_name}"
+        return partner_name
+
     def _base_pdf_values(self, title, lang, direction='ltr', partner_name='', period_label='', as_of_label=''):
         return {
             'lang': lang,
@@ -346,7 +358,11 @@ class BalanceExcelExport(BaseExportFormat, http.Controller):
             # it's actually shown under on screen — map it to the same "Balance"
             # translation so the PDF header matches what the view displays.
             'Cumulated Balance': _('Balance'),
+            # Same for the TRY statement's `cumulated_amount_tr_currency`.
+            'Cumulated TL': _('Balance'),
             'Origin Amount': _('Origin Amount'),
+            # And `amount_currency`, shown on screen as "Origin Amount".
+            'Amount Currency': _('Origin Amount'),
             'Currency': _('Currency'),
             'Rate': _('Rate'),
             'Document': _('Document'),
@@ -367,24 +383,49 @@ class BalanceExcelExport(BaseExportFormat, http.Controller):
         records = gathered['records']
 
         digits = FieldMapping.get_max_decimal_places(request.env)
-        numeric_indices = [
-            FieldMapping.COLUMNS['debit'], FieldMapping.COLUMNS['credit'],
-            FieldMapping.COLUMNS['balance'], FieldMapping.COLUMNS['amount_currency'],
-        ]
+        debit_idx = FieldMapping.COLUMNS['debit']
+        credit_idx = FieldMapping.COLUMNS['credit']
+        balance_idx = FieldMapping.COLUMNS['balance']
+        amount_currency_idx = FieldMapping.COLUMNS['amount_currency']
+        # Balance and Origin Amount carry a currency symbol, so they are
+        # formatted separately below instead of through format_pdf_row().
+        plain_numeric_indices = [debit_idx, credit_idx]
+
+        if data_service.is_tr_report:
+            balance_currency = request.env['account.move.line.report']._get_try_currency()
+        else:
+            balance_currency = records[:1].company_currency_id or request.env.company.currency_id
+
+        def _format_currency_cells(row, origin_currency):
+            if balance_idx < len(row):
+                row[balance_idx] = format_pdf_value(
+                    request.env, row[balance_idx], lang, digits=digits, currency=balance_currency,
+                )
+            if amount_currency_idx < len(row):
+                row[amount_currency_idx] = format_pdf_value(
+                    request.env, row[amount_currency_idx], lang, digits=digits, currency=origin_currency,
+                )
+            return row
 
         rows = [
-            format_pdf_row(request.env, self._sanitize_row(r), numeric_indices, lang, digits=digits)
-            for r in export_data
+            _format_currency_cells(
+                format_pdf_row(request.env, self._sanitize_row(r), plain_numeric_indices, lang, digits=digits),
+                rec.currency_id,
+            )
+            for r, rec in zip(export_data, records)
         ]
         row_move_ids = [r.move_id.id for r in records]
 
         opening_row = None
         opening_debit = opening_credit = 0.0
         if not skip_opening and opening_data['balance'] != 0.0:
-            opening_row = format_pdf_row(
-                request.env,
-                self._sanitize_row(FieldMapping.create_opening_balance_row(opening_data, env=self._lang_env(lang))),
-                numeric_indices, lang, digits=digits,
+            opening_row = _format_currency_cells(
+                format_pdf_row(
+                    request.env,
+                    self._sanitize_row(FieldMapping.create_opening_balance_row(opening_data, env=self._lang_env(lang))),
+                    plain_numeric_indices, lang, digits=digits,
+                ),
+                None,
             )
             opening_debit = opening_data.get('debit', 0.0)
             opening_credit = opening_data.get('credit', 0.0)
@@ -397,16 +438,14 @@ class BalanceExcelExport(BaseExportFormat, http.Controller):
 
         totals_row = [''] * len(columns_headers)
         totals_row[0] = self._lang_env(lang)._('Total')
-        debit_idx = FieldMapping.COLUMNS['debit']
-        credit_idx = FieldMapping.COLUMNS['credit']
-        balance_idx = FieldMapping.COLUMNS['balance']
         if debit_idx < len(totals_row):
             totals_row[debit_idx] = format_pdf_value(request.env, round(total_debit, 2), lang, digits=digits)
         if credit_idx < len(totals_row):
             totals_row[credit_idx] = format_pdf_value(request.env, round(total_credit, 2), lang, digits=digits)
         if balance_idx < len(totals_row):
             totals_row[balance_idx] = format_pdf_value(
-                request.env, round(total_debit - total_credit, 2), lang, digits=digits
+                request.env, round(total_debit - total_credit, 2), lang, digits=digits,
+                currency=balance_currency,
             )
 
         show_products = ctx.get('show_products', False)
@@ -415,11 +454,20 @@ class BalanceExcelExport(BaseExportFormat, http.Controller):
         )
 
         action_name = ctx.get('action_name', '')
+        if action_name in self.ACTION_TITLES:
+            title = self._resolve_title(action_name, lang)
+        else:
+            # Default statement: `action_name` may arrive already translated in
+            # the backend user's language (res.partner action), so rebuild the
+            # title in the report's language instead of echoing it back.
+            env = self._lang_env(lang)
+            title = (env._('Detailed Statement of Account') if show_products
+                     else env._('Statement of Account'))
         values = self._base_pdf_values(
-            title=self._resolve_title(action_name, lang),
+            title=title,
             lang=lang,
             direction=direction,
-            partner_name=ctx.get('partner_name', ''),
+            partner_name=self._pdf_partner_name(ctx, lang),
             period_label=self._period_label(data_service, lang),
         )
         values.update({
@@ -583,7 +631,7 @@ class BalanceExcelExport(BaseExportFormat, http.Controller):
             title=title,
             lang=lang,
             direction=direction,
-            partner_name=ctx.get('partner_name', ''),
+            partner_name=self._pdf_partner_name(ctx, lang),
             as_of_label=datetime.date.today().strftime('%Y-%m-%d'),
         )
         values.update({
