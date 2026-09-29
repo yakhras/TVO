@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- ===== Bill of Lading Analysis (SQL view, one row per BL + product) ===== -->
+    <!-- ===== Documentation Follow-Up (SQL view, one row per BL + product) ===== -->
 
     <record id="view_logistics_bill_lading_report_list" model="ir.ui.view">
         <field name="name">logistics.bill.lading.report.list</field>
         <field name="model">logistics.bill.lading.report</field>
         <field name="arch" type="xml">
-            <list string="Bill of Lading Analysis" create="0" edit="0" delete="0"
+            <list string="Documentation Follow-Up" create="0" edit="0" delete="0"
                   action="action_open_lines" type="object">
                 <field name="bill_lading_id"/>
                 <field name="arrival_date"/>
@@ -35,7 +35,7 @@
         <field name="name">logistics.bill.lading.report.pivot</field>
         <field name="model">logistics.bill.lading.report</field>
         <field name="arch" type="xml">
-            <pivot string="Bill of Lading Analysis" sample="1">
+            <pivot string="Documentation Follow-Up" sample="1">
                 <field name="bill_lading_id" type="row"/>
                 <field name="product_qty" type="measure"/>
                 <field name="container_count" type="measure"/>
@@ -47,7 +47,7 @@
         <field name="name">logistics.bill.lading.report.graph</field>
         <field name="model">logistics.bill.lading.report</field>
         <field name="arch" type="xml">
-            <graph string="Bill of Lading Analysis" type="bar" sample="1">
+            <graph string="Documentation Follow-Up" type="bar" sample="1">
                 <field name="bill_lading_id"/>
                 <field name="product_qty" type="measure"/>
             </graph>
@@ -101,14 +101,14 @@
     </record>
 
     <record id="action_logistics_bill_lading_report" model="ir.actions.act_window">
-        <field name="name">Bill of Lading Analysis</field>
+        <field name="name">Documentation Follow-Up</field>
         <field name="res_model">logistics.bill.lading.report</field>
         <field name="view_mode">list,pivot,graph</field>
         <field name="search_view_id" ref="view_logistics_bill_lading_report_search"/>
     </record>
 
     <menuitem id="menu_logistics_bill_lading_report"
-              name="Bill of Lading Analysis"
+              name="Documentation Follow-Up"
               parent="menu_logistics_reporting"
               action="action_logistics_bill_lading_report"
               sequence="60"/>
