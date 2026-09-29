@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===== Bill of Lading Analysis (SQL view, one row per BL + product) ===== -->
+
+    <record id="view_logistics_bill_lading_report_list" model="ir.ui.view">
+        <field name="name">logistics.bill.lading.report.list</field>
+        <field name="model">logistics.bill.lading.report</field>
+        <field name="arch" type="xml">
+            <list string="Bill of Lading Analysis" create="0" edit="0" delete="0"
+                  action="action_open_lines" type="object">
+                <field name="bill_lading_id"/>
+                <field name="arrival_date"/>
+                <field name="requisition_names"/>
+                <field name="product_id"/>
+                <field name="product_qty" sum="Total"/>
+                <field name="container_count"/>
+                <field name="container_types"/>
+                <field name="invoice_nos"/>
+                <field name="shipping_line_id"/>
+                <field name="port_of_discharge_id"/>
+                <field name="docs_draft" optional="show"/>
+                <field name="docs_original" optional="show"/>
+                <field name="bl_original_release" optional="show"/>
+                <field name="coo" optional="show"/>
+                <field name="coa" optional="show"/>
+                <field name="hc" optional="show"/>
+                <field name="mtfta" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_logistics_bill_lading_report_pivot" model="ir.ui.view">
+        <field name="name">logistics.bill.lading.report.pivot</field>
+        <field name="model">logistics.bill.lading.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Bill of Lading Analysis" sample="1">
+                <field name="bill_lading_id" type="row"/>
+                <field name="product_qty" type="measure"/>
+                <field name="container_count" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_logistics_bill_lading_report_graph" model="ir.ui.view">
+        <field name="name">logistics.bill.lading.report.graph</field>
+        <field name="model">logistics.bill.lading.report</field>
+        <field name="arch" type="xml">
+            <graph string="Bill of Lading Analysis" type="bar" sample="1">
+                <field name="bill_lading_id"/>
+                <field name="product_qty" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_logistics_bill_lading_report_search" model="ir.ui.view">
+        <field name="name">logistics.bill.lading.report.search</field>
+        <field name="model">logistics.bill.lading.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="bill_lading_id"/>
+                <field name="product_id"/>
+                <field name="vendor_id"/>
+                <field name="requisition_names"/>
+                <field name="shipping_line_id"/>
+                <field name="port_of_discharge_id"/>
+                <field name="invoice_nos"/>
+                <separator/>
+                <filter name="missing_docs_draft" string="Docs Draft Missing" domain="[('docs_draft','=',False)]"/>
+                <filter name="missing_docs_original" string="Docs Org Missing" domain="[('docs_original','=',False)]"/>
+                <filter name="missing_bl_original_release" string="BL Org./Release Missing" domain="[('bl_original_release','=',False)]"/>
+                <filter name="missing_coo" string="COO Missing" domain="[('coo','=',False)]"/>
+                <filter name="missing_coa" string="COA Missing" domain="[('coa','=',False)]"/>
+                <filter name="missing_hc" string="HC Missing" domain="[('hc','=',False)]"/>
+                <filter name="missing_mtfta" string="MTFTA Missing" domain="[('mtfta','=',False)]"/>
+                <separator/>
+                <filter name="no_bill_lading" string="Without BL" domain="[('bill_lading_id','=',False)]"/>
+                <separator/>
+                <filter name="filter_arrival_date" string="Arriving Date" date="arrival_date"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_requisition" string="Purchase Agreement" context="{'group_by': 'requisition_names'}"/>
+                    <filter name="group_product" string="Product" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_vendor" string="Vendor" context="{'group_by': 'vendor_id'}"/>
+                    <filter name="group_container_type" string="Container Type" context="{'group_by': 'container_types'}"/>
+                    <filter name="group_docs_draft" string="Docs Draft" context="{'group_by': 'docs_draft'}"/>
+                    <filter name="group_docs_original" string="Docs Org" context="{'group_by': 'docs_original'}"/>
+                    <filter name="group_bl_original_release" string="BL Org./Release" context="{'group_by': 'bl_original_release'}"/>
+                    <filter name="group_coo" string="COO" context="{'group_by': 'coo'}"/>
+                    <filter name="group_coa" string="COA" context="{'group_by': 'coa'}"/>
+                    <filter name="group_hc" string="HC" context="{'group_by': 'hc'}"/>
+                    <filter name="group_mtfta" string="MTFTA" context="{'group_by': 'mtfta'}"/>
+                    <filter name="group_shipping_line" string="Shipping Line" context="{'group_by': 'shipping_line_id'}"/>
+                    <filter name="group_arrival_date" string="Arriving Date" context="{'group_by': 'arrival_date:day'}"/>
+                    <filter name="group_invoice_no" string="Invoice No" context="{'group_by': 'invoice_nos'}"/>
+                    <filter name="group_bill_lading" string="BL" context="{'group_by': 'bill_lading_id'}"/>
+                    <filter name="group_port_to" string="Port To" context="{'group_by': 'port_of_discharge_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_logistics_bill_lading_report" model="ir.actions.act_window">
+        <field name="name">Bill of Lading Analysis</field>
+        <field name="res_model">logistics.bill.lading.report</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="search_view_id" ref="view_logistics_bill_lading_report_search"/>
+    </record>
+
+    <menuitem id="menu_logistics_bill_lading_report"
+              name="Bill of Lading Analysis"
+              parent="menu_logistics_reporting"
+              action="action_logistics_bill_lading_report"
+              sequence="60"/>
+
+</odoo>

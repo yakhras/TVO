@@ -38,6 +38,10 @@ class LogisticsBillLading(models.Model):
     bl_original_release = fields.Boolean(string='BL Org./Release', tracking=True)
     ordino = fields.Boolean(string='Ordino', tracking=True)
     custom_declaration = fields.Boolean(string='Custom Declaration', tracking=True)
+    coo = fields.Boolean(string='COO', tracking=True)
+    coa = fields.Boolean(string='COA', tracking=True)
+    hc = fields.Boolean(string='HC', tracking=True)
+    mtfta = fields.Boolean(string='MTFTA', tracking=True)
 
     requisition_ids = fields.Many2many(
         'purchase.requisition', string='Purchase Agreements',

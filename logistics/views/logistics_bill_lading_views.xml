@@ -46,6 +46,12 @@
                         <group>
                             <field name="docs_draft"/>
                             <field name="docs_original"/>
+                            <field name="coo"/>
+                            <field name="coa"/>
+                            <field name="hc"/>
+                            <field name="mtfta"/>
+                        </group>
+                        <group>
                             <field name="bl_original_release"/>
                             <field name="ordino"/>
                             <field name="custom_declaration"/>
