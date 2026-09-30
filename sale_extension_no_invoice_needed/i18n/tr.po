@@ -1,0 +1,61 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_extension_no_invoice_needed
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-30 06:13+0000\n"
+"PO-Revision-Date: 2026-09-30 06:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_extension_no_invoice_needed
+#: model:ir.model.fields,field_description:sale_extension_no_invoice_needed.field_sale_order__invoice_status
+msgid "Invoice Status"
+msgstr "Fatura Durumu"
+
+#. module: sale_extension_no_invoice_needed
+#. odoo-python
+#: code:addons/sale_extension_no_invoice_needed/models/sale_order.py:0
+msgid "Invoice status changed from 'No Invoice Needed' to 'To Invoice'."
+msgstr "Fatura durumu 'Fatura Gerekmiyor' durumundan 'Faturalanacak' durumuna değiştirildi."
+
+#. module: sale_extension_no_invoice_needed
+#. odoo-python
+#: code:addons/sale_extension_no_invoice_needed/models/sale_order.py:0
+msgid "Invoice status changed from 'To Invoice' to 'No Invoice Needed'."
+msgstr "Fatura durumu 'Faturalanacak' durumundan 'Fatura Gerekmiyor' durumuna değiştirildi."
+
+#. module: sale_extension_no_invoice_needed
+#: model:ir.actions.act_window,name:sale_extension_no_invoice_needed.action_orders_no_invoice_needed
+#: model:ir.model.fields,field_description:sale_extension_no_invoice_needed.field_sale_order__no_invoice_needed
+#: model:ir.model.fields.selection,name:sale_extension_no_invoice_needed.selection__sale_order__invoice_status__no_invoice_needed
+#: model:ir.ui.menu,name:sale_extension_no_invoice_needed.menu_sale_order_no_invoice_needed
+msgid "No Invoice Needed"
+msgstr "Fatura Gerekmiyor"
+
+#. module: sale_extension_no_invoice_needed
+#: model_terms:ir.actions.act_window,help:sale_extension_no_invoice_needed.action_orders_no_invoice_needed
+msgid "No orders marked as 'No Invoice Needed'"
+msgstr "'Fatura Gerekmiyor' olarak işaretlenmiş sipariş yok"
+
+#. module: sale_extension_no_invoice_needed
+#: model_terms:ir.ui.view,arch_db:sale_extension_no_invoice_needed.view_order_tree_no_invoice_needed
+msgid "Reset to To Invoice"
+msgstr "Faturalanacak Durumuna Geri Al"
+
+#. module: sale_extension_no_invoice_needed
+#: model:ir.model,name:sale_extension_no_invoice_needed.model_sale_order
+msgid "Sales Order"
+msgstr "Satış Siparişi"
+
+#. module: sale_extension_no_invoice_needed
+#: model_terms:ir.ui.view,arch_db:sale_extension_no_invoice_needed.view_order_tree_to_invoice
+msgid "Set No Invoice Needed"
+msgstr "Fatura Gerekmiyor Olarak İşaretle"
