@@ -87,9 +87,11 @@
                                             type="object" icon="fa-exclamation-triangle"
                                             title="Quantity exceeds the agreement — click for detail"
                                             invisible="product_qty &lt;= agreement_remaining_qty or product_qty &lt;= 0"/>
+                                    <field name="currency_id" column_invisible="1"/>
                                     <field name="sku_price" readonly="1"/>
                                     <field name="subtotal" readonly="1"/>
                                     <field name="total_weight" readonly="1"/>
+                                    <field name="mt_price"/>
                                      <field name="readiness_date" readonly="1"/>
                                       <field name="port_exiting_date" readonly="1"/>
                                                                             <field name="antrepo_arrival_date" readonly="1"/>

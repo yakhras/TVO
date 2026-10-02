@@ -9,12 +9,12 @@
         <field name="arch" type="xml">
             <list string="Arrivals by Product" create="0" edit="0" delete="0"
                   action="action_open_lines" type="object">
-                <field name="arrival_date"/>
+                <field name="arrival_date" width="110px"/>
                 <field name="product_id"/>
                 <field name="description_picking"/>
-                <field name="product_qty" sum="Total"/>
-                <field name="total_weight" sum="Total"/>
-                <field name="container_count"/>
+                <field name="product_qty" sum="Total" width="100px"/>
+                <field name="total_weight" sum="Total" width="110px"/>
+                <field name="container_count" width="160px"/>
                 <field name="state" optional="hide"/>
                 <field name="child_state_id" optional="hide"/>
                 <field name="company_id" groups="base.group_multi_company" optional="hide"/>
@@ -72,15 +72,15 @@
         <field name="arch" type="xml">
             <list string="Arrivals by Forwarder" create="0" edit="0" delete="0"
                   action="action_open_lines" type="object">
-                <field name="arrival_date"/>
+                <field name="arrival_date" width="110px"/>
                 <field name="forwarder_id"/>
                 <field name="bill_lading_id"/>
                 <field name="port_of_discharge_id"/>
                 <field name="product_id"/>
                 <field name="description_picking"/>
-                <field name="product_qty" sum="Total"/>
-                <field name="total_weight" sum="Total"/>
-                <field name="container_count"/>
+                <field name="product_qty" sum="Total" width="100px"/>
+                <field name="total_weight" sum="Total" width="110px"/>
+                <field name="container_count" width="160px"/>
                 <field name="state" optional="hide"/>
                 <field name="child_state_id" optional="hide"/>
                 <field name="company_id" groups="base.group_multi_company" optional="hide"/>

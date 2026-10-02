@@ -10,22 +10,22 @@
             <list string="Documentation Follow-Up" create="0" edit="0" delete="0"
                   action="action_open_lines" type="object">
                 <field name="bill_lading_id"/>
-                <field name="arrival_date"/>
+                <field name="arrival_date" width="110px"/>
                 <field name="requisition_names"/>
                 <field name="product_id"/>
                 <field name="product_qty" sum="Total"/>
-                <field name="container_count"/>
+                <field name="container_count" width="130px"/>
                 <field name="container_types"/>
                 <field name="invoice_nos"/>
                 <field name="shipping_line_id"/>
                 <field name="port_of_discharge_id"/>
-                <field name="docs_draft" optional="show"/>
-                <field name="docs_original" optional="show"/>
-                <field name="bl_original_release" optional="show"/>
-                <field name="coo" optional="show"/>
-                <field name="coa" optional="show"/>
-                <field name="hc" optional="show"/>
-                <field name="mtfta" optional="show"/>
+                <field name="docs_draft" optional="show" width="95px"/>
+                <field name="docs_original" optional="show" width="85px"/>
+                <field name="bl_original_release" optional="show" width="125px"/>
+                <field name="coo" optional="show" width="60px"/>
+                <field name="coa" optional="show" width="60px"/>
+                <field name="hc" optional="show" width="60px"/>
+                <field name="mtfta" optional="show" width="75px"/>
                 <field name="company_id" groups="base.group_multi_company" optional="hide"/>
             </list>
         </field>

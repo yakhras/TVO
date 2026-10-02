@@ -1,6 +1,6 @@
 {
     'name': 'Logistics',
-    'version': '18.0.1.0.8',
+    'version': '18.0.1.0.9',
     'category': 'Logistics',
     'summary': 'Import operations tracking: containers, B/L, customs',
     'description': """
