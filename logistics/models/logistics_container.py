@@ -287,6 +287,12 @@ class LogisticsContainer(models.Model):
         else:
             no_number_before = self.env['logistics.container']
 
+        # Keep Status and Child State consistent when they're written outside the
+        # form onchange (list multi-edit, imports): a child state implies its parent.
+        if vals.get('child_state_id') and 'state' not in vals:
+            child = self.env['logistics.container.child.state'].browse(vals['child_state_id'])
+            vals = dict(vals, state=child.parent_state)
+
         needs_sync = 'bill_lading_id' in vals or 'requisition_ids' in vals
         old_bls = {
             container.id: container.bill_lading_id
@@ -294,6 +300,14 @@ class LogisticsContainer(models.Model):
         } if needs_sync else {}
 
         result = super().write(vals)
+
+        # Status changed without a matching child state → first child of the new status.
+        if 'state' in vals:
+            mismatched = self.filtered(lambda c: c.child_state_id.parent_state != c.state)
+            for state in set(mismatched.mapped('state')):
+                mismatched.filtered(lambda c: c.state == state).write(
+                    {'child_state_id': self._first_child_state(state).id},
+                )
 
         # Sync internal_ref: replace '/False/' with the real container number
         for container in no_number_before:

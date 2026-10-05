@@ -120,24 +120,28 @@
         <field name="name">logistics.container.list</field>
         <field name="model">logistics.container</field>
         <field name="arch" type="xml">
-            <list>
+            <!-- multi_edit: tick one or more rows to change Status / Child State
+                 in place; every other column is read-only here. -->
+            <list multi_edit="1">
                 <field name="name"/>
-                <field name="transport_unit"/>
-                <field name="container_number"/>
-                <field name="container_type"/>
-                <field name="bill_lading_id"/>
-                <field name="requisition_ids" widget="many2many_tags"/>
-                <field name="ship_fee_amount"/>
-                                <field name="amount_subtotal" sum="Subtotal"/>
-                                <field name="amount_total" sum="Total"/>
-                  <field name="destination_country_id" optional="hide"/>
-                  <field name="dest_city_id" optional="hide"/>
-                <field name="state" widget="badge"
+                <field name="transport_unit" readonly="1"/>
+                <field name="container_number" readonly="1"/>
+                <field name="container_type" readonly="1"/>
+                <field name="bill_lading_id" readonly="1"/>
+                <field name="requisition_ids" widget="many2many_tags" readonly="1"/>
+                <field name="ship_fee_amount" readonly="1"/>
+                <field name="amount_subtotal" sum="Subtotal"/>
+                <field name="amount_total" sum="Total"/>
+                <field name="destination_country_id" optional="hide" readonly="1"/>
+                <field name="dest_city_id" optional="hide" readonly="1"/>
+                <field name="state"
                        decoration-muted="state == 'purchase'"
                        decoration-warning="state in ('oversea', 'at_port')"
                        decoration-danger="state == 'arrived'"
                        decoration-success="state == 'antrepo'"/>
-                <field name="child_state_id" optional="show"/>
+                <field name="child_state_id" optional="show"
+                       domain="[('parent_state', '=', state)]"
+                       options="{'no_create': True, 'no_open': True}"/>
             </list>
         </field>
     </record>
