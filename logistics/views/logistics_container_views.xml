@@ -92,7 +92,6 @@
                                     <field name="subtotal" readonly="1"/>
                                     <field name="total_weight" readonly="1"/>
                                     <field name="mt_price"/>
-                                    <field name="antrepo_arrival_date" readonly="1"/>
                                 </list>
                             </field>
 
