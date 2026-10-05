@@ -92,9 +92,7 @@
                                     <field name="subtotal" readonly="1"/>
                                     <field name="total_weight" readonly="1"/>
                                     <field name="mt_price"/>
-                                     <field name="readiness_date" readonly="1"/>
-                                      <field name="port_exiting_date" readonly="1"/>
-                                                                            <field name="antrepo_arrival_date" readonly="1"/>
+                                    <field name="antrepo_arrival_date" readonly="1"/>
                                 </list>
                             </field>
 
