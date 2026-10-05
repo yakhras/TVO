@@ -47,6 +47,7 @@
             'logistics/static/src/components/logistics_dashboard/logistics_dashboard.js',
             'logistics/static/src/components/logistics_dashboard/logistics_dashboard.xml',
             'logistics/static/src/components/logistics_dashboard/logistics_dashboard.scss',
+            'logistics/static/src/scss/bordered_list.scss',
         ],
     },
     'installable': True,

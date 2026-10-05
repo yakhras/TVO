@@ -1,6 +1,8 @@
 from odoo import fields, models
 from odoo.tools.sql import SQL
 
+from .logistics_container import CONTAINER_STATE_SELECTION
+
 
 class LogisticsBillLadingReport(models.Model):
     """One row per B/L + product (+ vendor, company), aggregated from container lines,
@@ -25,6 +27,9 @@ class LogisticsBillLadingReport(models.Model):
     # === DIMENSIONS ===
     bill_lading_id = fields.Many2one('logistics.bill.lading', string='BL', readonly=True)
     product_id = fields.Many2one('product.product', string='Product', readonly=True)
+    product_description = fields.Text(
+        related='product_id.description_picking', string='Product Description',
+    )
     requisition_names = fields.Char(string='Purchase Agreement', readonly=True)
     container_types = fields.Char(string='Container Type', readonly=True)
     invoice_nos = fields.Char(string='Invoice No', readonly=True)
@@ -40,6 +45,10 @@ class LogisticsBillLadingReport(models.Model):
     )
     arrival_date = fields.Date(string='Arriving Date', readonly=True)
     port_of_discharge_id = fields.Many2one('logistics.port', string='Port To', readonly=True)
+    state = fields.Selection(CONTAINER_STATE_SELECTION, string='Status', readonly=True)
+    child_state_id = fields.Many2one(
+        'logistics.container.child.state', string='Child State', readonly=True,
+    )
     # Filter / group-by only (not a list column).
     vendor_id = fields.Many2one('res.partner', string='Vendor', readonly=True)
     company_id = fields.Many2one('res.company', string='Company', readonly=True)
@@ -73,13 +82,15 @@ class LogisticsBillLadingReport(models.Model):
                 b.shipping_line_id AS shipping_line_id,
                 b.arrival_date AS arrival_date,
                 b.port_of_discharge_id AS port_of_discharge_id,
+                l.state AS state,
+                l.child_state_id AS child_state_id,
                 l.vendor_id AS vendor_id,
                 l.company_id AS company_id
             FROM logistics_container_line l
             LEFT JOIN logistics_container c ON c.id = l.container_id
             LEFT JOIN logistics_bill_lading b ON b.id = c.bill_lading_id
             LEFT JOIN purchase_requisition r ON r.id = l.requisition_id
-            GROUP BY b.id, l.product_id, l.vendor_id, l.company_id
+            GROUP BY b.id, l.product_id, l.state, l.child_state_id, l.vendor_id, l.company_id
         """)
 
     def _read_group_select(self, aggregate_spec, query):
@@ -106,6 +117,8 @@ class LogisticsBillLadingReport(models.Model):
                 ('company_id', '=', self.company_id.id),
                 ('bill_lading_id', '=', self.bill_lading_id.id or False),
                 ('product_id', '=', self.product_id.id or False),
+                ('state', '=', self.state or False),
+                ('child_state_id', '=', self.child_state_id.id or False),
                 ('vendor_id', '=', self.vendor_id.id or False),
             ],
             'target': 'current',

@@ -1,0 +1,8 @@
+// Grid lines between columns for list views with class="o_logistics_bordered_list".
+.o_logistics_bordered_list .o_list_table {
+    > thead > tr > th,
+    > tbody > tr > td,
+    > tfoot > tr > td {
+        border: 1px solid $border-color;
+    }
+}
