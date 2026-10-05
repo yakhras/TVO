@@ -27,9 +27,8 @@ class LogisticsBillLadingReport(models.Model):
     # === DIMENSIONS ===
     bill_lading_id = fields.Many2one('logistics.bill.lading', string='BL', readonly=True)
     product_id = fields.Many2one('product.product', string='Product', readonly=True)
-    product_description = fields.Text(
-        related='product_id.description_picking', string='Product Description',
-    )
+    # From the line's stored copy (like the arrival reports) so it can be grouped by.
+    product_description = fields.Text(string='Product Description', readonly=True)
     requisition_names = fields.Char(string='Purchase Agreement', readonly=True)
     container_types = fields.Char(string='Container Type', readonly=True)
     invoice_nos = fields.Char(string='Invoice No', readonly=True)
@@ -65,6 +64,7 @@ class LogisticsBillLadingReport(models.Model):
                 STRING_AGG(DISTINCT l.container_id::text, ',') AS container_ids_text,
                 b.id AS bill_lading_id,
                 l.product_id AS product_id,
+                l.description_picking AS product_description,
                 STRING_AGG(DISTINCT COALESCE(r.reference, r.name), ', ') AS requisition_names,
                 STRING_AGG(DISTINCT CASE c.container_type
                     WHEN '20' THEN '20ft'
@@ -90,7 +90,7 @@ class LogisticsBillLadingReport(models.Model):
             LEFT JOIN logistics_container c ON c.id = l.container_id
             LEFT JOIN logistics_bill_lading b ON b.id = c.bill_lading_id
             LEFT JOIN purchase_requisition r ON r.id = l.requisition_id
-            GROUP BY b.id, l.product_id, l.state, l.child_state_id, l.vendor_id, l.company_id
+            GROUP BY b.id, l.product_id, l.description_picking, l.state, l.child_state_id, l.vendor_id, l.company_id
         """)
 
     def _read_group_select(self, aggregate_spec, query):

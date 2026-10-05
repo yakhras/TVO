@@ -94,6 +94,7 @@
                 <group expand="0" string="Group By">
                     <filter name="group_requisition" string="Purchase Agreement" context="{'group_by': 'requisition_names'}"/>
                     <filter name="group_product" string="Product" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_product_description" string="Product Description" context="{'group_by': 'product_description'}"/>
                     <filter name="group_vendor" string="Vendor" context="{'group_by': 'vendor_id'}"/>
                     <filter name="group_container_type" string="Container Type" context="{'group_by': 'container_types'}"/>
                     <filter name="group_docs_draft" string="Docs Draft" context="{'group_by': 'docs_draft'}"/>
