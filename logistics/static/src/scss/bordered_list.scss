@@ -6,3 +6,34 @@
         border: 1px solid $border-color;
     }
 }
+
+// Centre checkboxes in lists with class="o_logistics_center_checkboxes":
+// boolean columns (fields with widget="boolean": header label + checkbox)
+// and the record selection column.
+.o_logistics_center_checkboxes .o_list_table {
+    th.o_boolean_cell,
+    td.o_boolean_cell {
+        text-align: center;
+    }
+    // Selector header has an uneven pe-1 (!important) padding. The column is
+    // sized as 20px + this padding (web column_width_hook), so keep it even and
+    // wide enough that the ~21px checkbox doesn't touch the borders.
+    .o_list_record_selector {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    // web's list style makes the checkbox a block (display:block !important on
+    // cells, d-flex m-0 utilities on the select-all header) with a 10px right
+    // margin, so text-align can't centre it: use auto side margins (it is
+    // width: fit-content) and drop the form-check left gutter.
+    td.o_boolean_cell .o-checkbox,
+    .o_list_record_selector .o-checkbox {
+        padding-left: 0;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        .form-check-input {
+            float: none;
+            margin-left: 0;
+        }
+    }
+}

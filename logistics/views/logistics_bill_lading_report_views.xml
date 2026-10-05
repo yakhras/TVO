@@ -8,7 +8,8 @@
         <field name="model">logistics.bill.lading.report</field>
         <field name="arch" type="xml">
             <list string="Documentation Follow-Up" create="0" edit="0" delete="0"
-                  action="action_open_lines" type="object" class="o_logistics_bordered_list">
+                  action="action_open_lines" type="object"
+                  class="o_logistics_bordered_list o_logistics_center_checkboxes">
                 <field name="bill_lading_id"/>
                 <field name="arrival_date" width="110px"/>
                 <field name="requisition_names"/>
@@ -22,13 +23,14 @@
                 <field name="state" optional="hide"/>
                 <field name="child_state_id" optional="hide"/>
                 <field name="product_id" optional="hide"/>
-                <field name="docs_draft" optional="show" width="95px"/>
-                <field name="docs_original" optional="show" width="85px"/>
-                <field name="bl_original_release" optional="show" width="125px"/>
-                <field name="coo" optional="show" width="60px"/>
-                <field name="coa" optional="show" width="60px"/>
-                <field name="hc" optional="show" width="60px"/>
-                <field name="mtfta" optional="show" width="75px"/>
+                <!-- explicit widget: adds o_boolean_cell to header + cells, centred via bordered_list.scss -->
+                <field name="docs_draft" widget="boolean" optional="show" width="95px"/>
+                <field name="docs_original" widget="boolean" optional="show" width="85px"/>
+                <field name="bl_original_release" widget="boolean" optional="show" width="125px"/>
+                <field name="coo" widget="boolean" optional="show" width="60px"/>
+                <field name="coa" widget="boolean" optional="show" width="60px"/>
+                <field name="hc" widget="boolean" optional="show" width="60px"/>
+                <field name="mtfta" widget="boolean" optional="show" width="75px"/>
                 <field name="company_id" groups="base.group_multi_company" optional="hide"/>
             </list>
         </field>
