@@ -1,29 +1,17 @@
-# -*- coding: utf-8 -*-
+# Copyright 2026 Yaser Akhras
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
-    'name': "stock_valuation",
-
-    'summary': """
-        stock_valuation""",
-
-    'description': """
-        stock_valuation. 
-    """,
-
+    'name': "Stock Valuation per Warehouse",
+    'summary': "Keep a separate product cost per warehouse, with cost history, "
+               "landed costs and revaluation applied per warehouse.",
     'author': "Yaser Akhras",
-    'website': "https://www.yaserakhras.com",
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    
-    'version': '18.0.1.0',
-    'application': True,
+    'maintainers': ["yakhras"],
+    'website': "https://yaserakhras.com",
+    'category': "Inventory/Inventory",
+    'version': '18.0.1.0.1',
+    'application': False,
     'license': 'AGPL-3',
-
-    # any module necessary for this one to work correctly
-    'depends': ['stock_landed_costs','base'],
-
-    # always loaded
+    'depends': ['stock_landed_costs'],
     'data': [
         'security/ir.model.access.csv',
         "views/product_product_view.xml",
