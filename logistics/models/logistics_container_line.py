@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.tools import SQL
 
 
 class LogisticsContainerLine(models.Model):
@@ -108,7 +109,10 @@ class LogisticsContainerLine(models.Model):
     # === QUANTITIES & PRICES ===
     product_uom_id = fields.Many2one('uom.uom', string='Unit', tracking=True)
     sku_weight = fields.Float(string='SKU Weight', digits='Stock Weight', tracking=True)
-    sku_price = fields.Float(string='SKU Price', digits='Product Price', tracking=True)
+    # Grouped as a weighted average, see _read_group_select.
+    sku_price = fields.Float(
+        string='SKU Price', digits='Product Price', tracking=True, aggregator='avg',
+    )
     product_qty = fields.Float(
         string='Quantity', digits='Product Unit of Measure', tracking=True,
     )
@@ -116,7 +120,9 @@ class LogisticsContainerLine(models.Model):
         string='Total Weight', compute='_compute_total_weight', store=True,
         digits='Stock Weight',
     )
-    mt_price = fields.Monetary(string='MT Price', currency_field='currency_id', tracking=True)
+    mt_price = fields.Monetary(
+        string='MT Price', currency_field='currency_id', tracking=True, aggregator='avg',
+    )
     subtotal = fields.Monetary(
         string='Subtotal', compute='_compute_subtotal', store=True,
         currency_field='currency_id',
@@ -401,6 +407,26 @@ class LogisticsContainerLine(models.Model):
     def _compute_subtotal(self):
         for line in self:
             line.subtotal = line.sku_price * line.product_qty
+
+    # Weight of each price in its weighted average, like Average Price in Invoice Analysis.
+    _WEIGHTED_AVG_FIELDS = {
+        'sku_price': 'product_qty',
+        'mt_price': 'total_weight',
+    }
+
+    def _read_group_select(self, aggregate_spec, query):
+        # A plain average of unit prices ignores how much each line weighs;
+        # use SUM(price * weight) / SUM(weight) instead. Lines without a price
+        # (not entered yet) are left out, else they would pull the average down.
+        fname, __, func = aggregate_spec.partition(':')
+        if func == 'avg' and fname in self._WEIGHTED_AVG_FIELDS:
+            price = self._field_to_sql(self._table, fname, query)
+            weight = self._field_to_sql(self._table, self._WEIGHTED_AVG_FIELDS[fname], query)
+            return SQL(
+                "COALESCE(SUM(%s * %s) / NULLIF(SUM(CASE WHEN %s <> 0 THEN %s END), 0), 0)",
+                price, weight, price, weight,
+            )
+        return super()._read_group_select(aggregate_spec, query)
 
     def action_open_form(self):
         self.ensure_one()
