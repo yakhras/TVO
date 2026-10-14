@@ -1,6 +1,6 @@
 {
     'name': 'Nilvera E-Invoice USD - TCMB Rate',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': 'Accounting',
     'summary': 'TCMB rate type selector and auto-fetch for invoices',
     'author': 'Yaser Akhras',
