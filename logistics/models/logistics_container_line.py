@@ -23,6 +23,10 @@ class LogisticsContainerLine(models.Model):
     container_id = fields.Many2one(
         'logistics.container', string='Container', ondelete='cascade',
     )
+    container_type = fields.Selection(
+        string='Container Type',
+        related='container_id.container_type', store=True,
+    )
     product_id = fields.Many2one('product.product', string='Product', tracking=True)
     bill_lading_id = fields.Many2one(
         'logistics.bill.lading', string='Bill of Lading',

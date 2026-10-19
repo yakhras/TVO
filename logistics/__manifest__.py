@@ -1,6 +1,6 @@
 {
     'name': 'Logistics',
-    'version': '18.0.1.0.9',
+    'version': '18.0.1.0.13',
     'category': 'Logistics',
     'summary': 'Import operations tracking: containers, B/L, customs',
     'description': """
@@ -41,6 +41,7 @@
         'views/logistics_arrival_report_views.xml',
         'views/logistics_bill_lading_report_views.xml',
         'views/sale_container_line_views.xml',
+        'views/logistics_cargo_readiness_report_views.xml',
     ],
     'assets': {
         'web.assets_backend': [

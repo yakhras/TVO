@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===== Cargo Readiness (SQL view, Awaiting Supplier Load only) ===== -->
+
+    <record id="view_logistics_cargo_readiness_report_list" model="ir.ui.view">
+        <field name="name">logistics.cargo.readiness.report.list</field>
+        <field name="model">logistics.cargo.readiness.report</field>
+        <field name="arch" type="xml">
+            <list string="Cargo Readiness" create="0" edit="0" delete="0"
+                  action="action_open_lines" type="object">
+                <field name="requisition_id"/>
+                <field name="readiness_date" width="140px"/>
+                <field name="container_type" width="110px"/>
+                <field name="container_count" sum="Total" width="130px"/>
+                <field name="port_of_loading_id"/>
+                <field name="vendor_id"/>
+                <field name="product_qty" sum="Total" optional="hide"/>
+                <field name="total_weight" sum="Total" optional="hide"/>
+                <field name="child_state_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_logistics_cargo_readiness_report_search" model="ir.ui.view">
+        <field name="name">logistics.cargo.readiness.report.search</field>
+        <field name="model">logistics.cargo.readiness.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="requisition_id"/>
+                <field name="vendor_id"/>
+                <field name="port_of_loading_id"/>
+                <field name="container_type"/>
+                <separator/>
+                <filter name="filter_readiness_date" string="Cargo Readiness Date" date="readiness_date"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_requisition" string="Contract No"
+                            context="{'group_by': 'requisition_id'}"/>
+                    <filter name="group_readiness_date" string="Cargo Readiness Date"
+                            context="{'group_by': 'readiness_date:day'}"/>
+                    <filter name="group_container_type" string="Container Type"
+                            context="{'group_by': 'container_type'}"/>
+                    <filter name="group_port_of_loading" string="Loading Port"
+                            context="{'group_by': 'port_of_loading_id'}"/>
+                    <filter name="group_vendor" string="Supplier"
+                            context="{'group_by': 'vendor_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_logistics_cargo_readiness_report" model="ir.actions.act_window">
+        <field name="name">Cargo Readiness</field>
+        <field name="res_model">logistics.cargo.readiness.report</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="view_logistics_cargo_readiness_report_search"/>
+        <field name="domain" eval="[('child_state_id', '=', ref('logistics.child_state_awaiting_supplier_load'))]"/>
+    </record>
+
+    <menuitem id="menu_logistics_cargo_readiness_report"
+              name="Cargo Readiness"
+              parent="menu_logistics_reporting"
+              action="action_logistics_cargo_readiness_report"
+              sequence="35"/>
+
+</odoo>

@@ -72,6 +72,43 @@ class LogisticsArrivalProductReport(models.Model):
         return _action_open_lines(self)
 
 
+class LogisticsCargoReadinessReport(models.Model):
+    """Restricted to the Awaiting Supplier Load child state by the action domain."""
+    _name = 'logistics.cargo.readiness.report'
+    _description = 'Cargo Readiness'
+    _auto = False
+    _order = 'readiness_date, requisition_id'
+
+    requisition_id = fields.Many2one('purchase.requisition', string='Contract No', readonly=True)
+    readiness_date = fields.Date(string='Cargo Readiness Date', readonly=True)
+    container_type = fields.Selection(
+        selection=[('20', '20ft'), ('40', '40ft'), ('other', 'Other')],
+        string='Container Type', readonly=True,
+    )
+    container_count = fields.Integer(string='Total Containers', readonly=True)
+    # Port From comes from the B/L, so it stays empty until one is linked.
+    port_of_loading_id = fields.Many2one('logistics.port', string='Loading Port', readonly=True)
+    vendor_id = fields.Many2one('res.partner', string='Supplier', readonly=True)
+    product_qty = fields.Float(string='Quantity', digits='Product Unit of Measure', readonly=True)
+    total_weight = fields.Float(string='Total Weight', digits='Stock Weight', readonly=True)
+    child_state_id = fields.Many2one(
+        'logistics.container.child.state', string='Child State', readonly=True,
+    )
+    company_id = fields.Many2one('res.company', string='Company', readonly=True)
+
+    _dimensions = [
+        'requisition_id', 'readiness_date', 'container_type',
+        'port_of_loading_id', 'vendor_id', 'child_state_id',
+    ]
+
+    @property
+    def _table_query(self):
+        return _arrival_report_query(self._dimensions)
+
+    def action_open_lines(self):
+        return _action_open_lines(self)
+
+
 class LogisticsArrivalForwarderReport(models.Model):
     _name = 'logistics.arrival.forwarder.report'
     _description = 'Arrivals by Forwarder'
