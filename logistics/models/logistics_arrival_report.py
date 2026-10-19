@@ -73,7 +73,8 @@ class LogisticsArrivalProductReport(models.Model):
 
 
 class LogisticsCargoReadinessReport(models.Model):
-    """Restricted to the Awaiting Supplier Load child state by the action domain."""
+    """Restricted to the Purchasing state by the action domain; child states are
+    picked in the search panel."""
     _name = 'logistics.cargo.readiness.report'
     _description = 'Cargo Readiness'
     _auto = False
@@ -91,14 +92,15 @@ class LogisticsCargoReadinessReport(models.Model):
     vendor_id = fields.Many2one('res.partner', string='Supplier', readonly=True)
     product_qty = fields.Float(string='Quantity', digits='Product Unit of Measure', readonly=True)
     total_weight = fields.Float(string='Total Weight', digits='Stock Weight', readonly=True)
+    state = fields.Selection(CONTAINER_STATE_SELECTION, string='Status', readonly=True)
     child_state_id = fields.Many2one(
         'logistics.container.child.state', string='Child State', readonly=True,
     )
     company_id = fields.Many2one('res.company', string='Company', readonly=True)
 
     _dimensions = [
-        'requisition_id', 'readiness_date', 'container_type',
-        'port_of_loading_id', 'vendor_id', 'child_state_id',
+        'readiness_date', 'requisition_id', 'container_type',
+        'port_of_loading_id', 'vendor_id', 'state', 'child_state_id',
     ]
 
     @property
