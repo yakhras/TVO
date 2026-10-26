@@ -47,6 +47,7 @@ class LogisticsArrivalProductReport(models.Model):
     _auto = False
     _order = 'arrival_date desc, product_id'
 
+    requisition_id = fields.Many2one('purchase.requisition', string='Purchase Agreement', readonly=True)
     arrival_date = fields.Date(string='Arriving Date', readonly=True)
     product_id = fields.Many2one('product.product', string='Product', readonly=True)
     description_picking = fields.Text(string='Description on Picking', readonly=True)
@@ -60,7 +61,7 @@ class LogisticsArrivalProductReport(models.Model):
     company_id = fields.Many2one('res.company', string='Company', readonly=True)
 
     _dimensions = [
-        'arrival_date', 'product_id', 'description_picking',
+        'requisition_id', 'arrival_date', 'product_id', 'description_picking',
         'state', 'child_state_id',
     ]
 
@@ -115,10 +116,11 @@ class LogisticsArrivalForwarderReport(models.Model):
     _name = 'logistics.arrival.forwarder.report'
     _description = 'Arrivals by Forwarder'
     _auto = False
-    _order = 'arrival_date desc, forwarder_id, bill_lading_id, product_id'
+    _order = 'arrival_date desc, forwarder_id, requisition_id, bill_lading_id, product_id'
 
     arrival_date = fields.Date(string='Arriving Date', readonly=True)
     forwarder_id = fields.Many2one('res.partner', string='Forwarder', readonly=True)
+    requisition_id = fields.Many2one('purchase.requisition', string='Purchase Agreement', readonly=True)
     bill_lading_id = fields.Many2one('logistics.bill.lading', string='Bill of Lading', readonly=True)
     port_of_discharge_id = fields.Many2one('logistics.port', string='Port To', readonly=True)
     product_id = fields.Many2one('product.product', string='Product', readonly=True)
@@ -133,7 +135,7 @@ class LogisticsArrivalForwarderReport(models.Model):
     company_id = fields.Many2one('res.company', string='Company', readonly=True)
 
     _dimensions = [
-        'arrival_date', 'forwarder_id', 'bill_lading_id',
+        'arrival_date', 'forwarder_id', 'requisition_id', 'bill_lading_id',
         'port_of_discharge_id', 'product_id', 'description_picking',
         'state', 'child_state_id',
     ]

@@ -9,6 +9,7 @@
         <field name="arch" type="xml">
             <list string="Arrivals by Product" create="0" edit="0" delete="0"
                   action="action_open_lines" type="object">
+                <field name="requisition_id"/>
                 <field name="arrival_date" width="110px"/>
                 <field name="product_id"/>
                 <field name="description_picking"/>
@@ -27,6 +28,7 @@
         <field name="model">logistics.arrival.product.report</field>
         <field name="arch" type="xml">
             <search>
+                <field name="requisition_id"/>
                 <field name="product_id"/>
                 <field name="description_picking"/>
                 <field name="state"/>
@@ -40,6 +42,8 @@
                 <separator/>
                 <filter name="filter_arrival_date" string="Arriving Date" date="arrival_date"/>
                 <group expand="0" string="Group By">
+                    <filter name="group_requisition" string="Purchase Agreement"
+                            context="{'group_by': 'requisition_id'}"/>
                     <filter name="group_arrival_date" string="Arriving Date"
                             context="{'group_by': 'arrival_date:day'}"/>
                     <filter name="group_product" string="Product"
@@ -74,6 +78,7 @@
                   action="action_open_lines" type="object">
                 <field name="arrival_date" width="110px"/>
                 <field name="forwarder_id"/>
+                <field name="requisition_id"/>
                 <field name="bill_lading_id"/>
                 <field name="port_of_discharge_id"/>
                 <field name="product_id"/>
@@ -94,6 +99,7 @@
         <field name="arch" type="xml">
             <search>
                 <field name="forwarder_id"/>
+                <field name="requisition_id"/>
                 <field name="bill_lading_id"/>
                 <field name="port_of_discharge_id"/>
                 <field name="product_id"/>
@@ -113,6 +119,8 @@
                             context="{'group_by': 'arrival_date:day'}"/>
                     <filter name="group_forwarder" string="Forwarder"
                             context="{'group_by': 'forwarder_id'}"/>
+                    <filter name="group_requisition" string="Purchase Agreement"
+                            context="{'group_by': 'requisition_id'}"/>
                     <filter name="group_bill_lading" string="Bill of Lading"
                             context="{'group_by': 'bill_lading_id'}"/>
                     <filter name="group_port_to" string="Port To"
