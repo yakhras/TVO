@@ -11,8 +11,8 @@
                   action="action_open_lines" type="object">
                 <field name="requisition_id"/>
                 <field name="arrival_date" width="110px"/>
-                <field name="port_of_discharge_id"/>
-                <field name="dest_city_id"/>
+                <field name="port_of_discharge_id" optional="hide"/>
+                <field name="dest_city_id" optional="hide"/>
                 <field name="product_id"/>
                 <field name="description_picking"/>
                 <field name="product_qty" sum="Total" width="100px"/>
@@ -85,8 +85,8 @@
             <list string="Arrivals by Forwarder" create="0" edit="0" delete="0"
                   action="action_open_lines" type="object">
                 <field name="arrival_date" width="110px"/>
-                <field name="port_of_discharge_id"/>
-                <field name="dest_city_id"/>
+                <field name="port_of_discharge_id" optional="hide"/>
+                <field name="dest_city_id" optional="hide"/>
                 <field name="forwarder_id"/>
                 <field name="requisition_id"/>
                 <field name="bill_lading_id"/>
