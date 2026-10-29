@@ -154,6 +154,7 @@
                 <field name="invoice_no" optional="hide"/>
                 <field name="invoice_date" optional="hide"/>
                 <field name="readiness_date" optional="hide"/>
+                <field name="eeta_date" optional="hide"/>
                 <field name="port_exiting_date" optional="hide"/>
                 <field name="antrepo_arrival_date" optional="hide"/>
                 <!-- Post-Arrival (optional) -->

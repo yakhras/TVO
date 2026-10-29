@@ -10,7 +10,9 @@
             <list string="Cargo Readiness" create="0" edit="0" delete="0"
                   action="action_open_lines" type="object">
                 <field name="readiness_date" width="140px"/>
+                <field name="eeta_date" optional="hide"/>
                 <field name="requisition_id"/>
+                <field name="product_id" optional="hide"/>
                 <field name="container_type" width="110px"/>
                 <field name="container_count" sum="Total" width="130px"/>
                 <field name="port_of_loading_id"/>
@@ -29,6 +31,7 @@
         <field name="arch" type="xml">
             <search>
                 <field name="requisition_id"/>
+                <field name="product_id"/>
                 <field name="vendor_id"/>
                 <field name="port_of_loading_id"/>
                 <field name="container_type"/>
@@ -37,6 +40,8 @@
                 <group expand="0" string="Group By">
                     <filter name="group_requisition" string="Contract No"
                             context="{'group_by': 'requisition_id'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_id'}"/>
                     <filter name="group_readiness_date" string="Cargo Readiness Date"
                             context="{'group_by': 'readiness_date:day'}"/>
                     <filter name="group_container_type" string="Container Type"

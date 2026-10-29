@@ -40,6 +40,7 @@
                             <field name="invoice_date"/>
                             <field name="wh_arriving_date"/>
                                 <field name="readiness_date"/>
+                                <field name="eeta_date"/>
                                 <field name="port_exiting_date"/>
                                 <field name="antrepo_arrival_date"/>
                                 <field name="declaration_type_id"/>

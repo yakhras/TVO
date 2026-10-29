@@ -169,6 +169,10 @@ class LogisticsContainerLine(models.Model):
         string='Readiness Date',
         related='container_id.readiness_date', store=True,
     )
+    eeta_date = fields.Date(
+        string='EETA',
+        related='container_id.eeta_date', store=True,
+    )
     port_exiting_date = fields.Date(
         string='Port Exiting Date',
         related='container_id.port_exiting_date', store=True,

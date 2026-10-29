@@ -1,4 +1,5 @@
 import logging
+from datetime import timedelta
 
 from odoo import api, fields, models
 from odoo.fields import Command
@@ -82,6 +83,10 @@ class LogisticsContainer(models.Model):
     invoice_date = fields.Date(string='Invoice Date', tracking=True)
     wh_arriving_date = fields.Date(string='WH Arriving Date', tracking=True)
     readiness_date = fields.Date(string='Readiness Date', tracking=True)
+    eeta_date = fields.Date(
+        string='EETA', compute='_compute_eeta_date', store=True,
+        help='Readiness Date + 75 days.',
+    )
     port_exiting_date = fields.Date(string='Port Exiting Date', tracking=True)
     antrepo_arrival_date = fields.Date(string='Antrepo Arrival Date', tracking=True)
     declaration_type_id = fields.Many2one(
@@ -390,6 +395,11 @@ class LogisticsContainer(models.Model):
                 rec.amount_subtotal
                 + (rec.ship_fee_amount or 0.0)
             )
+
+    @api.depends('readiness_date')
+    def _compute_eeta_date(self):
+        for rec in self:
+            rec.eeta_date = rec.readiness_date and rec.readiness_date + timedelta(days=75)
 
     @api.depends('container_line_ids')
     def _compute_line_count(self):

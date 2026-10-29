@@ -84,7 +84,9 @@ class LogisticsCargoReadinessReport(models.Model):
     _order = 'readiness_date, requisition_id'
 
     requisition_id = fields.Many2one('purchase.requisition', string='Contract No', readonly=True)
+    product_id = fields.Many2one('product.product', string='Product', readonly=True)
     readiness_date = fields.Date(string='Cargo Readiness Date', readonly=True)
+    eeta_date = fields.Date(string='EETA', readonly=True)
     container_type = fields.Selection(
         selection=[('20', '20ft'), ('40', '40ft'), ('other', 'Other')],
         string='Container Type', readonly=True,
@@ -102,7 +104,7 @@ class LogisticsCargoReadinessReport(models.Model):
     company_id = fields.Many2one('res.company', string='Company', readonly=True)
 
     _dimensions = [
-        'readiness_date', 'requisition_id', 'container_type',
+        'readiness_date', 'eeta_date', 'requisition_id', 'product_id', 'container_type',
         'port_of_loading_id', 'vendor_id', 'state', 'child_state_id',
     ]
 
