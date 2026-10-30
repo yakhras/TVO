@@ -13,8 +13,10 @@
                 <field name="eeta_date" optional="hide"/>
                 <field name="requisition_id"/>
                 <field name="product_id" optional="hide"/>
+                <field name="description_picking" optional="hide"/>
                 <field name="container_type" width="110px"/>
                 <field name="container_count" sum="Total" width="130px"/>
+                <field name="booking_number" optional="hide"/>
                 <field name="port_of_loading_id"/>
                 <field name="vendor_id"/>
                 <field name="product_qty" sum="Total" optional="hide"/>

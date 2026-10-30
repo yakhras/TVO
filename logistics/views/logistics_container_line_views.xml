@@ -145,6 +145,7 @@
                 <field name="mt_price" optional="hide" sum="Total MT Price"/>
                 <!-- Shipping (optional) -->
                 <field name="forwarder_id" optional="hide"/>
+                <field name="booking_number" optional="hide"/>
                 <field name="port_of_loading_id" optional="hide"/>
                 <field name="port_of_discharge_id" optional="hide"/>
                 <field name="departure_date" optional="hide"/>

@@ -134,6 +134,7 @@
                 <field name="amount_total" sum="Total"/>
                 <field name="destination_country_id" optional="hide" readonly="1"/>
                 <field name="dest_city_id" optional="hide" readonly="1"/>
+                <field name="port_exiting_date" optional="show" readonly="1"/>
                 <field name="state"
                        decoration-muted="state == 'purchase'"
                        decoration-warning="state in ('oversea', 'at_port')"

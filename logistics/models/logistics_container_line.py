@@ -45,6 +45,10 @@ class LogisticsContainerLine(models.Model):
         'res.partner', string='Forwarder',
         related='container_id.forwarder_id', store=True,
     )
+    booking_number = fields.Char(
+        string='Booking Number',
+        related='bill_lading_id.booking_number', store=True,
+    )
     port_of_loading_id = fields.Many2one(
         'logistics.port', string='Port From',
         related='container_id.port_of_loading_id', store=True,

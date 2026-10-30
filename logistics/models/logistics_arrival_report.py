@@ -85,6 +85,7 @@ class LogisticsCargoReadinessReport(models.Model):
 
     requisition_id = fields.Many2one('purchase.requisition', string='Contract No', readonly=True)
     product_id = fields.Many2one('product.product', string='Product', readonly=True)
+    description_picking = fields.Text(string='Technical Description', readonly=True)
     readiness_date = fields.Date(string='Cargo Readiness Date', readonly=True)
     eeta_date = fields.Date(string='EETA', readonly=True)
     container_type = fields.Selection(
@@ -92,7 +93,8 @@ class LogisticsCargoReadinessReport(models.Model):
         string='Container Type', readonly=True,
     )
     container_count = fields.Integer(string='Total Containers', readonly=True)
-    # Port From comes from the B/L, so it stays empty until one is linked.
+    # Booking Number and Port From come from the B/L, so they stay empty until one is linked.
+    booking_number = fields.Char(string='Booking Number', readonly=True)
     port_of_loading_id = fields.Many2one('logistics.port', string='Loading Port', readonly=True)
     vendor_id = fields.Many2one('res.partner', string='Supplier', readonly=True)
     product_qty = fields.Float(string='Quantity', digits='Product Unit of Measure', readonly=True)
@@ -104,8 +106,9 @@ class LogisticsCargoReadinessReport(models.Model):
     company_id = fields.Many2one('res.company', string='Company', readonly=True)
 
     _dimensions = [
-        'readiness_date', 'eeta_date', 'requisition_id', 'product_id', 'container_type',
-        'port_of_loading_id', 'vendor_id', 'state', 'child_state_id',
+        'readiness_date', 'eeta_date', 'requisition_id', 'product_id', 'description_picking',
+        'container_type', 'booking_number', 'port_of_loading_id', 'vendor_id', 'state',
+        'child_state_id',
     ]
 
     @property

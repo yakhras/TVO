@@ -19,6 +19,7 @@ class LogisticsBillLading(models.Model):
         readonly=True, default='New',
     )
     number = fields.Char(string='B/L Number', tracking=True)
+    booking_number = fields.Char(string='Booking Number', tracking=True)
     bl_date = fields.Date(string='B/L Date', tracking=True)
     bl_draft = fields.Boolean(string='B/L Draft', tracking=True)
 

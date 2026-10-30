@@ -21,6 +21,7 @@
                     <group>
                         <group>
                             <field name="number"/>
+                            <field name="booking_number"/>
                             <field name="bl_date"/>
                             <field name="bl_draft"/>
                         </group>
