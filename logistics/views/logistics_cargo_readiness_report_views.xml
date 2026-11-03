@@ -45,6 +45,8 @@
                             context="{'group_by': 'requisition_id'}"/>
                     <filter name="group_product" string="Product"
                             context="{'group_by': 'product_id'}"/>
+                    <filter name="group_parent_category" string="Parent Category"
+                            context="{'group_by': 'parent_category_id'}"/>
                     <filter name="group_readiness_date" string="Cargo Readiness Date"
                             context="{'group_by': 'readiness_date:day'}"/>
                     <filter name="group_container_type" string="Container Type"

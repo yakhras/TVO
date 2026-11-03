@@ -91,6 +91,11 @@ class LogisticsContainerLine(models.Model):
         'product.category', string='Category', related='product_id.categ_id',
         store=True,
     )
+    # Level 2 = direct parent of the product's category (not the root)
+    parent_category_id = fields.Many2one(
+        'product.category', string='Parent Category', related='category_id.parent_id',
+        store=True,
+    )
     description_picking = fields.Text(
         string='Description on Picking',
         compute='_compute_description_picking', store=True, readonly=True,

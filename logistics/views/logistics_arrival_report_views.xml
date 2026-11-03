@@ -56,6 +56,8 @@
                             context="{'group_by': 'destination_country_id'}"/>
                     <filter name="group_product" string="Product"
                             context="{'group_by': 'product_id'}"/>
+                    <filter name="group_parent_category" string="Parent Category"
+                            context="{'group_by': 'parent_category_id'}"/>
                     <filter name="group_state" string="Status"
                             context="{'group_by': 'state'}"/>
                     <filter name="group_child_state" string="Child State"
@@ -139,6 +141,8 @@
                             context="{'group_by': 'bill_lading_id'}"/>
                     <filter name="group_product" string="Product"
                             context="{'group_by': 'product_id'}"/>
+                    <filter name="group_parent_category" string="Parent Category"
+                            context="{'group_by': 'parent_category_id'}"/>
                     <filter name="group_state" string="Status"
                             context="{'group_by': 'state'}"/>
                     <filter name="group_child_state" string="Child State"
