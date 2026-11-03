@@ -50,7 +50,7 @@ class LogisticsArrivalProductReport(models.Model):
     requisition_id = fields.Many2one('purchase.requisition', string='Purchase Agreement', readonly=True)
     arrival_date = fields.Date(string='Arriving Date', readonly=True)
     port_of_discharge_id = fields.Many2one('logistics.port', string='Port To', readonly=True)
-    dest_city_id = fields.Many2one('res.country.state', string='Destination City', readonly=True)
+    destination_country_id = fields.Many2one('res.country', string='Destination Country', readonly=True)
     product_id = fields.Many2one('product.product', string='Product', readonly=True)
     description_picking = fields.Text(string='Description on Picking', readonly=True)
     product_qty = fields.Float(string='Quantity', digits='Product Unit of Measure', readonly=True)
@@ -63,7 +63,7 @@ class LogisticsArrivalProductReport(models.Model):
     company_id = fields.Many2one('res.company', string='Company', readonly=True)
 
     _dimensions = [
-        'requisition_id', 'arrival_date', 'port_of_discharge_id', 'dest_city_id',
+        'requisition_id', 'arrival_date', 'port_of_discharge_id', 'destination_country_id',
         'product_id', 'description_picking', 'state', 'child_state_id',
     ]
 
@@ -107,7 +107,8 @@ class LogisticsCargoReadinessReport(models.Model):
 
     _dimensions = [
         'readiness_date', 'eeta_date', 'requisition_id', 'product_id', 'description_picking',
-        'container_type', 'booking_number', 'port_of_loading_id', 'vendor_id', 'state',
+    forwarder_id = fields.Many2one('res.partner', string='Forwarder', readonly=True)
+        'container_type', 'forwarder_id', 'booking_number', 'port_of_loading_id', 'vendor_id', 'state',
         'child_state_id',
     ]
 
@@ -127,7 +128,7 @@ class LogisticsArrivalForwarderReport(models.Model):
 
     arrival_date = fields.Date(string='Arriving Date', readonly=True)
     port_of_discharge_id = fields.Many2one('logistics.port', string='Port To', readonly=True)
-    dest_city_id = fields.Many2one('res.country.state', string='Destination City', readonly=True)
+    destination_country_id = fields.Many2one('res.country', string='Destination Country', readonly=True)
     forwarder_id = fields.Many2one('res.partner', string='Forwarder', readonly=True)
     requisition_id = fields.Many2one('purchase.requisition', string='Purchase Agreement', readonly=True)
     bill_lading_id = fields.Many2one('logistics.bill.lading', string='Bill of Lading', readonly=True)
@@ -143,7 +144,7 @@ class LogisticsArrivalForwarderReport(models.Model):
     company_id = fields.Many2one('res.company', string='Company', readonly=True)
 
     _dimensions = [
-        'arrival_date', 'port_of_discharge_id', 'dest_city_id', 'forwarder_id',
+        'arrival_date', 'port_of_discharge_id', 'destination_country_id', 'forwarder_id',
         'requisition_id', 'bill_lading_id', 'product_id', 'description_picking',
         'state', 'child_state_id',
     ]

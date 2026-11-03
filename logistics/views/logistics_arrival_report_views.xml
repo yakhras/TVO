@@ -12,7 +12,7 @@
                 <field name="requisition_id"/>
                 <field name="arrival_date" width="110px"/>
                 <field name="port_of_discharge_id" optional="hide"/>
-                <field name="dest_city_id" optional="hide"/>
+                <field name="destination_country_id" optional="hide"/>
                 <field name="product_id"/>
                 <field name="description_picking"/>
                 <field name="product_qty" sum="Total" width="100px"/>
@@ -32,7 +32,7 @@
             <search>
                 <field name="requisition_id"/>
                 <field name="port_of_discharge_id"/>
-                <field name="dest_city_id"/>
+                <field name="destination_country_id"/>
                 <field name="product_id"/>
                 <field name="description_picking"/>
                 <field name="state"/>
@@ -52,8 +52,8 @@
                             context="{'group_by': 'arrival_date:day'}"/>
                     <filter name="group_port_to" string="Port To"
                             context="{'group_by': 'port_of_discharge_id'}"/>
-                    <filter name="group_dest_city" string="Destination City"
-                            context="{'group_by': 'dest_city_id'}"/>
+                    <filter name="group_dest_country" string="Destination Country"
+                            context="{'group_by': 'destination_country_id'}"/>
                     <filter name="group_product" string="Product"
                             context="{'group_by': 'product_id'}"/>
                     <filter name="group_state" string="Status"
@@ -86,7 +86,7 @@
                   action="action_open_lines" type="object">
                 <field name="arrival_date" width="110px"/>
                 <field name="port_of_discharge_id" optional="hide"/>
-                <field name="dest_city_id" optional="hide"/>
+                <field name="destination_country_id" optional="hide"/>
                 <field name="forwarder_id"/>
                 <field name="requisition_id"/>
                 <field name="bill_lading_id"/>
@@ -108,7 +108,7 @@
         <field name="arch" type="xml">
             <search>
                 <field name="port_of_discharge_id"/>
-                <field name="dest_city_id"/>
+                <field name="destination_country_id"/>
                 <field name="forwarder_id"/>
                 <field name="requisition_id"/>
                 <field name="bill_lading_id"/>
@@ -129,8 +129,8 @@
                             context="{'group_by': 'arrival_date:day'}"/>
                     <filter name="group_port_to" string="Port To"
                             context="{'group_by': 'port_of_discharge_id'}"/>
-                    <filter name="group_dest_city" string="Destination City"
-                            context="{'group_by': 'dest_city_id'}"/>
+                    <filter name="group_dest_country" string="Destination Country"
+                            context="{'group_by': 'destination_country_id'}"/>
                     <filter name="group_forwarder" string="Forwarder"
                             context="{'group_by': 'forwarder_id'}"/>
                     <filter name="group_requisition" string="Purchase Agreement"
