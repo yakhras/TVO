@@ -93,6 +93,7 @@ class LogisticsCargoReadinessReport(models.Model):
         string='Container Type', readonly=True,
     )
     container_count = fields.Integer(string='Total Containers', readonly=True)
+    forwarder_id = fields.Many2one('res.partner', string='Forwarder', readonly=True)
     # Booking Number and Port From come from the B/L, so they stay empty until one is linked.
     booking_number = fields.Char(string='Booking Number', readonly=True)
     port_of_loading_id = fields.Many2one('logistics.port', string='Loading Port', readonly=True)
@@ -107,7 +108,6 @@ class LogisticsCargoReadinessReport(models.Model):
 
     _dimensions = [
         'readiness_date', 'eeta_date', 'requisition_id', 'product_id', 'description_picking',
-    forwarder_id = fields.Many2one('res.partner', string='Forwarder', readonly=True)
         'container_type', 'forwarder_id', 'booking_number', 'port_of_loading_id', 'vendor_id', 'state',
         'child_state_id',
     ]
