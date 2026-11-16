@@ -85,7 +85,7 @@ class LogisticsContainer(models.Model):
     readiness_date = fields.Date(string='Readiness Date', tracking=True)
     eeta_date = fields.Date(
         string='EETA', compute='_compute_eeta_date', store=True,
-        help='Readiness Date + 75 days.',
+        help='Arriving Date if set, otherwise Readiness Date + 75 days.',
     )
     port_exiting_date = fields.Date(string='Port Exiting Date', tracking=True)
     antrepo_arrival_date = fields.Date(string='Antrepo Arrival Date', tracking=True)
@@ -396,10 +396,11 @@ class LogisticsContainer(models.Model):
                 + (rec.ship_fee_amount or 0.0)
             )
 
-    @api.depends('readiness_date')
+    @api.depends('arrival_date', 'readiness_date')
     def _compute_eeta_date(self):
         for rec in self:
-            rec.eeta_date = rec.readiness_date and rec.readiness_date + timedelta(days=75)
+            rec.eeta_date = rec.arrival_date or (
+                rec.readiness_date and rec.readiness_date + timedelta(days=75))
 
     @api.depends('container_line_ids')
     def _compute_line_count(self):
